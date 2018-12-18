@@ -1,0 +1,2735 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="Access-Control-Allow-Origin" content="*">
+        <style>
+            .fadeIn {
+                -webkit-animation-name: fadeIn;
+                animation-name: fadeIn;
+            }
+            
+            .animated {
+                -webkit-animation-duration: 1s;
+                animation-duration: 1s;
+                -webkit-animation-fill-mode: both;
+                animation-fill-mode: both;
+            }
+
+             @keyframes fadeIn{
+                 0% {
+                     opacity: 0;
+                 }
+                 100%{
+                     opacity: 1
+                 }
+             }
+            .jsonview{font-family:monospace;font-size:1.1em;white-space:pre-wrap}.jsonview .prop{font-weight:700;text-decoration:none;color:#000}.jsonview .null,.jsonview .undefined{color:red}.jsonview .bool,.jsonview .num{color:#00f}.jsonview .string{color:green;white-space:pre-wrap}.jsonview .string.multiline{display:inline-block;vertical-align:text-top}.jsonview .collapser{position:absolute;left:-1em;cursor:pointer}.jsonview .collapsible{transition:height 1.2s;transition:width 1.2s}.jsonview .collapsible.collapsed{height:.8em;width:1em;display:inline-block;overflow:hidden;margin:0}.jsonview .collapsible.collapsed:before{content:"…";width:1em;margin-left:.2em}.jsonview .collapser.collapsed{transform:rotate(0)}.jsonview .q{display:inline-block;width:0;color:transparent}.jsonview li{position:relative}.jsonview ul{list-style:none;margin:0 0 0 2em;padding:0}.jsonview h1{font-size:1.2em}
+            *{
+                box-sizing: border-box;
+            }
+            html,body{width: 100%; height: 100%; margin:0; padding: 0;}
+            hr{
+                margin: 30px 0;
+            }
+            .div_module{
+                width:60%;
+                margin: 20px auto;
+            }
+            .div_module input,.div_module select,.div_module textarea{
+                width: 100%;
+            }
+            .div_module_c{
+                margin-bottom: 30px;
+            }
+            .div_module_c h2{
+                text-align: center;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #ddd;
+            }
+            .sel_goods{
+                padding: 3px 0;
+            }         
+            .div_getOperations table td{
+                border-bottom: 1px solid #eee;
+            }  
+            table{
+                width: 100%;
+                border-collapse: collapse;
+                border-spacing: 0;
+            }
+
+            th,td{
+                text-align: left;
+            }
+
+            .body{
+                width: 100%;
+            }
+
+            .container{
+                height: 100%;
+                display: flex;
+                /* overflow: hidden; */
+            }
+            .left_nav{
+                padding: 30px 30px 0 10px;   
+                height: 100%;
+                overflow: auto;     
+                width: 390px; 
+                min-width: 390px;      
+            }
+            .left_nav ul{
+                list-style: decimal-leading-zero;
+            }
+            
+            .right_main_content{
+                flex: 1;
+                border-left:1px dotted green;
+                display: flex;
+                flex-direction: column;
+            }
+            .right_main_content .top{
+                border-bottom:1px dotted green;
+            }
+            .container .body{
+                flex: 1;
+                overflow:auto;
+            }
+
+            .top .div_module_c{
+                margin-bottom: 0;
+            }
+
+            .h_msg{
+                margin:0;
+                color:red;
+                padding-left: 20px;
+            }
+            .h_msg::before{
+                content: "消息："
+            }
+            .div_unlock{
+                padding-bottom: 0;
+            }
+
+            .left_nav .p_account{margin-bottom: 20px; padding-left: 10px;}
+
+            .listCard .row{
+                display: flex;
+                margin-bottom:6px;
+            }
+            .listCard .row .field{
+                width: 160px;
+            }
+
+            .transactions h4{
+                margin:8px 0;
+            }
+
+            .blockOrTXID .transactions{
+                margin-top: 16px;
+            }
+
+            .blockOrTXID .row_op{
+                margin-bottom: 8px;
+            }
+            .blockOrTXID .row_op .info{
+                margin: 6px 0;
+            }
+
+            .blockOrTXID .row_op .type{
+                color:green;
+            }
+
+            .blockOrTXID .row_op .time{
+                color:#999;
+            }
+            .div_getWitnessesForExplorer .activeNodeClass>td {
+                background: rgba(80, 210, 194, 0.4);
+            }
+
+            .div_get_contract p,.div_getAccountContractData p{
+                border-bottom: 1px solid #eee;
+                padding-bottom: 6px;
+            }
+            
+            .op_results{
+                display: none;
+                color:gray;
+                margin-top: 6px;
+            }
+            .op_results p{
+                border-top:1px solid #eee;
+                margin: 2px 0;
+            }
+
+            .checkbox{
+                display: flex;
+                align-items: center;
+                margin: 10px 0;
+            }
+            input[type="checkbox"]{
+                margin:3px 6px 0;
+            }
+
+            .div_getAssets .div_list P{
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .red{
+                color:red;
+            }
+            .green{
+                color:green;
+            }
+            .div_subscribeToTransactionPair .container{
+                display:flex;
+                height: auto;
+            }
+            .orders{
+                flex: 1;
+                padding-left: 30px;
+            }
+            .orders tbody tr:hover{
+                background: rgba(0,0,0,0.6);
+                color:#fff;
+                cursor: pointer;
+            }
+            .btn{
+                padding: 10px 0;
+                color:#fff;
+                font-size: 16px;
+            }
+
+            .buy_balances,.sell_balances{
+                margin: 0;
+            }
+
+            .op_results p{
+                word-wrap: break-word; 
+            }
+            .game_item_base_describe{
+                word-break:break-all;
+                word-wrap:break-word;
+                padding-right:10px;
+                /* width:200px; */
+            }
+            .new_options{
+                margin-top: 6px;
+                border-top:1px solid #dedede;
+            }
+            .memo{
+                margin-left: 6px;
+            }
+            .res{
+                max-width: 600px;
+                overflow: auto;
+            }
+        </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="left_nav">
+            <p class="p_account">当前账户：<span class="current_account"></span></p>
+            <ul>
+                <li>钱包管理模式
+                    <ul class="class_0">
+
+                    </ul>
+                </li>
+                <li>账户管理模式
+                    <ul class="class_1">
+
+                    </ul>
+                </li>
+                <li>账户操作
+                    <ul class="class_11">
+
+                    </ul>
+                </li>
+                <li>代币资产操作
+                    <ul class="class_2">
+
+                    </ul>
+                </li>
+                <li>NH资产操作
+                    <ul class="class_3">
+
+                    </ul>
+                </li>
+                <li>NH资产查询
+                    <ul class="class_5">
+
+                    </ul>
+                </li>
+                <li>区块链浏览器
+                    <ul class="class_7">
+
+                    </ul>
+                </li>
+                <li>API服务器节点
+                    <ul class="class_8">
+
+                    </ul>
+                </li>
+                <li>合约
+                    <ul class="class_9">
+
+                    </ul>
+                </li>
+                <li>其他
+                    <ul class="class_12">
+
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="right_main_content">
+                <div class="top">
+                    <h2 class="h_msg"></h2>
+                    <div class="div_module_c" pclass="class_1">
+                        <h2 style="border-bottom:0; padding-bottom:0; margin:6px 0;">钱包解锁与锁定</h2>
+                        <div class="div_unlock div_module">
+                            <p>私钥模式登录可以使用该方法</p>
+                            <input type="text" class="pwd" placeholder="解锁密码" value="12345678"/><br><br>
+                            <input type="button" id="btn_unlock" value="确认解锁"  /><br><br>
+                            <input type="button" id="btn_lock" value="确认锁定"  />
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="body">
+                        <div class="div_module_c" id="div_createAccountWithWallet" pclass="class_0"  >
+                            <h2>钱包模式创建账户</h2>
+                            <div class="div_createAccountWithWallet div_module">
+                                <p class="red">如果钱包模式已经存在账户，该操作会创建子账户，创建该子账户需要操作账户为终身会员账户</p>
+                                用户名(规则/^[a-z][a-z0-9\.-]{4,63}$//)<input type="text" class="signup_username"  value="test1"><br><br>
+                                密码<input type="text" class="signup_pwd"  value="12345678"><br><br><br>
+                                <input type="button" class="btn_signup" value="确认创建账户"  />
+                                <p class="res"></p>
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_backupDownload" pclass="class_0"  >
+                            <h2>备份钱包下载</h2>
+                            <div class="div_backupDownload div_module">
+                                <input type="button" id="btn_backupDownload" value="确认下载"  />
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_restoreWalletFile" pclass="class_0"  >
+                            <h2>备份文件恢复钱包</h2>
+                            <div class="div_restoreWalletFile div_module">
+                                选择钱包文件
+                                <input  type="file" value="选择钱包文件" class="file"  />
+                                <div class="div_restore" style="display:none">
+                                    <p>SHA1:<span class="sha1"></span></p>
+                                    <input type="password" class="password" placeholder="请输入钱包密码" /><br><br>
+                                    <input type="button" id="btn_restoreWallet" value="确认恢复"  />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_deleteWallet" pclass="class_0"  >
+                                <h2>删除钱包</h2>
+                                <div class="div_deleteWallet div_module">
+                                    删除钱包前再次确认是否已备份钱包或私钥
+                                    <input type="button" id="btn_deleteWallet" value="确认删除"  />
+                                </div>
+                            </div>
+                        <div class="div_module_c" id="div_importPrivateKey" pclass="class_0" >
+                            <h2>导入私钥</h2>
+                            <div class="div_importPrivateKey div_module">
+                                <input type="text" class="pwd" value="12345678" placeholder="请设置临时密码" /><br><br>
+                                <input type="text" class="privateKey" value="5JTRWBhT98rw8oCKWz5MVJEciYRed8ogqDifvqturWEE3UQPND3" placeholder="请输入账号私钥" /><br><br>
+                                <input type="button" id="btn_importPrivateKey" value="确认导入"  />
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_getAccounts" pclass="class_0" >
+                            <h2>获取钱包账户列表</h2>
+                            <div class="div_getAccounts div_module">
+                                <input type="button" id="btn_getAccounts" value="确认获取"  />
+                                <p class="res"></p>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>账户名称</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_signup" pclass="class_1"  >
+                            <h2>账户模式创建账户</h2>
+                            <div class="div_signup div_module">
+                                <p class="red">如果账户模式已经登录，该操作会创建子账户，创建该子账户需要操作账户为终身会员账户</p>
+                                用户名(规则/^[a-z][a-z0-9\.-]{4,63}$/)<input type="text" id="signup_username"  value="test1"><br><br>
+                                密码<input type="text" id="signup_pwd"  value="12345678"><br><br><br>
+                                <input type="button" id="btn_signup" value="注册"  />
+                            </div>
+                        </div>
+                        <div class="div_module_c"  id="div_login" pclass="class_1" >
+                            <h2>登录</h2>
+                            <div class="div_login div_module">
+                                    <!-- tom0002,12345678 -->
+                                用户名<input type="text" id="login_username"  value="test1"><br><br>
+                                密码<input type="text" id="login_pwd"  value="12345678"><br><br><br>
+                                <input type="button" id="btn_login" value="登录"  />
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_keyLogin" pclass="class_1" >
+                            <h2>私钥登录</h2>
+                            <div class="div_keyLogin div_module">
+                                <input type="text" class="pwd" value="12345678" placeholder="请设置临时密码" /><br><br>
+                                <input type="text" class="privateKey" value="5KUAMBYHLm6vyLgEwjLVx5bsQ6534c7mc54RoyaidJCfxBExdjf" placeholder="请输入账号私钥" /><br><br>
+                                <input type="button" id="btn_keyLogin" value="确认登录"  />
+                            </div>
+                        </div>
+                        
+                        <div class="div_module_c" id="div_logout" pclass="class_1" >
+                            <h2>退出登录</h2>
+                            <div class="div_logout div_module">
+                                <input type="button" id="btn_logout" value="确认退出" /><br><br>
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_changePassword" pclass="class_1" >
+                            <h2>修改密码</h2>
+                            <div class="div_changePassword div_module">
+                               <p class="red">如果账户模式已经登录，该操作会创建子账户，创建该子账户需要操作账户为终身会员账户</p>
+                               <input type="text" class="old_password" placeholder="原始密码/临时钱包密码" /><br><br>
+                               <input type="text" class="new_password" placeholder="新密码" /><br><br>
+                                <input type="button" id="btn_changePassword" value="确认修改"  /><br><br>
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_getUserInfo" pclass="class_1" >
+                            <h2>获取当前账户信息</h2>
+                            <div class="div_getUserInfo div_module">
+                                <p>无callback,直接返回</p>
+                                <input type="button" id="btn_getUserInfo" value="立即获取"  /><br><br>
+                                <p class="res"></p>
+                            </div>
+                        </div>
+
+                        <div class="div_module_c" id="div_upgradeAccount" pclass="class_11" >
+                            <h2>升级成为终身会员账户</h2>
+                            <div class="div_upgradeAccount div_module">
+                                <p>此操作需消耗一定的手续费</p>
+                                <p>手续费：<span class="fee"></span></p>
+                                <input type="button" id="btn_get_upgradeAccount_fee" value="获取本次操作所需手续费"  /><br><br>
+                                <input type="button" id="btn_upgradeAccount" value="确认升级"  /><br><br>
+                                <p class="res"></p>
+                            </div>
+                        </div>
+
+                        <div class="div_module_c" id="div_getPrivateKey" pclass="class_11" >
+                            <h2>获取私钥</h2>
+                            <div class="div_getPrivateKey div_module">
+                                <input type="button" id="btn_getPrivateKey" value="获取私钥"  /><br><br>
+                                <p class="res"></p>
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_queryUserInfo" pclass="class_11" >
+                            <h2>查询账户信息</h2>
+                            <div class="div_queryUserInfo div_module">
+                                account<input  type="text" class="account" value="test1"><br><br>
+                                <input type="button" id="btn_queryUserInfo" value="立即查询"  /><br><br>
+                                <p class="res"></p>
+                            </div>
+                        </div>
+
+                        <div class="div_module_c" id="div_getOperations" pclass="class_11" >
+                            <h2>查询和订阅账户记录</h2>
+                            <div class="div_getOperations div_module" style="width:98%;">
+                                account<input  type="text" class="account" value="test1"><br><br>
+                                limit<input  type="text" class="limit" value="10"><br><br>
+                                <input type="button" id="btn_getOperations" value="立即查询" /><br><br>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>区块</th>
+                                            <th>操作</th>
+                                            <th>信息</th>
+                                            <th>手续费</th>
+                                            <th>时间</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="div_module_c" id="div_transferAsset" pclass="class_2"  >
+                            <h2>转账</h2>
+                            <div class="div_transferAsset div_module">
+                                <div class="div_from_account" style="display:none;">来自<input  type="text" class="from_account" value="test1"><br><br></div>
+                                发往<input  type="text" class="to_account" value="test2"><br><br>
+                                数量<input type="number" class="transfer_amount"  value="1"><br><br>
+                                资产id<input type="text" class="asset_id"  value="COCOS"><br><br>
+                                支付手续费资产类型<input type="text" class="feeAssetId"  value="COCOS"><br><br>
+                                备注消息<input class="transfer_memo" type="text" value="">
+                                <div class="checkbox">
+                                    是否发起提议: <input type="checkbox" onclick="document.querySelector('.div_from_account').style.display=this.checked?'block':'none'" class="isPropose" style="width:auto;" />          
+                                </div>
+                                <p>手续费：<span class="fee"></span></p>
+                                <input type="button" id="btn_get_transferAsset_fee" value="获取本次转账所需手续费"  /><br><br>
+                                <input type="button" id="btn_transferAsset" value="转账"  />
+                            </div>
+                        </div>
+
+                        <div class="div_module_c" id="div_createAsset" pclass="class_2"  >
+                            <h2>资产创建</h2>
+                            <div class="div_createAsset div_module">
+                                资产符号<input  type="text" class="symbol" value="TEST"><br><br>
+                                最大资产总量<input type="number" class="max_supply"  value="100000"><br><br>
+                                精度(小数位数)<input type="text" class="precision"  value="8"><br><br>
+                                <fieldset>
+                                    <legend>手续费汇率</legend>
+                                    标价资产数量：<input type="text" class="quote" value="1" onKeyUp="_assets.c_priceChange()" />
+                                    基准资产数量：<input type="text" class="base" value="10" onKeyUp="_assets.c_priceChange()" />
+                                    <p>单价：<span class="price">0.1 TEST/COCOS</span></p>
+                                </fieldset>
+                                <!-- <div class="checkbox">
+                                        收取交易手续费:<input type="checkbox" class="is_charge_market_fee" style="width:auto;" />          
+                                </div>
+                               
+                                <fieldset style="display:none" class="fieldset_charge_market_fee">
+                                    <legend>交易手续费率 </legend>
+                                    交易手续费率 (%)：<input type="text" class="market_fee_percent" value="1" />
+                                    最大交易手续费：<input type="text" class="max_market_fee" value="1" />
+                                </fieldset> -->
+                                <br>
+                                描述<textarea rows="6" class="description"></textarea>
+                                <p>创建资产手续费：<span class="fee"></span></p>
+                                <input type="button" id="btn_get_createAsset_fee" value="获取创建资产费用预估"  /><br><br>
+                                <input type="button" id="btn_createAsset" value="确认创建"  />
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_updateAsset" pclass="class_2"  >
+                            <h2>资产更新</h2>
+                            <div class="div_updateAsset div_module">
+                                资产符号<input  type="text" class="symbol" value="TEST"><br><br>
+                                最大资产总量<input type="number" class="max_supply"  value="100000"><br><br>
+                                新发行人<input type="text" class="new_issuer"  ><br><br>
+                                <fieldset>
+                                    <legend>手续费汇率</legend>
+                                    标价资产数量：<input type="text" class="quote" value="" onKeyUp="_assets.u_priceChange()" />
+                                    基准资产数量：<input type="text" class="base" value="" onKeyUp="_assets.u_priceChange()" />
+                                    <p>单价：<span class="price"></span></p>
+                                </fieldset>
+                                <br>
+                                描述<textarea rows="6" class="description"></textarea>
+                                <p>更新资产手续费：<span class="fee"></span></p>
+                                <input type="button" id="btn_get_updateAsset_fee" value="获取更新资产费用预估"  /><br><br>
+                                <input type="button" id="btn_updateAsset" value="确认更新"  />
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_issueAsset" pclass="class_2"  >
+                            <h2>资产发行</h2>
+                            <div class="div_issueAsset div_module">
+                                发行给<input  type="text" class="to_account" value="test2"><br><br>
+                                发行数量<input type="number" class="amount"  value="10"><br><br>
+                                资产符号<input type="text" class="asset_id"  value="TEST"><br><br>
+                                备注消息<input class="memo" type="text" value="">
+                                <p>手续费：<span class="fee"></span></p>
+                                <input type="button" id="btn_get_issueAsset_fee" value="获取本次资产发行所需手续费"  /><br><br>
+                                <input type="button" id="btn_issueAsset" value="确认发行"  />
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_reserveAsset" pclass="class_2"  >
+                            <h2>资产销毁</h2>
+                            <div class="div_reserveAsset div_module">
+                                资产符号<input  type="text" class="asset_id" value="TEST"><br><br>
+                                销毁数量<input type="number" class="amount"  value="1"><br><br>
+                                <p>销毁资产手续费：<span class="fee"></span></p>
+                                <input type="button" id="btn_get_reserveAsset_fee" value="获取资产销毁费用预估"  /><br><br>
+                                <input type="button" id="btn_reserveAsset" value="确认销毁"  />
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_assetFundFeePool" pclass="class_2"  >
+                            <h2>注资资产手续费池</h2>
+                            <div class="div_assetFundFeePool div_module">
+                                资产符号<input  type="text" class="asset_id" value="TEST"><br><br>
+                                数量<input type="number" class="amount"  value="1"><br><br>
+                                <p>手续费：<span class="fee"></span></p>
+                                <input type="button" id="btn_get_assetFundFeePool_fee" value="获取手续费费用预估"  /><br><br>
+                                <input type="button" id="btn_assetFundFeePool" value="确认注资"  />
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_assetClaimFees" pclass="class_2"  >
+                            <h2>领取资产手续费</h2>
+                            <div class="div_assetClaimFees div_module">
+                                资产符号<input  type="text" class="asset_id" value="TEST"><br><br>
+                                数量<input type="number" class="amount"  value="1"><br><br>
+                                <p>手续费：<span class="fee"></span></p>
+                                <input type="button" id="btn_get_assetClaimFees_fee" value="获取手续费费用预估"  /><br><br>
+                                <input type="button" id="btn_assetClaimFees" value="确认领取"  />
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_getAssets" pclass="class_2" >
+                            <h2>查询链上发行的资产</h2>
+                            <div class="div_getAssets div_module">
+                                <input type="button" id="btn_getAssets" value="立即查询"  /><br><br>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>资产</th>
+                                            <th>发行人</th>
+                                            <th>供应量</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                                <p>查询指定资产</p>
+                                <input type="text" class="symbol" placeholder="请输入查询的资产符号" ><br><br>
+                                <input type="button" id="btn_queryAsset" value="立即查询"  />
+                                <div class="div_list">
+                                  
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="queryAccountAllBalances" pclass="class_2" >
+                            <h2>查询账户拥有的所有资产列表</h2>
+                            <div class="div_queryAccountAllBalances div_module">
+                                <h3>其中包含资产对记账单位的换算值</h3>
+                                记账单位<input  type="text" class="asset_id" value=""><br><br>
+                                account<input  type="text" class="account" value="test1"><br><br>
+                                <input type="button" id="btn_queryAccountAllBalances" value="立即查询"  /><br><br>
+                                <p class="res"></p>
+                            </div>
+                        </div>
+                        
+                        <div class="div_module_c" id="queryAccountBalances" pclass="class_2" >
+                            <h2>查询账户指定资产</h2>
+                            <div class="div_queryAccountBalances div_module">
+                                资产id或symbol<input  type="text" class="asset_id" value=""><br><br>
+                                account<input  type="text" class="account" value="test1"><br><br>
+                                <input type="button" id="btn_queryAccountBalances" value="立即查询"  /><br><br>
+                                <p class="res"></p>
+                            </div>
+                        </div>
+
+                        <div class="div_module_c" id="div_registerCreator" pclass="class_3" >
+                            <h2>注册开发者</h2>
+                            <div class="div_registerCreator div_module">
+                                <input type="button" id="btn_registerCreator" value="确认注册"  />
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_creatWorldView" pclass="class_3">
+                            <h2>创建世界观</h2>
+                            <div class="div_creatWorldView div_module">
+                                世界观<input  type="text" class="world_view" value=""><br><br>
+                                <input type="button" id="btn_creatWorldView" value="确认创建"  />
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_proposeRelateWorldView" pclass="class_3" > 
+                            <h2>提议关联世界观</h2>
+                            <div class="div_proposeRelateWorldView div_module">
+                                <p>提议关联到某一个世界观，需要该世界观的创建人审批</p>
+                                世界观<input  type="text" class="world_view" value="TEST"><br><br>
+                                世界观创建人<input  type="text" class="view_owner" value="test1"><br><br>
+                                <input type="button" id="btn_proposeRelateWorldView" value="确认关联"  />
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="loadAccountProposals" pclass="class_3" >
+                            <h2>获取当前用户收到的提议并审批</h2>
+                            <div class="div_loadAccountProposals div_module" style="width:90%;">
+                                <input type="button" id="btn_loadAccountProposals" value="立即获取"  /><br><br>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>id</th>
+                                            <th>信息</th>
+                                            <th>过期时间</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_create_nh" pclass="class_3" >
+                                <h2>创建NH资产</h2>
+                                <div class="div_create_nh div_module">
+                                    资产id<input  type="text" class="asset_id" value="COCOS" ><br><br>
+                                    世界观<input  type="text" class="world_view" value="TEST" ><br><br>
+                                    NH资产数据data<textarea rows="6" class="base_describe"></textarea><br><br>
+                                    NH资产拥有者(NH资产归属权账户)<input  type="text" class="owner_account" value="test2" ><br><br>
+                                    NH资产数量(默认为1)<input  type="text" class="nh_count" value="1" placeholder="" ><br><br><br>
+                                    type(默认为0,可不传,如果批量创建不同NH资产传1)<input  type="text" class="type" value="0" placeholder="" ><br><br>
+                                    批量创建不同NH资产(type为1才使用该参数)<textarea rows="6" class="items"></textarea><br><br><br>
+                                    <input type="button" id="btn_create_nh" value="确认创建"  />
+                                </div>
+                            </div>    
+                            <div class="div_module_c" id="div_deleteNHAsset" pclass="class_3" >
+                                <h2>删除NH资产</h2>
+                                <div class="div_deleteNHAsset div_module">
+                                    itemIds(Array)<textarea rows="10" class="NHAssetIds">4.2.195,4.2.194</textarea><br><br><br>
+                                    <input type="button" id="btn_deleteNHAsset" value="确认删除" >
+                                </div>
+                            </div>
+                            <div class="div_module_c" id="div_transferNHAsset" pclass="class_3" >
+                                <h2>转移NH资产</h2>
+                                <div class="div_transferNHAsset div_module">
+                                    转移目标账户<input  type="text" class="to_account" value="developer2"><br><br>
+                                    <input type="text" class="NHAssetIds"  value="4.2.2,4.2.3"><br><br>
+                                    <input type="button" id="btn_transferNHAsset" value="确认发送"  />
+                                </div>
+                            </div>
+                      
+                        
+                        <div class="div_module_c" id="div_sell" pclass="class_3">
+                            <h2>创建游戏NH资产出售单</h2>
+                            <div class="div_multiple_opt div_module">
+                                OTC交易平台账户otcAccount，用于收取挂单费用
+                                <input  type="text" class="receiver" value="otcaccount" ><br><br>
+                                挂单费用fee<input  type="text" class="token" value="1"><br><br>
+                                挂单备注信息memo<input  type="text" class="memo" value="NH资产挂单"><br><br>
+                                商品挂单价格price<input  type="text" class="price" value="2" ><br><br>
+                                商品挂单价格币种priceAssetSymbol<input  type="text" class="priceAssetSymbol" value="1.3.0" ><br><br>
+                                过期时间(即挂卖时间,number类型,如3600，表示3600秒后过期)<input  type="text" class="expiration" value="3600" ><br><br><br>
+
+                                <!-- 游戏开发者账户<input  type="text" class="developerAccount" value="" ><br><br> -->
+                                获取账户NH资产 <input type="button" id="btn_getAccountNHAssetForSell" value="立即获取"  /><br><br>     
+                                NH资产itemID<select class="sel_goods" >
+                                            <option value ="1">请选择您要卖的NH资产</option>
+                                        </select>
+                                <br><br><br>
+                                
+                                <input type="button" id="btn_sell" value="确认卖出NH资产"  />
+                            </div>
+                        </div>
+
+                        <div class="div_module_c" id="div_queryNHAssets" pclass="class_5" >
+                            <h2>查询NH资产详细信息</h2>
+                            <div class="div_queryNHAssets div_module">
+                                    hash或id<input  type="text" class="NHAssetHashOrIds" value="4.2.11" ><br><br>
+                                <input type="button" id="btn_queryNHAssets" value="立即查询"  />
+                                <p class="res"></p>
+                            </div>
+                        </div> 
+                        <div class="div_module_c" id="div_queryAccountNHAssets" pclass="class_5" >
+                            <h2>查询账户下所拥有的NH资产</h2>
+                            <div class="div_queryAccountNHAssets div_module">
+                                查询账户<input  type="text" class="account" value="test1" ><br><br>
+                                查询的世界观<input  type="text" class="worldViews" value="" ><br><br>
+                                page<input type="text" class="page" placeholder="" value="1" ><br><br>
+                                pageSize<input type="text" class="pageSize" placeholder="" value="10" ><br><br>
+                                <input type="button" id="btn_queryAccountNHAssets" value="立即查询"  />
+                                <p class="res"></p>
+                            </div>
+                        </div> 
+                        <div class="div_module_c" id="div_queryAccountNHAssetOrders" pclass="class_5" >
+                            <h2>查询账户下的NH资产售卖单</h2>
+                            <div class="div_queryAccountNHAssetOrders div_module"  style="width:98%;">
+                                查询账户<input type="text" class="account" placeholder="" value="test1" ><br><br>
+                                page<input type="text" class="page" placeholder="" value="1" ><br><br>
+                                pageSize<input type="text" class="pageSize" placeholder="" value="10" ><br><br>
+                                <input type="button" id="btn_queryAccountNHAssetOrders" value="立即查询" ><br><br>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>订单id</th>
+                                            <th>NH资产id</th>
+                                            <th>基本属性</th>
+                                            <th>域数据列表 </th>
+                                            <th>售卖价格</th>
+                                            <th>卖家</th>
+                                            <th>过期时间</th>
+                                            <th>备注</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table><br><br>
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_queryNHAssetOrders" pclass="class_5"  >
+                            <h2>查询(购买)全网NH资产售卖单</h2>
+                            <div class="div_queryNHAssetOrders div_module"  style="width:98%;">
+                                资产ID或资产符号<input type="text" class="assetSymbolsOrIds" placeholder="" value="COCOS" ><br><br>
+                                世界观ID或世界观名<input type="text" class="world_views" placeholder="" value="" ><br><br>
+                                page<input type="text" class="page" placeholder="" value="1" ><br><br>
+                                pageSize<input type="text" class="pageSize" placeholder="" value="10" ><br><br>
+                                <input type="button" id="btn_queryNHAssetOrders" value="立即查询" ><br><br>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>订单id</th>
+                                            <th>NH资产id</th>
+                                            <th>基本属性</th>
+                                            <th>域数据列表 </th>
+                                            <th>售卖价格</th>
+                                            <th>卖家</th>
+                                            <th>过期时间</th>
+                                            <th>备注</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table><br><br>
+                            </div>
+                        </div>
+                        
+                       
+                        <div class="div_module_c" id="div_lookupWorldViews" pclass="class_5" >
+                            <h2>查询世界观详细信息</h2>
+                            <div class="div_lookupWorldViews div_module">
+                                世界观<input  type="text" class="worldViewNameOrIds" value="TEST" ><br><br>
+                                <input type="button" id="btn_lookupWorldViews" value="立即查询"  />
+                                <p class="res"></p>
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_queryNHCreator" pclass="class_5" >
+                            <h2>查询开发者关联的世界观</h2>
+                            <div class="div_queryNHCreator div_module">
+                                 查询账户名<input  type="text" class="account" value="test1" ><br><br>
+                                 <p class="res"></p>
+                                 <input type="button" id="btn_queryNHCreator" value="立即查询"  />
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_queryNHAssetsByCreator" pclass="class_5">
+                            <h2>查询开发者所创建的NH资产</h2>
+                            <div class="div_queryNHAssetsByCreator div_module">
+                                查询账户名<input  type="text" class="account" value="test1" ><br><br>
+                                page<input type="text" class="page" placeholder="" value="1" ><br><br>
+                                pageSize<input type="text" class="pageSize" placeholder="" value="10" ><br><br>
+                                <input type="button" id="btn_queryNHAssetsByCreator" value="立即查询"  />
+                                <p class="res"></p>
+                            </div>
+                        </div>
+                
+                        <div class="div_module_c" id="div_getVotes"   pclass="class_8">
+                                <h2>查询节点投票信息数据并投票</h2>
+                                <div class="div_getVotes div_module">
+                                    查询投票账户<input  type="text" class="query_account" value=""><br><br>
+                                    <input type="button" id="btn_getVotes" value="立即加载" /><br><br>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>账户名</th>
+                                                <th>得票</th>
+                                                <th>状态</th>
+                                                <th style="text-align:center;">已支持</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                    <br><br>
+                                    代理投票账户<input  type="text" class="proxy_account" value=""><br><br>
+                                    <input type="button" id="btn_publishVotes" value="保存修改" />
+                                </div>
+                            </div>
+                            <div class="div_module_c" id="div_subscribeBlocks" pclass="class_7" >
+                                <h2>订阅区块</h2>
+                                <div class="div_subscribeBlocks div_module" style="width:90%;">
+                                    <input type="button" id="btn_subscribeBlocks" value="立即订阅" /><br><br>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>区块</th>
+                                                <th>区块id</th>
+                                                <th>见证人</th>
+                                                <th>交易数</th>
+                                                <th>时间</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="div_module_c" id="div_subscribeToChainTranscation" pclass="class_7" >
+                                <h2>订阅区块链交易</h2>
+                                <div class="div_subscribeToChainTranscation div_module" style="width:90%;">
+                                    <input type="button" id="btn_subscribeToChainTranscation" value="立即订阅" /><br><br>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>区块</th>
+                                                <th>操作</th>
+                                                <th>信息</th>
+                                                <th>手续费</th>
+                                                <th>时间</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="div_module_c" id="div_queryBlock" pclass="class_7" >
+                                <h2>查询区块</h2>
+                                <div class="div_queryBlock blockOrTXID div_module" style="width:90%;">
+                                    block<input  type="text" class="block_num" value="362817" placeholder="查询区块或交易ID"><br><br>
+                                    <input type="button" id="btn_queryBlock" value="立即查询" /><br><br>
+                                    <div class="block listCard">
+                                    </div>
+                                    <div class="transactions">      
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="div_module_c" id="div_queryTXID" pclass="class_7" >
+                                <h2>查询交易</h2>
+                                <div class="div_queryTXID blockOrTXID div_module" style="width:90%;">
+                                     TXID<input  type="text" class="trx_id" value="1119f2fd778895add03887b738b2930081b12e0f" placeholder="查询区块或交易ID"><br><br>
+                                    <input type="button" id="btn_queryTXID" value="立即查询" /><br><br>
+                                    <div class="block listCard">
+                                    </div>
+                                    <div class="transactions">      
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="div_module_c" id="div_getWitnessesForExplorer" pclass="class_7" >
+                                <h2>查看节点出块信息</h2>
+                                <div class="div_getWitnessesForExplorer div_module" style="width:90%;" >
+                                    <input type="button" id="btn_getWitnessesForExplorer" value="立即查看" /><br><br>
+                                    <div class="mainInfo listCard">
+    
+                                    </div>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>排名</th>
+                                                <th>账户名</th>
+                                                <th style="padding-right:20px; text-align:right;">上一个区块</th>
+                                                <th>上次生成块</th>
+                                                <th >缺失块数</th>
+                                                <th >得票</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="div_module_c" id="div_lookupBlockRewards"  pclass="class_7" >
+                                <h2>查看节点出块奖励并领取</h2>
+                                <div class="div_lookupBlockRewards div_module" >
+                                    <p>查看当前登录账户且是节点账户的出块奖励</p>
+                                    <input type="button" id="btn_lookupBlockRewards" value="立即查看" /><br><br>
+                                    <div class="mainInfo">
+    
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="div_module_c" id="div_getWSNodeList" pclass="class_8"  >
+                                <h2>查看API服务器节点列表+切换连接+删除节点</h2>
+                                <div class="div_getWSNodeList div_module" style="width:90%;" >
+                                    <input type="button" id="btn_getWSNodeList" value="立即获取" /><br><br>
+                                    <p>当前使用的节点：<span class="selected_url"></span></p>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>名称</th>
+                                                <th>url</th>
+                                                <th>ping</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="div_module_c" id="div_addAPINode" pclass="class_8" >
+                                <h2>添加API服务器节点</h2>
+                                <div class="div_addAPINode div_module">
+                                    名称<input  type="text" class="name" value="My node"><br><br>
+                                    地址<input  type="text" class="address" value="ws://"><br><br>
+                                    <input type="button" id="btn_addAPINode" value="确认添加" /><br><br>
+                                </div>
+                            </div>
+                            <div class="div_module_c" id="div_subscribeToRpcConnectionStatus" pclass="class_8" >
+                                <h2>监听与节点连接状态变化</h2>
+                                <div class="div_subscribeToRpcConnectionStatus div_module">
+                                    <input type="button" id="btn_subscribeToRpcConnectionStatus" value="确认监听" /><br><br>
+                                    <p class="res"></p>
+                                </div>
+                            </div>   
+                            <div class="div_module_c" id="div_disconnect" pclass="class_8" >
+                                <h2>断开websoket通信</h2>
+                                <div class="div_disconnect div_module">
+                                    <input type="button" id="btn_disconnect" value="确认断开" /><br><br>
+                                </div>
+                            </div>    
+                            <div class="div_module_c" id="div_generateKeys"  pclass="class_9" >
+                                <h2>一键生成私钥/公钥（随机生成）</h2>
+                                <div class="div_generateKeys div_module">
+                                    <input type="button" id="btn_generateKeys" value="确认生成" /><br><br>
+                                    <p>私钥：<span class="privateKey"></span></p>
+                                    <p>公钥：<span class="publicKey"></span></p>
+                                </div>
+                            </div>
+                            <div class="div_module_c" id="div_contract_create"  pclass="class_9" >
+                                <h2>合约创建</h2>
+                                <div class="div_contract_create div_module">
+                                    合约权限(一对公私钥中的公钥publicKey)
+                                    <input  type="text" class="authority" value="COCOS7d7RLEJc4tVYCskhKQLJHnJhhZQb4DWcTGqsWqFwC1mkxXvTY2"><br><br>
+                                    合约名字name((规则/^[a-z][a-z0-9\.-]{4,63}$/))<input  type="text" class="name" value="contract.test02"><br><br>
+                                    合约代码data<textarea rows="20" class="data"></textarea><br><br><br>
+                                    <input type="button" id="btn_contract_create" value="确认创建合约" /><br><br>
+                                </div>
+                            </div>
+
+                            <div class="div_module_c" id="div_updateContract"  pclass="class_9" >
+                                <h2>合约更新</h2>
+                                <div class="div_updateContract div_module">
+                                    合约名字name((规则/^[a-z][a-z0-9\.-]{4,63}$/))<input  type="text" class="name" value="contract.test02"><br><br>
+                                    合约代码data<textarea rows="20" class="data"></textarea><br><br><br>
+
+                                    <input type="button" id="btn_get_update_contract_fee" value="获取费用预估"  /><br><br>
+                                    <input type="button" id="btn_update_contract" value="确认更新合约" /><br><br>
+                                    <p class="res"></p>
+                                </div>
+                            </div>
+                            
+                            <div class="div_module_c"  id="div_call_contract_function"  pclass="class_9" >
+                                <h2>合约接口调用</h2>
+                                <div class="div_call_contract_function div_module">
+                                    合约name或ID<input  type="text" class="nameOrId" value="ccshooter"><br><br>
+                                    目标函数名<input  type="text" class="function_name" value="put_reward"><br><br>
+                                    参数列表 <textarea rows="10" class="value_list">4.2.0,{"size":"large"}</textarea><br><br>
+                                    runTime(单位毫秒)<input  type="text" class="runTime" value="5"><br><br><br>
+                                    <input type="button" id="btn_call_contract_function" value="确认执行合约函数" /><br><br>
+                                </div>
+                            </div>
+                    
+                            <div class="div_module_c" id="div_get_contract"  pclass="class_9" >
+                                <h2>查询合约信息</h2>
+                                <div class="div_get_contract div_module">
+                                    合约名字或ID<input  type="text" class="contract_nameOrId" value="contract.test02"><br><br>
+                                    <input type="button" id="btn_get_contract" value="确认查询" /><br><br>
+                                    <p >合约：<span class="contract_name"></span></p>
+                                    <p >创建账户：<span class="account_name"></span></p>
+                                    <p >创建时间：<span class="create_date"></span></p>
+                                    <p >动作：<span class="actions"></span></p>
+                                    <p> 合约接口描述：</p>
+                                    <div class="actions_describe"> </div>
+                                    <p> 合约数据：</p>
+                                    <div class="contract_data"></div>
+                                    <p> 合约数据类型：</p>
+                                    <div class="contract_data_type"></div>
+                                    <p>合约源代码:</p>
+                                    <textarea class="txt_source_code" rows="30"></textarea><br><br>
+                                </div>
+                            </div>
+                            <div class="div_module_c" id="div_getAccountContractData"  pclass="class_9" >
+                                <h2>查询账户合约信息</h2>
+                                <div class="div_getAccountContractData div_module">
+                                    账户名或ID<input  type="text" class="account_nameOrId" value="test1"><br><br>
+                                    合约名字或ID<input  type="text" class="contract_nameOrId" value="contract.test02"><br><br>
+                                    <input type="button" id="btn_getAccountContractData" value="立即查询" /><br><br>
+                                    <p >合约：<span class="contract_name"></span></p>
+                                    <p >合约数据所属账户：<span class="account_name"></span></p>
+                                    <p> 合约数据：</p>
+                                    <div class="account_contract_data"> </div>
+                                    <p> 合约数据类型：</p>
+                                    <div class="account_contract_data_type"> </div>
+                                    <br>
+                                    <br>
+                                </div>
+                            </div>
+
+                            <div class="div_module_c" id="div_getTransactionBaseFee"  pclass="class_12" >
+                                <h2>查询交易类型基础手续费</h2>
+                                <div class="div_getTransactionBaseFee div_module">
+                                    交易类型<input  type="text" class="transactionType" value="transfer"><br><br>
+                                    手续费资产类型<input  type="text" class="feeAssetId" value="COCOS"><br><br>
+                                    <input type="button" id="btn_getTransactionBaseFee" value="立即获取" /><br><br>
+                                    <p class="res"></p>
+                                </div>
+                            </div> 
+                </div>
+        </div>
+       
+    </div>
+
+        <script src="bcx.min.js?v=7"></script>
+        <script type="text/javascript" src="./FELib/jquery-1.8.3.min.js" charset="utf-8"></script>
+        <script type="text/javascript" src="./FELib/jsonview/jquery.jsonview.min.js" charset="utf-8"></script>
+
+        <script>
+                function loadLeftNavs(){
+                    var el_modules=document.querySelectorAll(".right_main_content .body .div_module_c");
+                    var nav_htmls="";
+                    var m_name="";
+                    var el;
+                    var p_class="";
+                    for(var i=0;i<el_modules.length;i++){
+                        el=el_modules[i];
+                        m_name=el.querySelector("h2").innerText;
+                        p_class=el.getAttribute("pclass");
+                        if(p_class){
+                           var li=document.createElement("LI"); 
+                           li.innerHTML='<a href="#'+el.id+'">'+m_name+'</a>';
+                           gel("."+p_class).appendChild(li); 
+                        }
+                        //nav_htmls+='<li><a href="#'+el.id+'">'+m_name+'</a></li>';
+                    }
+                }
+
+                loadLeftNavs();
+                
+                var _configParams={
+                    api_node:{
+                        url:"ws://39.106.139.132:8010",
+                        name:"COCOS最新链"
+                    },
+                    networks:[
+                    {
+                        core_asset:"COCOS",
+                        chain_id:"52e65ef663454f910ba3fe5f0b97a359f6a15aa50a329ae8de4d2b38eb0ee7a1" 
+                    }], 
+                    faucet_url:"http://39.106.139.132:4000",
+                    auto_reconnect:true,
+                    worker:false
+                    //app_keys:["5HxzZncKDjx7NEaEv989Huh7yYY7RukcJLKBDQztXAmZYCHWPgd"]
+                };
+
+                var bcx=new BCX(_configParams);
+                //可以不用初始化，直接调用，API会自动判断是否初始化，热没有初始化则自动初始化
+                bcx.init().then(res=>{
+                    _wallet.init();
+                    _user.init();
+                    _contracts.init();
+                    _NHAssets.init();
+                    _nodes.init();
+                    _assets.init();
+                    _explorer.init();
+
+                    gel("#btn_getVotes").onclick=queryVotes;
+                    gel("#btn_publishVotes").onclick=publishVotes;
+                    gel("#btn_getTransactionBaseFee").onclick=getTransactionBaseFee;
+                });
+                
+
+                var _explorer={
+                    init:function(){
+                        gel("#btn_queryBlock").onclick=this.queryBlock;
+                        gel("#btn_queryTXID").onclick=this.queryTXID;
+
+                        gel("#btn_subscribeToChainTranscation").onclick=this.subscribeToChainTranscation;
+                        gel("#btn_subscribeBlocks").onclick=this.subscribeBlocks;
+                        gel("#btn_getWitnessesForExplorer").onclick=this.getWitnessesForExplorer;
+                        gel("#btn_lookupBlockRewards").onclick=this.lookupBlockRewards;
+                    },
+                    allOps:[],
+                    subscribeToChainTranscation:function(){
+                        bcx.subscribeToChainTranscation({
+                            callback:function(res){
+                                console.info("subscribeToChainTranscation res",res);
+                                if(res.code==1){
+                                    _explorer.allOps.unshift(res.data);
+                                    renderOp(_explorer.allOps,".div_subscribeToChainTranscation tbody",true);
+                                }
+                            }
+                        })
+                    },
+                    blocks:[],
+                    subscribeBlocks:function(){
+                        bcx.subscribeToBlocks({
+                            callback:function(res){
+                                console.info("subscribeBlocks res",res);
+                                if(res.code==1){
+                                    _explorer.blocks.unshift(res.data);
+                                    if(_explorer.blocks.length>10){
+                                        _explorer.blocks.length=10; 
+                                    }
+                                    var blocks_html="";
+                                    _explorer.blocks.forEach(function(block){
+                                        var {block_height,block_id,trx_count,witness_name,time}=block;
+                                        blocks_html+=`<tr   >
+                                                        <td scope="row" width="80">${block_height}</th>
+                                                        <td width="100" style="padding-right:10px;" >${block_id}</td>
+                                                        <td>${witness_name}</td>
+                                                        <td width="100" >${trx_count}</td>
+                                                        <td>${time}</td>
+                                                    </tr>`
+                                    })
+                                    gel(".div_subscribeBlocks tbody").innerHTML=blocks_html;
+                                }
+                            }
+                        })
+                    },
+                    queryTXID:function(){
+                        bcx.queryTransaction({
+                            transactionId:gel(".div_queryTXID .trx_id").value
+                        }).then(res=>{
+                            console.info("queryTXID res",res);
+                            if(res.code!=1){
+                                return;
+                            }
+
+                            var trx=res.data;
+                            _explorer.transaction=trx;
+                            var block_htmls=`<div class="row trx_id">
+                                                <div class="field">交易hash：</div><div class="value">${trx.trx_id}</div>
+                                            </div>
+                                            <div class="row date">
+                                                <div class="field">过期时间：</div><div class="value">${trx.expiration}</div>
+                                            </div>
+                                            <div class="row block_id">
+                                                <div class="field">所在区块：</div><div class="value">${trx.block_num}</div>
+                                            </div>`
+
+                            gel(".div_queryTXID .block").innerHTML=block_htmls;
+                            let row_txid=document.createElement("div");
+                            trx.parse_ops.forEach((op,op_index)=>{
+                                more="";
+                                if(op.type=="call_contract_function"&& op.result.contract_affecteds.length){
+                                    var results="";
+                                    op.result.contract_affecteds.forEach(c_op=>{
+                                        results+="<p>"+c_op.parse_operations_text+"</p>"
+                                    });
+                                    more=`
+                                    <a class="more" href="javascript:_explorer.showTXIDOpMore(${op_index});"  >查看结果</a>
+                                    <div class="op_results">
+                                        ${results}
+                                    </div>
+                                    `
+                                }
+
+                                var row_op=document.createElement("div");
+                                row_op.id="a_"+trx.trx_id+"_"+op_index;
+                                row_op.className="row_op";
+                                row_op.innerHTML=`<div class="type">
+                                                ${op.type_name}
+                                            </div>
+                                            <div class="info">
+                                                ${op.parse_operations_text}
+                                                ${more}
+                                            </div>
+                                            <div class="time">
+                                                ${op.date}
+                                            </div>`;
+
+                                if(op.raw_data.new_options){
+                                    var new_options_html=document.createElement("div");
+                                    new_options_html.innerHTML='<span class="green" >新的设定</span>';
+                                    new_options_html.className="new_options";
+
+                                    var new_options_json_div=document.createElement("div");
+                                    $(new_options_json_div).JSONView(op.raw_data.new_options,{ collapsed: true });
+                                    new_options_html.appendChild(new_options_json_div);
+                                    row_op.querySelector(".info").appendChild(new_options_html)
+                                }
+
+                                
+                                row_txid.appendChild(row_op);
+                            });
+
+                             gel(".div_queryTXID .transactions").appendChild(row_txid);
+                        });
+                    },
+                    queryBlock:function(){
+                        bcx.queryBlock({
+                            block:gel("#div_queryBlock .block_num").value,
+                            callback:res=>{
+                                console.info("queryBlock res",res);
+                                if(res.code!=1){
+                                    return;
+                                }
+                                var block=res.data;
+                                var block_htmls=`
+                                        <div class="row block_height">
+                                            <div class="field">区块高度：</div><div class="value">${block.block_height}</div>
+                                        </div>
+                                        <div class="row date">
+                                            <div class="field">日期：</div><div class="value">${block.time}</div>
+                                        </div>
+                                        <div class="row block_id">
+                                            <div class="field">区块 hash：</div><div class="value">${block.block_id}</div>
+                                        </div>
+                                        <div class="row last_block_id">
+                                            <div class="field">上一区块：</div><div class="value">${block.previous}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="field">生产者：</div><div class="value">${block.witness_name}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="field">交易数量：</div><div class="value">${block.trx_count}</div>
+                                        </div>`
+                                gel(".div_queryBlock .block").innerHTML=block_htmls;
+                                
+                                var trxs=block.transactions;
+                                gel(".div_queryBlock .transactions").innerHTML="";
+                                _explorer.transactions=trxs;
+                                var row_txid,ops;
+                                trxs.forEach((trx,trx_index)=>{
+                                    ops=trx.parse_ops;
+
+                                    row_txid=document.createElement("div")
+                                    row_txid.innerHTML=`<h4>交易Hash: <span>${trx.trx_id}</span></h4>`;
+                                    ops.forEach((op,op_index)=>{
+                                        more="";
+                                        if(op.type=="call_contract_function"&& op.result.contract_affecteds.length){
+                                            var results="";
+                                            op.result.contract_affecteds.forEach(c_op=>{
+                                                results+="<p>"+c_op.parse_operations_text+"</p>"
+                                            });
+                                            more=`
+                                            <a class="more" href="javascript:_explorer.showBlockOpMore(${op_index},${trx_index});"  >查看结果</a>
+                                            <div class="op_results">
+                                                ${results}
+                                            </div>
+                                            `
+                                        }
+    
+                                        var row_op=document.createElement("div");
+                                        row_op.id="a_"+op.block_num+"_"+op_index;
+                                        row_op.className="row_op";
+                                        row_op.innerHTML=`<div class="type">
+                                                        ${op.type_name}
+                                                    </div>
+                                                    <div class="info">
+                                                        ${op.parse_operations_text}
+                                                        ${more}
+                                                    </div>
+                                                    <div class="time">
+                                                        ${op.date}
+                                                    </div>`;
+
+                                        if(op.raw_data.new_options){
+                                            var new_options_html=document.createElement("div");
+                                            new_options_html.innerHTML='<span class="green" >新的设定</span>';
+                                            new_options_html.className="new_options";
+                                            var new_options_json_div=document.createElement("div");
+                                            $(new_options_json_div).JSONView(op.raw_data.new_options,{ collapsed: true });
+
+                                            new_options_html.appendChild(new_options_json_div);
+
+                                            row_op.querySelector(".info").appendChild(new_options_html)
+                                        }
+
+                                        row_txid.appendChild(row_op);   
+                                    })
+                                    gel(".div_queryBlock .transactions").appendChild(row_txid);
+                                });
+                            }
+                        })
+                    },
+                    showBlockOpMore:function(op_index,trx_index){
+                        var operation=_explorer.transactions[trx_index].parse_ops[op_index];
+                        console.info("operation",operation);
+                        var op_el_id_selector="#a_"+operation.block_num+"_"+trx_index;//".div_queryBlockTXID .op_"+operation.id.replace(/\./g,"");
+                        operation.expand=!!operation.expand;
+                        gel(op_el_id_selector+" .op_results").style.display=operation.expand?"none":"block";
+                        gel(op_el_id_selector+" .more").innerText=operation.expand?"查看结果":"收起"; 
+                        operation.expand=!operation.expand;      
+                    },
+                    showTXIDOpMore:function(op_index){
+                        var operation=_explorer.transaction.parse_ops[op_index];
+                        console.info("operation",operation);
+                        var op_el_id_selector="#a_"+_explorer.transaction.trx_id+"_"+op_index;//".div_queryBlockTXID .op_"+operation.id.replace(/\./g,"");
+                        operation.expand=!!operation.expand;
+                        gel(op_el_id_selector+" .op_results").style.display=operation.expand?"none":"block";
+                        gel(op_el_id_selector+" .more").innerText=operation.expand?"查看结果":"收起"; 
+                        operation.expand=!operation.expand;  
+                    },
+                    getWitnessesForExplorerTimer:0,
+                    getWitnessesForExplorer:function(){
+                        clearTimeout(_explorer.getWitnessesForExplorerTimer);
+                        bcx.lookupWitnessesForExplorer({
+                            callback:function(res){
+                                // console.info("getWitnessesForExplorer res",res);
+                                if(res.code==1){
+                                    let {active_witnesses,current_witness_name,participation,coreAssetSymbol,
+                                        witness_pay_per_block,witness_budget,next_maintenance_time}=res.data;
+                                        next_maintenance_time=Math.ceil((new Date(next_maintenance_time).getTime()-Date.now())/1000/60)+"分钟后";
+                                
+                                    var mainInfoHtmls=`
+                                    <div class="row">
+                                        <div class="field">当前见证人：</div><div class="value">${current_witness_name}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="field">活跃见证人：</div><div class="value">${active_witnesses.length}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="field">参与率：</div><div class="value">${participation}%</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="field">每块奖励：</div><div class="value">${witness_pay_per_block} ${coreAssetSymbol}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="field">剩余预算：</div><div class="value">${witness_budget} ${coreAssetSymbol}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="field">投票更新时间：</div><div class="value">${next_maintenance_time}</div>
+                                    </div>
+                                    `;
+                                    gel(".div_getWitnessesForExplorer .mainInfo").innerHTML=mainInfoHtmls;
+
+                                    var witnesses_htmls="";
+                                    res.data.witnesses.forEach((witness,index)=>{
+        
+                                        let {account_name,last_confirmed_block_num,total_missed,votes,last_aslot_time}=witness;
+                                        last_aslot_time=_helper.getTimeTo(last_aslot_time)
+
+                                        let activeNodeClass=account_name==current_witness_name?'activeNodeClass':'';
+                                        witnesses_htmls+=`<tr class="${activeNodeClass}">
+                                                <td>${index+1}</td>
+                                                <td>${account_name}</td>
+                                                <td style="padding-right:20px; text-align:right;">${last_aslot_time} </td>
+                                                <td>${last_confirmed_block_num}</td>
+                                                <td>${total_missed}</td>
+                                                <td>${votes}</td>
+                                            </tr>`
+                                    })
+                                    gel(".div_getWitnessesForExplorer tbody").innerHTML=witnesses_htmls;
+                                }
+                                
+                                _explorer.getWitnessesForExplorerTimer=setTimeout(() => {
+                                    _explorer.getWitnessesForExplorer();
+                                }, 1000);
+                            }
+                        });
+                   },
+                   claimVestingBalance(id,amount,asset_id){
+                        bcx.claimVestingBalance({
+                            id,
+                            callback:res=>{
+                                console.info("claimVestingBalance res",res);
+                            }
+                        })
+                   },
+                   lookupBlockRewards(){
+                        bcx.lookupBlockRewards({
+                            callback:function(res){
+                                console.info("lookupBlockRewards res",res);
+                                if(res.code==1){
+                                    var mainInfoHtmls="";
+                                    let {id,return_cash,earned_coindays,require_coindays,remaining_days,available_percent,available_balance}=res.data;
+                                    let {amount,symbol,asset_id}=available_balance;
+                                    mainInfoHtmls+=`<div class="listCard">
+                                        <div class="row">
+                                            <div class="field">返现：</div><div class="value">${return_cash} ${symbol}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="field">已完成币天：</div><div class="value">${earned_coindays} 币天</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="field">要求的币天：</div><div class="value">${require_coindays} 币天</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="field">剩余解冻天数：</div><div class="value">${remaining_days} 天</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="field">可领取数量：</div><div class="value">${available_percent}% / ${amount} ${symbol}</div>
+                                        </div>
+
+                                        <div class="row">
+                                            <input type="button" onClick="_explorer.claimVestingBalance('${id}',${amount},'${asset_id}')" value="立即领取" /><br><br>  
+                                        </div>
+                                    </div>
+                                    `;
+                            
+                                    gel(".div_lookupBlockRewards .mainInfo").innerHTML=mainInfoHtmls;
+                                }
+                            }
+                        })
+                    }
+                }
+
+               var _assets={
+                    init:function(){
+                        // gel(".is_charge_market_fee").onclick=this.charge_market_fee_change;
+                        gel("#btn_get_createAsset_fee").onclick=function(){
+                            _assets.createAsset(true);
+                        }
+                        gel("#btn_createAsset").onclick=function(){
+                            _assets.createAsset(false);
+                        }
+
+                        gel("#btn_get_updateAsset_fee").onclick=function(){
+                            _assets.updateAsset(true);
+                        }
+                        gel("#btn_updateAsset").onclick=function(){
+                            _assets.updateAsset(false);
+                        }
+
+                        
+                        gel("#btn_getAssets").onclick=function(){
+                            _assets.queryAssets();
+                        };
+                        gel("#btn_queryAsset").onclick=function(){
+                            _assets.queryAssets(gel(".div_getAssets .symbol").value);
+                        }
+
+                        gel("#btn_get_transferAsset_fee").onclick=function(){
+                            _assets.transferAsset(true);
+                        };
+                        gel("#btn_transferAsset").onclick=function(){
+                            _assets.transferAsset();
+                        };
+                   
+                        gel("#btn_get_issueAsset_fee").onclick=function(){
+                            _assets.issueAsset(true);
+                        }
+                        gel("#btn_issueAsset").onclick=function(){
+                            _assets.issueAsset(false);
+                        }
+
+                        gel("#btn_get_reserveAsset_fee").onclick=function(){
+                            _assets.reserveAsset(true);
+                        }
+                        gel("#btn_reserveAsset").onclick=function(){
+                            _assets.reserveAsset(false);
+                        }
+
+                        gel("#btn_get_assetFundFeePool_fee").onclick=function(){
+                            _assets.assetFundFeePool(true);
+                        }
+                        gel("#btn_assetFundFeePool").onclick=function(){
+                            _assets.assetFundFeePool(false);
+                        }
+
+                        gel("#btn_get_assetClaimFees_fee").onclick=function(){
+                            _assets.assetClaimFees(true);
+                        }
+                        gel("#btn_assetClaimFees").onclick=function(){
+                            _assets.assetClaimFees(false);
+                        }
+
+                        
+                        gel("#btn_queryAccountAllBalances").onclick=this.queryAccountAllBalances;
+                       
+                        gel("#btn_queryAccountBalances").onclick=this.getAccountBalances;
+                    },
+                    c_priceChange:function(obj){
+                        gel(".div_createAsset .price").innerText=(gel(".div_createAsset .base").value/gel(".div_createAsset .quote").value||1)
+                        .toFixed(gel(".div_createAsset .precision").value||8)
+                        +" COCOS/ "+gel(".div_updateAsset .symbol").value
+                    },
+                    u_priceChange:function(obj){
+                        gel(".div_updateAsset .price").innerText=(gel(".div_updateAsset .base").value/
+                        (gel(".div_updateAsset .quote").value||1)).toFixed(8)
+                         +" COCOS/ "+gel(".div_updateAsset .symbol").value
+                    },
+                    getAccountBalances:function(){
+                        bcx.queryAccountBalances({
+                            assetId_or_symbol:gel(".div_queryAccountBalances .asset_id").value,
+                            account:gel(".div_queryAccountBalances .account").value,
+                            callback:function(res){
+                                console.info('div_queryAccountBalances res',res);
+                                $(".div_queryAccountBalances .res").JSONView(res);
+                            }
+                        });
+                    },
+                    queryAccountAllBalances:function(){
+                        bcx.queryAccountAllBalances({
+                            // assetId_or_symbol:gel(".div_getBalances .asset_id").value,
+                            account:gel(".div_queryAccountAllBalances .account").value,
+                            unit:gel(".div_queryAccountAllBalances .asset_id").value,
+                            callback:function(res){
+                                console.info('queryAccountAllBalances res',res);
+                                $(".div_queryAccountAllBalances .res").JSONView(res);
+                            }
+                        });
+                    },
+                    assetClaimFees:function(isOnlyGetFee){
+                        bcx.assetClaimFees({
+                            assetId:gel(".div_assetClaimFees .asset_id").value,
+                            amount:Number(gel(".div_assetClaimFees .amount").value),
+                            onlyGetFee:!!isOnlyGetFee,
+                            callback:function(res){
+                                console.info('div_assetClaimFees res',res);
+                                if(res.code==1){
+                                    if(isOnlyGetFee)
+                                    gel(".div_assetClaimFees .fee").innerText=res.data.fee_amount+" "+res.data.fee_symbol;
+                                }else{
+                                    alert(res.message);
+                                }
+                            }
+                        })
+                    },
+                    assetFundFeePool:function(isOnlyGetFee){
+                        bcx.assetFundFeePool({
+                            assetId:gel(".div_assetFundFeePool .asset_id").value,
+                            amount:Number(gel(".div_assetFundFeePool .amount").value),
+                            onlyGetFee:!!isOnlyGetFee,
+                            callback:function(res){
+                                console.info('div_assetFundFeePool res',res);
+                                if(res.code==1){
+                                    if(isOnlyGetFee)
+                                    gel(".div_assetFundFeePool .fee").innerText=res.data.fee_amount+" "+res.data.fee_symbol;
+                                }else{
+                                    alert(res.message);
+                                }
+                            }
+                        })
+                    },
+                    reserveAsset:function(isOnlyGetFee){
+                        bcx.reserveAsset({
+                            assetId:gel(".div_reserveAsset .asset_id").value,
+                            amount:Number(gel(".div_reserveAsset .amount").value),
+                            onlyGetFee:!!isOnlyGetFee,
+                            callback:function(res){
+                                console.info('div_reserveAsset res',res);
+                                if(res.code==1){
+                                    if(isOnlyGetFee)
+                                    gel(".div_reserveAsset .fee").innerText=res.data.fee_amount+" "+res.data.fee_symbol;
+                                }else{
+                                    alert(res.message);
+                                }
+                            }
+                        })
+                    },
+                    issueAsset:function(isOnlyGetFee){
+                        bcx.issueAsset({
+                                toAccount:gel(".div_issueAsset .to_account").value,
+                                amount:Number(gel(".div_issueAsset .amount").value),
+                                assetId:gel(".div_issueAsset .asset_id").value,
+                                memo:gel(".div_issueAsset .memo").value,
+                                onlyGetFee:!!isOnlyGetFee,
+                                callback:function(res){
+                                    console.info('issueAsset res',res);
+                                    if(res.code==1){
+                                        if(isOnlyGetFee)
+                                        gel(".div_issueAsset .fee").innerText=res.data.fee_amount+" "+res.data.fee_symbol;
+                                    }else{
+                                        alert(res.message);
+                                    }
+                                }
+                        })
+                    },
+                    transferAsset:function(isOnlyGetFee){
+                        var amount=Number(gel(".div_transferAsset .transfer_amount").value);
+                        bcx.transferAsset({
+                            fromAccount:gel(".div_transferAsset .from_account").value,
+                            toAccount:gel(".div_transferAsset .to_account").value,
+                            amount:amount,
+                            assetId:gel(".div_transferAsset .asset_id").value,
+                            memo:gel(".div_transferAsset .transfer_memo").value,
+                            feeAssetId:gel(".div_transferAsset .feeAssetId").value,
+                            isPropose:gel(".div_transferAsset .isPropose").checked,
+                            onlyGetFee:!!isOnlyGetFee
+                        }).then(res=>{
+                            console.info('transferAsset res',res);
+                            if(res.code==1){
+                                if(isOnlyGetFee)
+                                gel(".div_transferAsset .fee").innerText=res.data.fee_amount+" "+res.data.fee_symbol;
+                            }else{
+                                alert(res.message);
+                            }
+                        })
+                    },
+                    queryAssets:function(symbol){
+                        bcx.queryAssets({
+                            symbol,
+                            callback:function(res){
+                                console.info("queryAssets res",res);
+                                if(res.code!=1){
+                                    return;
+                                }
+                                if(symbol){
+                                    // var fields=document.querySelectorAll(".div_getAssets .list span");
+                                    let {symbol,issuer_name,precision,dynamic,options}=res.data[0];
+                                    gel(".div_getAssets .div_list").innerHTML=`<p>资产符号：<span class="symbol">${symbol}</span></p>
+                                    <p>发行人：<span class="issuer_name">${issuer_name}</span></p>
+                                    <p>小数位数：<span class="precision">${precision}</span></p>
+                                    <p>当前供应量：<span class="current_supply">${dynamic.current_supply} ${symbol}</span></p>
+                                    <p>最大供应量：<span class="max_supply">${options.max_supply} ${symbol}</span></p>
+                                    <fieldset  class="fieldset_charge_market_fee">
+                                        <legend>手续费资金池 </legend>
+                                        <p>手续费汇率：<span class="fee_pool">${options.core_exchange_rate.text}</span></p>
+                                        <p>资金池余额：<span class="fee_pool">${dynamic.fee_pool} ${dynamic.fee_pool_symbol}</span></p>
+                                        <p>发行人未申领收入：<span class="accumulated_fees">${dynamic.accumulated_fees} ${symbol}</span></p>
+                                    </fieldset>
+                                  `;
+                                    return;
+                                }
+
+                                // <p>市场手续费：<span class="market_fee_percent">${options.market_fee_percent} %</span></p>
+                                // <p>市场手续费上限：<span class="max_market_fee">${options.max_market_fee} ${symbol}</span></p>
+                               
+
+                                var assets_html=""
+                                res.data.forEach(function(asset,index){
+                                    assets_html+=`<tr>
+                                                        <th scope="row">${(index+1)}</th>
+                                                        <td ><a href="javascript:_assets.queryAssets('${asset.symbol}')">${asset.symbol}</a></td>
+                                                        <td>${asset.issuer_name}</td>
+                                                        <td>${asset.dynamic.current_supply.toFixed(asset.precision)}</td>
+                                                  </tr>`
+                                });
+                                gel(".div_getAssets .table tbody").innerHTML=assets_html;
+
+                               
+                                // $(".div_getAssets .res").JSONView(res);
+                            }
+                        })
+                    },
+                    charge_market_fee_change:function(e){
+                        gel(".fieldset_charge_market_fee").style.display=e.target.checked?"block":"none";
+                    },
+                    createAsset:function(isOnlyGetFee){
+                        bcx.createAsset({
+                            assetId:gel(".div_createAsset .symbol").value,
+                            maxSupply:gel(".div_createAsset .max_supply").value,
+                            precision:gel(".div_createAsset .precision").value,
+                            coreExchangeRate:{
+                                quoteAmount:gel(".div_createAsset .quote").value,
+                                baseAmount:gel(".div_createAsset .base").value
+                            },
+                            // chargeMarketFee:{//是否收取交易手续费,不传该参数说明不收取交易手续费
+                            //     marketFeePercent:gel(".div_createAsset .market_fee_percent").value,
+                            //     maxMarketFee:gel(".div_createAsset .max_market_fee").value
+                            // },
+                            description:gel(".div_createAsset .description").value,
+                            onlyGetFee:isOnlyGetFee,
+                            callback:function(res){
+                                console.info("createAsset res",res);
+                                if(res.code==1&&isOnlyGetFee){
+                                    gel(".div_createAsset .fee").innerText=res.data.fee_amount+" "+res.data.fee_symbol;
+                                }
+                            }
+                        })
+                    },
+                    updateAsset:function(isOnlyGetFee){
+                        bcx.updateAsset({
+                            assetId:gel(".div_updateAsset .symbol").value,
+                            maxSupply:gel(".div_updateAsset .max_supply").value,
+                            newIssuer:gel(".div_updateAsset .new_issuer").value,
+                            coreExchangeRate:{
+                                quoteAmount:gel(".div_updateAsset .quote").value,
+                                baseAmount:gel(".div_updateAsset .base").value
+                            },
+                            description:gel(".div_updateAsset .description").value,
+                            onlyGetFee:isOnlyGetFee,
+                            callback:function(res){
+                                console.info("updateAsset res",res);
+                                if(res.code==1&&isOnlyGetFee){
+                                    gel(".div_updateAsset .fee").innerText=res.data.fee_amount+" "+res.data.fee_symbol;
+                                }
+                            }
+                        })
+                    }
+                }
+
+                var _wallet={
+                    init:function(){
+                        gel(".div_createAccountWithWallet .btn_signup").onclick=function(){
+                            _wallet.createAccountWithWallet(false);
+                        };
+
+                        gel("#btn_backupDownload").onclick=_wallet.backupDownload;
+                        gel(".div_restoreWalletFile .file").onchange=_wallet.loadWalletFile;
+                        gel("#btn_restoreWallet").onclick=_wallet.restoreWallet;
+                        gel("#btn_deleteWallet").onclick=_wallet.deleteWallet;
+                        gel("#btn_importPrivateKey").onclick=_wallet.importPrivateKey;
+                        gel("#btn_getAccounts").onclick=_wallet.getAccounts;
+
+                        _wallet.getAccounts();
+                    },
+                    getAccounts:function(){
+                        var res=bcx.getAccounts();
+                        console.info("getAccounts res",res);
+                        $(".div_getAccounts .res").JSONView(res);
+
+                        var accounts_html="";
+                        res.accounts.forEach(function(account,index){
+                            var opt_htmls="";
+                            if(account!=res.current_account.account_name){
+                                opt_htmls=`<a href="javascript:_wallet.setCurrentAccount('${account}')">切换到当前账户</a>`;
+                            }
+                            accounts_html+=`<tr  >
+                                <th scope="row">${(index+1)}</th>
+                                <td>${account}</td>
+                                <td>${opt_htmls}</td>
+                            </tr>`
+                        });
+                        gel(".div_getAccounts table tbody").innerHTML=accounts_html;
+
+                        gel(".current_account").innerText=res.current_account.account_name;
+                    },
+                    setCurrentAccount:function(accountName){
+                        bcx.setCurrentAccount({
+                            account:accountName,
+                            callback:function(res){
+                                console.info("setCurrentAccount res",res);
+                                _wallet.getAccounts();
+                            }
+                        });
+                    },
+                    restoreWallet:function(){
+                        bcx.restoreWallet({
+                            password:gel(".div_restoreWalletFile .password").value,
+                            callback:function(res){
+                                console.info("restoreWallet res",res);
+                            }
+                        })
+                    },
+                    createAccountWithWallet:function(){
+                        bcx.createAccountWithWallet({
+                            account:gel(".div_createAccountWithWallet .signup_username").value,
+                            password:gel(".div_createAccountWithWallet .signup_pwd").value,
+                            callback:function(res){
+                                console.info("createAccountWithWallet res",res);
+                                $(".div_createAccountWithWallet .res").JSONView(res);
+                            }
+                        })
+                    },
+                    backupDownload:function(){
+                        bcx.backupDownload({
+                            callback:function(res){
+                                console.info("backupDownload res",res);
+                            }
+                        })
+                    },
+                    loadWalletFile:function(event){
+                        bcx.loadWalletFile({
+                            file:event.target.files[0],
+                            callback:function(res){
+                                console.info("loadWalletFile res",res);
+                                gel(".div_restoreWalletFile .file").value="";
+                                if(res.code==1){
+                                    gel(".div_restoreWalletFile .sha1").innerText=res.data.sha1;
+                                    gel(".div_restore").style.display="block";
+                                }
+                            }
+                        })
+                    },
+                    deleteWallet:function(){
+                        bcx.deleteWallet({
+                            callback:function(res){
+                                console.info("deleteWallet res",res);
+                            }
+                        })
+                    },
+                    importPrivateKey:function(){
+                        bcx.importPrivateKey({
+                            privateKey:gel(".div_importPrivateKey .privateKey").value,
+                            password:gel(".div_importPrivateKey .pwd").value,
+                            callback:function(res){
+                                console.info("res",res);
+                            }  
+                        })
+                    }
+                }
+
+                var _user={
+                    init:function(){      
+                        gel("#btn_signup").onclick=this.createAccountWithPassword;
+                        gel("#btn_login").onclick=this.passwordLogin;
+                        gel("#btn_keyLogin").onclick=this.keyLogin;
+
+                        
+                        gel("#btn_getUserInfo").onclick=this.getUserInfo;
+                        gel("#btn_unlock").onclick=this.unlock;
+                        gel("#btn_lock").onclick=this.lock;
+
+                        gel("#btn_logout").onclick=this.logout;
+
+                        gel("#btn_changePassword").onclick=this.changePassword;
+
+                        gel("#btn_get_upgradeAccount_fee").onclick=function(){
+                            _user.upgradeAccount(true);
+                        }
+                        gel("#btn_upgradeAccount").onclick=function(){
+                            _user.upgradeAccount(false);
+                        };
+
+                        gel("#btn_queryUserInfo").onclick=this.queryUserInfo;
+                        gel("#btn_getPrivateKey").onclick=this.getPrivateKey;
+                        gel("#btn_getOperations").onclick=this.fetchAndSubscribe
+
+                    },
+                    operations:[],
+                    fetchAndSubscribe:function(){
+                        bcx.queryUserOperations({
+                            account: gel(".div_getOperations .account").value,
+                            limit:gel(".div_getOperations .limit").value
+                        }).then(res=>{
+                            console.info("queryUserOperations res",res);
+                            if(res.code==1){
+                                _user.operations=res.data;
+                                renderOp(res.data,".div_getOperations tbody")
+                            }
+                        })
+
+                        bcx.subscribeToUserOperations({
+                            account: gel(".div_getOperations .account").value,
+                            callback:function(res){
+                                console.info("subscribeToUserOperations res",res);
+                                if(res.code==1){
+                                    // _user.operations=res.data.operations;
+                                    _user.operations.unshift(res.data.operation);
+                                    console.info(" _user.operations", _user.operations);
+                                    renderOp(_user.operations,".div_getOperations tbody")
+                                }
+                            }
+                        })
+                    },
+                    getPrivateKey:function(){
+                        bcx.getPrivateKey().then(res=>{
+                            console.info(res);
+                            $(".div_getPrivateKey .res").JSONView(res);
+                        });
+                    },
+                    queryUserInfo:function(){
+                        bcx.queryAccountInfo({
+                            account:gel(".div_queryUserInfo .account").value,
+                            callback:function(res){
+                                console.info("queryUserInfo res", res);
+                                $(".div_queryUserInfo .res").JSONView(res,{collapsed:true});
+                            }
+                        });
+                    },
+                    upgradeAccount:function(isOnlyGetFee){
+                        bcx.upgradeAccount({
+                            onlyGetFee:isOnlyGetFee,
+                            callback:function(res){
+                                console.info("upgradeAccount res",res);
+                                $(".div_upgradeAccount .res").JSONView(res);
+                                if(res.code==1&&isOnlyGetFee){
+                                    gel(".div_upgradeAccount .fee").innerText=res.data.fee_amount+" "+res.data.fee_symbol;
+                                }
+                            }
+                        })
+                    },
+                    getUserInfo:function(){
+                        console.info("getUserInfo res", bcx.getUserInfo());
+                        gel(".div_getUserInfo .res").innerText=JSON.stringify(bcx.getUserInfo());
+                    },
+                   
+                    createAccountWithPassword:function(){
+                        bcx.createAccountWithPassword({
+                            account:gel("#signup_username").value,
+                            password:gel("#signup_pwd").value,
+                            autoLogin:false,
+                            callback:function(res){
+                                console.info("signup res",res);
+                            }
+                        })
+                    },
+                    passwordLogin:function(){
+                        bcx.passwordLogin({
+                            account:gel("#login_username").value,
+                            password:gel("#login_pwd").value,
+                            callback:function(res){
+                                console.info("passwordLogin res",res)
+                                if(res.code==1){
+                                    gel(".current_account").innerText=bcx.getUserInfo().account_name;
+                                }
+                            }
+                        })
+                    },
+                    importPrivateKey:function(){
+                        bcx.importPrivateKey({
+                            privateKey:gel(".div_importPrivateKey .privateKey").value,
+                            password:gel(".div_importPrivateKey .pwd").value,
+                            callback:function(res){
+                                console.info("res",res);
+                                if(res.code==1){
+                                    // gel(".current_account").innerText=bcx.getUserInfo().name;
+                                    // gel(".div_getOperations .account").value=bcx.getUserInfo().name;
+                                }
+                            }  
+                        })
+                    },
+                    keyLogin:function(){
+                        bcx.privateKeyLogin({
+                            privateKey:gel(".div_keyLogin .privateKey").value,
+                            password:gel(".div_keyLogin .pwd").value,
+                            callback:function(res){
+                                console.info("res",res);
+                                if(res.code==1){
+                                    gel(".current_account").innerText=bcx.getUserInfo().account_name;
+                                    gel(".div_getOperations .account").value=bcx.getUserInfo().account_name;
+                                }
+                            }  
+                        })
+                    },
+                    changePassword:function(){
+                        bcx.changePassword({
+                            oldPassword:gel(".div_changePassword .old_password").value,
+                            newPassword:gel(".div_changePassword .new_password").value
+                        }).then(res=>{
+                            console.info("changePassword res",res);
+                        })
+                    },
+                    logout:function(){
+                        bcx.logout().then(res=>{
+                            console.info("logout res",res);
+                        })
+                    },
+                    unlock:function(){
+                        bcx.unlockAccount({
+                            password:gel(".div_unlock .pwd").value,
+                            callback:function(res){
+                                console.info("unlockAccount res",res);
+                                gel(".h_msg").innerText=res.message;
+                                if(res.code==1){
+                                    gel(".current_account").innerText=bcx.getUserInfo().account_name;
+                                    gel(".div_getOperations .account").value=bcx.getUserInfo().account_name;
+                                    console.info("bcx.getUserInfo()",bcx.getUserInfo());
+                                    // fetchAndSubscribe();
+                                }
+                            }
+                        })
+                    },
+                    lock:function(){
+                        bcx.lockAccount({
+                            callback:function(res){
+                                console.info("lockAccount res",res);
+                                gel(".h_msg").innerText=res.message;
+                            }
+                        });
+                    }
+                }
+
+                var _nodes={
+                    init:function(){
+                        gel("#btn_getWSNodeList").onclick=_nodes.lookupWSNodeList;
+                        gel("#btn_addAPINode").onclick=_nodes.addAPINode;
+                        gel("#btn_disconnect").onclick=_nodes.disconnect;
+                        gel("#btn_subscribeToRpcConnectionStatus").onclick=_nodes.subscribeToRpcConnectionStatus;
+                    },
+                    disconnect:function(){
+                        bcx.disconnect({callback:function(res){
+                            console.info("disconnect res",res);
+                        }})
+                    },
+                    lookupWSNodeList:function(){
+                       var nodes=bcx.lookupWSNodeList({
+                           callback:res=>{
+                                console.info("getWSNodeList res",res);
+                               if(res.code==1){
+                                gel(".div_getWSNodeList .selected_url").innerText=res.data.selectedNodeUrl
+                                 var nodes_html="";
+                                 res.data.nodes.forEach((node,index)=>{
+                                    let {name,url,ping}=node;
+                                    let connect=url!=res.data.selectedNodeUrl?
+                                    `<a href="javascript:_nodes.switchAPINode('${url}')">连接</a>
+                                    <a href="javascript:_nodes.deleteAPINode('${url}')">删除</a>`:"";
+                                    nodes_html+=`<tr>
+                                            <td>${index+1}</td>
+                                            <td >${name}</td>
+                                            <td>${url}</td>
+                                            <td>${ping} ms</td>
+                                            <td>${connect}</td>
+                                        </tr>`
+                                 });
+                                 gel(".div_getWSNodeList tbody").innerHTML=nodes_html;
+                               }
+                           }
+                       });  
+                    },
+                    switchAPINode:function(url){
+                        bcx.switchAPINode({
+                            url,
+                            callback:res=>{
+                                console.info("switchAPINode res",res);
+                                this.lookupWSNodeList();
+                            }
+                        })
+                    },
+                    addAPINode:function(){
+                        bcx.addAPINode({
+                            name:gel(".div_addAPINode .name").value,
+                            url:gel(".div_addAPINode .address").value,
+                            callback:res=>{
+                                console.info("addAPINode res",res);
+                                if(res.code==1){
+                                    _nodes.lookupWSNodeList();
+                                }
+                            }
+                        })
+                    },
+                    deleteAPINode:function(url){
+                        bcx.deleteAPINode({
+                            url,
+                            callback:res=>{
+                                console.info("deleteAPINode res",res);
+                                this.lookupWSNodeList();
+                            }
+                        })
+                    },
+                    disconnect:function(){
+                        bcx.disconnect(function(res){
+                            console.info("disconnect res",res);
+                        });
+                    },
+                    subscribeToRpcConnectionStatus:function(){
+                        bcx.subscribeToRpcConnectionStatus({
+                            callback:function(res){
+                                console.info("subscribeToRpcConnectionStatus res",res);
+                                $(".div_subscribeToRpcConnectionStatus .res").JSONView(res);
+                            }
+                        })
+                    }
+                }
+
+    
+                var _NHAssets={
+                    create_nh_assets:[
+                        {
+                            assetId:"1.3.0",
+                            worldView:"TEST",
+                            baseDescribe:'{name:"预言家"}',
+                            ownerAccount:"test2"
+                        },
+                        {
+                            assetId:"1.3.0",
+                            worldView:"TEST",
+                            baseDescribe:'{name:"女巫"}',
+                            ownerAccount:"test2"
+                        },
+                        {
+                            assetId:"1.3.0",
+                            worldView:"TEST",
+                            baseDescribe:'{name:"猎人"}',
+                            ownerAccount:"test2"
+                        }
+                    ],
+                    init:function(){        
+
+                        gel(".div_create_nh .items").value=JSON.stringify(_NHAssets.create_nh_assets);
+
+                        gel("#btn_getAccountNHAssetForSell").onclick=this.getAccountNHAssetForSell
+    
+                        gel(".div_create_nh .base_describe").value=JSON.stringify({name:"预言家"});
+
+
+                        gel("#btn_registerCreator").onclick=this.registerCreator;
+
+                        gel("#btn_creatWorldView").onclick=this.creatWorldView;
+
+                        gel("#btn_proposeRelateWorldView").onclick=this.proposeRelateWorldView
+
+                        gel("#btn_create_nh").onclick=this.creatNHAsset;
+
+                        gel("#btn_deleteNHAsset").onclick=this.deleteNHAsset;
+
+
+                        gel("#btn_transferNHAsset").onclick=this.transferNHAsset;
+
+                        gel("#btn_sell").onclick=this.creatNHAssetOrder;
+
+                        gel("#btn_queryNHAssetOrders").onclick=this.queryNHAssetOrders;
+
+                        gel("#btn_queryAccountNHAssetOrders").onclick=this.queryAccountNHAssetOrders;
+
+                        gel("#btn_queryAccountNHAssets").onclick=this.queryAccountNHAssets;
+
+                        gel("#btn_lookupWorldViews").onclick=this.lookupWorldViews;
+
+                        gel("#btn_queryNHCreator").onclick=this.queryNHCreator;
+
+                        gel("#btn_queryNHAssetsByCreator").onclick=this.queryNHAssetsByCreator;       
+                        
+                        gel("#btn_queryNHAssets").onclick=this.queryNHAssets;       
+                        
+                        gel("#btn_loadAccountProposals").onclick=this.getAccountProposals;
+
+                    },
+                    approvalProposal:function(proposal_id){
+                        bcx.approvalProposal({
+                            proposalId:proposal_id,
+                            callback:function(res){
+                                console.info("approvalProposal res",res);
+                                if(res.code==1){
+                                    _NHAssets.getAccountProposals();
+                                }
+                            }
+                        })
+                    },
+                    getAccountProposals:function(){
+                        bcx.getAccountProposals().then(res=>{
+                            console.info("res",res);
+                            if(res.code==1){
+                                var htmls="";
+                                    res.data.forEach(function(proposal,index){
+                                        htmls+=`<tr>
+                                            <td>${index+1}</td>
+                                            <td>${proposal.id}</td>
+                                            <td>${proposal.parse_operations_text}</td>
+                                            <td>${proposal.expiration_time}</td>
+                                            <td><a  href="javascript:_NHAssets.approvalProposal('${proposal.id}')">批准</a></td>
+                                        </tr>`
+                                    });
+                                    gel("#loadAccountProposals table tbody").innerHTML=htmls;
+                            }
+                        })
+                    },
+                    //核心NH资产相关函数
+                    registerCreator:function(){
+                        bcx.registerCreator({
+                            callback:function(res){
+                                console.info("registerCreator res",res);
+                            }
+                        })
+                    },
+                    creatWorldView:function(){
+                        bcx.creatWorldView({
+                            worldView:gel(".div_creatWorldView .world_view").value,
+                            callback:function(res){
+                                console.info('creatWorldView res',res);
+                            }
+                        })
+                    },
+                    proposeRelateWorldView:function(){
+                        bcx.proposeRelateWorldView({
+                            worldView:gel(".div_proposeRelateWorldView .world_view").value,
+                            viewOwner:gel(".div_proposeRelateWorldView .view_owner").value,
+                            callback:function(res){
+                                console.info('proposeRelateWorldView res',res);
+                            }
+                        })     
+                    },
+                    creatNHAsset:function(){
+                        bcx.creatNHAsset({
+                            assetId:gel(".div_create_nh .asset_id").value,
+                            worldView:gel(".div_create_nh .world_view").value,
+                            baseDescribe:gel(".div_create_nh .base_describe").value,
+                            ownerAccount:gel(".div_create_nh .owner_account").value,
+                            NHAssetsCount:gel(".div_create_nh .nh_count").value,
+                            type:gel(".div_create_nh .type").value,
+                            NHAssets:_NHAssets.create_nh_assets,
+                            callback:function(res){
+                                console.info("creatNHAsset res",res);
+                            }
+                        });
+                    },
+                    deleteNHAsset:function(){
+                        bcx.deleteNHAsset({
+                            NHAssetIds:gel(".div_deleteNHAsset .NHAssetIds").value.split(","),
+                            callback:function(res){
+                                console.info('deleteNHAsset res',res);
+                            }
+                        })
+                    },
+                    transferNHAsset:function(){
+                        bcx.transferNHAsset({
+                            toAccount:gel(".div_transferNHAsset .to_account").value,
+                            NHAssetIds:gel(".div_transferNHAsset .NHAssetIds").value.split(","),
+                            callback:function(res){
+                                console.info("transferNHAsset",res);
+                            }
+                        })
+                    },
+                    creatNHAssetOrder:function(){
+                        var selData= gel("#div_sell .sel_goods");
+                        bcx.creatNHAssetOrder(
+                            {
+                                otcAccount:gel(".div_multiple_opt .receiver").value,
+                                orderFee:gel(".div_multiple_opt .token").value,
+                                NHAssetId:selData.value,
+                                price:gel(".div_multiple_opt .price").value,
+                                priceAssetId:gel(".div_multiple_opt .priceAssetSymbol").value,
+                                expiration:gel(".div_multiple_opt .expiration").value,
+                                memo:gel(".div_multiple_opt .memo").value
+                            }
+                        ).then(res=>{
+                            console.info('creatNHAssetOrder result',res);
+                            if(res.code!=1){
+                                alert(res.message);
+                            }
+                        })
+                    },
+                    cancelNHAssetOrder:function(nh_orders_index){
+                        var NHAsset=this.account_sell_nh_orders[nh_orders_index];
+                        bcx.cancelNHAssetOrder({
+                            orderId:NHAsset.order,
+                            callback:function(res){
+                                console.info("cancelNHAssetOrder res",res)
+                                if(res.code==1)
+                                _NHAssets.queryAccountNHAssetOrders();
+                            }
+                        })
+                    },
+                    fillNHAssetOrder:function(item_orders_index){
+                        let {order,seller_name,game_item_id,price_amount,price_asset_id,price_asset_symbol}=this.sell_nh_orders[item_orders_index];
+                        bcx.fillNHAssetOrder({
+                            orderId:order, 
+                            callback:function(res){
+                                console.info("fillNHAssetOrder res",res)
+                                _NHAssets.queryNHAssetOrders();
+                            }
+                        })
+                    },
+                    //查询函数
+                    sell_nh_orders:[],
+                    queryNHAssetOrders:function(){
+                        var assetSymbolsOrIds=gel(".div_queryNHAssetOrders .assetSymbolsOrIds").value;
+                        if(assetSymbolsOrIds){
+                            assetSymbolsOrIds=assetSymbolsOrIds.split(",")
+                        }
+
+                        var world_views=gel(".div_queryNHAssetOrders .world_views").value;
+                        if(world_views){
+                            world_views=world_views.split(",")
+                        }
+
+                        bcx.queryNHAssetOrders({
+                            assetSymbolsOrIds:assetSymbolsOrIds,
+                            worldViews:world_views,
+                            pageSize:gel(".div_queryNHAssetOrders .pageSize").value,
+                            page:gel(".div_queryNHAssetOrders .page").value,
+                            callback:function(res){
+                                console.info("queryNHAssetOrders res",res);
+                                if(res.code==1){
+                                    $(".div_queryNHAssetOrders tbody").html("");
+                                     _NHAssets.sell_nh_orders=res.data;
+                                     _NHAssets.sell_nh_orders.forEach(function(item,index){
+                                        $(".div_queryNHAssetOrders tbody").append(`<tr class="${item.seller_name+item.order.replace(/\./g,'')}">
+                                            <td>${index+1}</td>
+                                            <td >${item.order}</td>
+                                            <td >${item.nh_asset_id}</td>
+                                            <td  >
+                                                <div class="nh_base_describe"></div>
+                                            </td>
+                                            <td  >
+                                                <div class="describe_with_contract"></div>
+                                            </td>
+                                            <td>${item.price_amount+" "+item.price_asset_symbol}</td>
+                                            <td>${item.seller_name}</td>
+                                            <td width="80" style="padding-right:6px;" >${item.expiration}</td>
+                                            <td width="120" style="padding:0 5px;">${item.memo}</td>
+                                            <td><a href="javascript:_NHAssets.fillNHAssetOrder(${index})">购买</a></td>
+                                        </tr>`)
+                                        $(".div_queryNHAssetOrders ."+item.seller_name+item.order.replace(/\./g,'')+" .nh_base_describe").JSONView(item.nh_asset_base_describe)
+                                        if(item.describe_with_contract)
+                                        $(".div_queryNHAssetOrders ."+item.seller_name+item.order.replace(/\./g,'')+" .describe_with_contract").JSONView(item.describe_with_contract)
+                                    })
+                                }
+                            }
+                        })
+                    },
+                    account_sell_nh_orders:[],
+                    queryAccountNHAssetOrders:function(){
+                        bcx.queryAccountNHAssetOrders({
+                            account:gel(".div_queryAccountNHAssetOrders .account").value,
+                            pageSize:gel(".div_queryAccountNHAssetOrders .pageSize").value,
+                            page:gel(".div_queryAccountNHAssetOrders .page").value,
+                            callback:function(res){
+                                console.info('queryAccountNHAssetOrders res',res);
+                                if(res.code==1){
+                                     var table_htms="";
+                                     $(".div_queryAccountNHAssetOrders tbody").html("");
+
+                                    //<td width="80">${item.item_ID}</td>
+                                     _NHAssets.account_sell_nh_orders=res.data;
+                                     _NHAssets.account_sell_nh_orders.forEach(function(item,index){
+                                        $(".div_queryAccountNHAssetOrders tbody").append(`<tr class="${item.seller_name+item.order.replace(/\./g,'')}">
+                                            <td>${index+1}</td>
+                                            <td >${item.order}</td>
+                                            <td >${item.nh_asset_id}</td>
+                                            <td  >
+                                                <div class="game_item_base_describe"></div>
+                                            </td>
+                                            <td  >
+                                                <div class="describe_with_contract"></div>
+                                            </td>
+                                            <td>${item.price_amount+" "+item.price_asset_symbol}</td>
+                                            <td>${item.seller_name}</td>
+                                            <td width="80" style="padding-right:6px;" >${item.expiration}</td>
+                                            <td width="120" style="padding:0 5px;" >${item.memo}</td>
+                                            <td><a href="javascript:_NHAssets.cancelNHAssetOrder(${index})">取消</a></td>
+                                        </tr>`)
+
+                                        $(".div_queryAccountNHAssetOrders ."+item.seller_name+item.order.replace(/\./g,'')+" .game_item_base_describe").JSONView(item.nh_asset_base_describe)
+                                        $(".div_queryAccountNHAssetOrders ."+item.seller_name+item.order.replace(/\./g,'')+" .describe_with_contract").JSONView(item.describe_with_contract)
+                                    })
+                                }
+                            }
+                        })
+                    },
+                    queryAccountNHAssets:function(){
+                        var worldViews=gel(".div_queryAccountNHAssets .worldViews").value;
+                        if(worldViews){
+                            worldViews=worldViews.split(",");
+                        }else{
+                            worldViews=[];
+                        }
+                        bcx.queryAccountNHAssets({
+                            account:gel(".div_queryAccountNHAssets .account").value,
+                            worldViews,
+                            page:gel(".div_queryAccountNHAssets .page").value,
+                            pageSize:gel(".div_queryAccountNHAssets .pageSize").value,
+                            callback:function(res){
+                                console.info('res',res);
+                                $(".div_queryAccountNHAssets .res").JSONView(res);
+                            }
+                        })      
+                    },
+                    queryNHAssets:function(){
+                        bcx.queryNHAssets({
+                            NHAssetHashOrIds:gel(".div_queryNHAssets .NHAssetHashOrIds").value.split(","),
+                            callback:function(res){
+                                console.info("div_queryNHAssets res",res);
+                                $(".div_queryNHAssets .res").JSONView(res);
+                            }
+                        })
+                    },
+                    lookupWorldViews:function(){
+                        bcx.queryWorldViews({
+                            worldViewNameOrIds:gel(".div_lookupWorldViews .worldViewNameOrIds").value.split(","),
+                            callback:function(res){
+                                console.info('lookupWorldViews res',res);
+                                $(".div_lookupWorldViews .res").JSONView(res);
+                            }
+                        }); 
+                    },
+                    queryNHCreator:function(){
+                        bcx.queryNHCreator({
+                            account:gel(".div_queryNHCreator .account").value,
+                            callback:function(res){
+                                console.info('queryNHCreator res',res);
+                                $(".div_queryNHCreator .res").JSONView(res)
+                            }
+                        }); 
+                    },
+                    queryNHAssetsByCreator:function(){
+                        bcx.queryNHAssetsByCreator({
+                            account:gel(".div_queryNHAssetsByCreator .account").value,
+                            page:gel(".div_queryNHAssetsByCreator .page").value,
+                            pageSize:gel(".div_queryNHAssetsByCreator .pageSize").value,
+                            callback:function(res){
+                                console.info('queryNHAssetsByCreator res',res);
+                                $(".div_queryNHAssetsByCreator .res").JSONView(res);
+                            }
+                        }); 
+                    },
+                    //辅助demo的函数
+                    getAccountNHAssetForSell:function(){
+                        // if(bcx.getUserInfo()){
+                        //     alert("请先登录或解锁账户")
+                        // }
+                        bcx.queryAccountNHAssets({
+                            account:bcx.getUserInfo().account_id,
+                            worldViews:[],
+                            callback:function(res){
+                                console.info('queryAccountNHAssets res',res);
+
+                                var sel_goods=gel(".div_multiple_opt .sel_goods");
+                                var sel_goods_htmls='<option value="-1">请选择您要卖的NH资产</option>'
+                                if(res.code==1){
+                                    if(res.data.length){
+                                        res.data.forEach(function(nh_asset){
+                                            sel_goods_htmls+='<option value="'+nh_asset.nh_asset_id+'">'+nh_asset.nh_asset_id+" | "+nh_asset.base_describe+'</option>';
+                                        });
+                                    }
+                                }
+                                
+                                sel_goods.innerHTML=sel_goods_htmls;
+                            }
+                       })  
+                    }
+                }
+                
+             
+                var _contracts={
+                    init:function(){
+                        gel("#btn_contract_create").onclick=this.createContract;
+
+                        gel("#btn_get_update_contract_fee").onclick=()=>{
+                            this.updateContract(true);
+                        }
+
+                        gel("#btn_update_contract").onclick=()=>{
+                            this.updateContract(false);
+                        }
+
+                        gel("#btn_call_contract_function").onclick=this.callContractFunction;
+
+                        gel("#btn_get_contract").onclick=this.queryContract;
+
+                        gel("#btn_getAccountContractData").onclick=this.queryAccountContractData;
+
+                        gel("#btn_generateKeys").onclick=this.generateKeys;
+                        
+                    },
+                    updateContract(onlyGetFee){
+                        bcx.updateContract({
+                            nameOrId:gel(".div_updateContract .name").value,
+                            data:gel(".div_updateContract .data").value,
+                            onlyGetFee,
+                        }).then(res=>{
+                            console.info("div_updateContract res",res);
+                            $(".div_updateContract .res").JSONView(res);
+                        })
+                    },
+                    generateKeys(){
+                        var random_key=bcx.generateKeys();
+                        console.info("random_key",random_key);
+                        gel(".div_generateKeys .privateKey").innerText=random_key.private_key;
+                        gel(".div_generateKeys .publicKey").innerText=random_key.public_key;
+                    },
+                    queryAccountContractData:function(){
+                        bcx.queryAccountContractData({
+                            userNameOrId:gel(".div_getAccountContractData .account_nameOrId").value,
+                            contractNameOrId:gel(".div_getAccountContractData .contract_nameOrId").value,
+                            callback:function(res){
+                                console.info("queryAccountContractData res",res);
+                                if(res.code==1){
+                                    gel(".div_getAccountContractData .contract_name").innerText=res.data.contract_name;
+                                    gel(".div_getAccountContractData .account_name").innerText=res.data.owner_account_name;
+                                    $(".account_contract_data").JSONView(res.data.contract_data);
+                                    $(".account_contract_data_type").JSONView(res.data.contract_data_type,{ collapsed: true })
+                                }
+                            }
+                        })
+                    },
+                    queryContract:function(){
+                        bcx.queryContract({
+                            nameOrId:gel(".div_get_contract .contract_nameOrId").value,
+                            callback:function(res){
+                                console.info("queryContract res",res);
+                                if(res.code==1){
+                                    gel(".contract_name").innerText=res.data.contract_name;
+                                    gel(".div_get_contract .account_name").innerText=res.data.owner_account_name;
+                                    gel(".div_get_contract .create_date").innerText=res.data.create_date;
+                                    var actions=[];
+                                    res.data.abi_actions.forEach(action=>{
+                                        actions.push(action.name);
+                                    });
+                                    gel(".actions").innerText=actions.join("，");
+                                    $(".actions_describe").JSONView(res.data.abi_actions);
+                                    $(".contract_data").JSONView(res.data.contract_data);
+                                    $(".contract_data_type").JSONView(res.data.contract_data_type,{ collapsed: true });
+                                    gel(".txt_source_code").value=res.data.lua_code;
+
+                                }else{
+                                    alert(res.message);
+                                }
+                            }
+                        })
+                    },
+                    callContractFunction:function(){
+                        //nameOrId=>合约名字或ID
+                        bcx.callContractFunction({
+                            nameOrId:gel(".div_call_contract_function .nameOrId").value,
+                            functionName:gel(".div_call_contract_function .function_name").value,//["1",1000001,'COCOS']
+                            valueList:["4.2.0",'{"size":"large"}'],//["test1",10],//(gel(".div_call_contract_function .value_list").value).split(","),//[{"level":1,"color":"red","clothes":{"size":7}}],//
+                            runTime:gel(".div_call_contract_function .runTime").value,
+                            onlyGetFee:false
+                        }).then(res=>{
+                            console.info("callContractFunction res",res);
+                        })
+                    },
+                    createContract:function(){
+                        bcx.createContract({
+                            name:gel(".div_contract_create .name").value,
+                            data:gel(".div_contract_create .data").value,
+                            authority:gel(".div_contract_create .authority").value,
+                            callback:function(res){
+                                console.info("contract_create res",res);
+                            }
+                        })
+                    }
+                }
+    
+
+
+                function publishVotes(){
+                  var vote_ids=[]
+                  var checkboxs=document.querySelectorAll(".div_getVotes input[type=checkbox]")
+                                .forEach(function(item){
+                                    if(item.checked){
+                                       vote_ids.push(item.value);
+                                    }
+                                })
+                   console.info("vote_ids",vote_ids);
+                   bcx.publishVotes({
+                      witnessesIds:vote_ids,
+                      proxyAccount:gel(".div_getVotes .proxy_account").value,
+                      onlyGetFee:false,
+                      callback:function(res){
+                          console.info("publishVotes res",res);
+                      }
+                   })
+                }
+
+
+                function queryVotes(){
+                    bcx.queryVotes({
+                        queryAccount:gel(".div_getVotes .query_account").value
+                    }).then(res=>{
+                        console.info("getVotes res",res);
+                        //(id:${item.account_id},vote_id:${item.vote_id})
+                        if(res.code==1){
+                            var votes_html=""
+                            res.data.forEach(function(item,index){
+                                votes_html+=` <tr>
+                                                <th scope="row">${(index+1)}</th>
+                                                <td >${item.account_name}</td>
+                                                <td>${item.votes}</td>
+                                                <td>${item.active?"活跃":"不活跃"}</td>
+                                                <td><input type="checkbox" ${item.supported?"checked":""} value="${item.account_id}" ></td>
+                                            </tr>`
+                            })
+                            gel(".div_getVotes tbody").innerHTML=votes_html;
+                        }
+                    })
+                }
+
+
+                function getTransactionBaseFee(){
+                    bcx.queryTransactionBaseFee({
+                        transactionType:gel(".div_getTransactionBaseFee .transactionType").value,
+                        feeAssetId:gel(".div_getTransactionBaseFee .feeAssetId").value,
+                        callback:function(res){
+                            console.info("getTransactionBaseFee res",res);
+                            $(".div_getTransactionBaseFee .res").JSONView(res);
+                            
+                        }
+                    })
+                }
+
+                function renderOp(operations,selector,isAllOP=false){
+                    gel(selector).innerHTML="";
+                    var operations_html=""
+                    var memo="",more="";
+                    var isLocked=bcx.getUserInfo().locked;
+                    operations.forEach(function(item,index){
+                        more="";
+                        memo=item.raw_data.memo||"";
+
+                        if(memo){
+                            if(item.type=="transfer"&&!isAllOP){
+                                    if(isLocked){
+                                    memo=`<a href="javascript:decodeMemo(${index});">解锁</a>`
+                                }else{
+                                    memo=bcx.decodeMemo(memo);
+                                    if(memo.code==1){
+                                        memo=memo.data.text||"";
+                                    }
+
+                                    if(memo)
+                                        memo="备注："+memo;
+                                }
+                            }else if(item.type=="creat_nh_asset_order"){
+                                memo="备注："+memo;
+                            }
+                           
+                        }
+
+                        if(item.type=="call_contract_function"&& item.result.contract_affecteds.length){
+                            var results="";
+                            item.result.contract_affecteds.forEach(c_op=>{
+                                results+="<p>"+c_op.parse_operations_text+"</p>"
+                            });
+                            more=`
+                            <a class="more" href="javascript:showOpMore(${index},${isAllOP});"  >${item.expand?"收起":"查看结果"}</a>
+                            <div class="op_results" style="display:${item.expand?'block':'none'}">
+                                ${results}
+                            </div>
+                            `
+                        }
+                        var new_options_html="";
+                        if(item.raw_data.new_options)
+                             new_options_html='<div class="new_options"><span class="green" >新的设定</span> <div></div></div>';
+
+                        var tr = document.createElement('tr');
+                        var op_class="op_"+item.id.replace(/\./g,"");
+                        tr.className=op_class;
+                        tr.innerHTML=`
+                            <td scope="row" width="80">${item.block_num}</th>
+                                <td width="135" >${item.type_name}</td>
+                            <td style="max-width:500px; word-wrap: break-word; padding-right:10px;">
+                                ${item.parse_operations_text} <span class="memo">${memo}</span>
+                                ${more}
+                                ${new_options_html}
+                            </td>
+                            <td>${item.parse_operations.fee}</td>
+                            <td>${item.date}</td>
+                        `
+                        // operations_html+=` <tr   >
+                                                
+                        //                     </tr>`
+                        gel(selector).appendChild(tr);
+                        if(item.raw_data.new_options)
+                         $("."+op_class+" .new_options div").JSONView(item.raw_data.new_options,{ collapsed: true })
+                    })
+                    //gel(selector).innerHTML=operations_html;
+                }
+
+                function showOpMore(op_index,isAllOP){   
+                    var _operations=isAllOP?_explorer.allOps:_user.operations;
+
+                    var operation=_operations[op_index];
+                    var op_el_id_selector=(isAllOP?".div_subscribeToChainTranscation":".div_getOperations")+" .op_"+operation.id.replace(/\./g,"");
+                    operation.expand=!!operation.expand;
+                    gel(op_el_id_selector+" .op_results").style.display=operation.expand?"none":"block";
+                    gel(op_el_id_selector+" .more").innerText=operation.expand?"查看结果":"收起"; 
+                    operation.expand=!operation.expand;                             
+                }
+
+                function decodeMemo(op_index){
+                    var isLocked=bcx.getUserInfo().locked;
+                    if(isLocked){
+                        gel(".h_msg").innerText="请先解锁账户";
+                        alert("请先解锁账户");
+                        return;
+                    }
+                    _user.fetchAndSubscribe();       
+                }
+                
+
+                function gel(selector){
+                    return document.querySelector(selector)
+                }
+
+                var _helper={
+                    getTimeTo:function(time,isOnlyShowM=false){
+                        var createDate = new Date(Date.parse(time.replace(/-/g, "/")));
+                        var nowDate = new Date();
+                        var m = parseInt(Math.abs((nowDate.getTime() - createDate.getTime()) /(1000*60)));
+                        if (m < 60) {
+                            if (m < 1) {
+                                let s=parseInt(Math.abs(nowDate.getTime() - createDate.getTime())/1000);
+                                if(s>0){
+                                    return s+"秒前"
+                                }
+                                return "现在";
+                            } else {
+                                return m + "分钟前";
+                            }
+                        } else if(isOnlyShowM){
+                            return time;
+                        }else{
+                            var createCurrentDayEndTime=new Date(createDate.format("yyyy/MM/dd")+" 23:59:59");
+                            var createCurrentDayEndMin=parseInt((createCurrentDayEndTime.getTime()-createDate.getTime())/(1000*60));
+                            if (m < createCurrentDayEndMin) {
+                                return parseInt(m / 60) + "小时前";//return "今天 " + TimeToHourMin(time);
+                            } else if (m > createCurrentDayEndMin && m < createCurrentDayEndMin + 24 * 60) {
+                                return "昨天 " + this.TimeToHourMin(time)
+                            } else if (createDate.getFullYear() == nowDate.getFullYear()) {
+                                    return createDate.format("MM月dd日 HH:mm:ss");
+                            } else {  return time; }
+                        }
+                    },
+                    TimeToHourMin:function(dateTimeStr){
+                        if (dateTimeStr.indexOf(" ") > -1) {
+                            var arr = dateTimeStr.split(" ");
+                            return arr[1].substring(0, arr[1].length - 3);
+                        }
+                        else { return dateTimeStr; }
+                    }
+                }
+     
+        </script>
+    </body>
+</html>
