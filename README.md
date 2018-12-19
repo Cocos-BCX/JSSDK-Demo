@@ -2,9 +2,9 @@
 
 Javascript API，用于使用COCOS-BCX RPC API与基于COCOS-BCX的区块链集成。
 
-## 类库应用说明
+## 类库引用说明
 
-### 引入方式
+### 引入API文件
 
 ```html
  <script type="text/javascript" src="bcx.min.js"></script>
@@ -14,7 +14,7 @@ Javascript API，用于使用COCOS-BCX RPC API与基于COCOS-BCX的区块链集�
 
 ```JavaScript
 var bcx=new BCX({
-            default_ws_node:”ws://XXXXXXXXX” //节点rpc地址,选填。惹没有指定此项则会自动连接ws_node_list中速度最快的节点
+            default_ws_node:”ws://XXXXXXXXX” //节点rpc地址,选填。如果没有指定此项则会自动连接ws_node_list中速度最快的节点
             ws_node_list:[{url:"ws://xxxxxxx",name:"xxxxx"}]//API服务器节点列表，必填
             faucet_url:"http://xxx.xxx.xxx.xxx:xxxx", //注册入口
             networks:[{
@@ -26,7 +26,7 @@ var bcx=new BCX({
 	 })
 ```
 
-### 调用实例
+### 调用实例-转账
 
 ```JavaScript
 bcx.transferAsset({
@@ -40,55 +40,38 @@ bcx.transferAsset({
 ```  
 
 
-## API参数统一说明
-
-#### 如API说明中不作特殊说明则均含有一个可选传入参数callback，即回调函数
-#### result为Object对象，结构为{code:0,message:””}
-#### code=1的时候表示成功，无message状态描述
-#### code!=1时，意味执行失败，message为失败状态描述
-#### API不做特殊说明均只有一个参数，该参数为一个对象，对象包含所有相关参数，其中也包含callback
+## API说明
+#### 1.没有特殊说明均有一个可选参数callback
+callback返回的result为Object对象,结构为{code:0,message:””}。
+code=1时表示成功，无message状态描述。
+code!=1时意味执行失败，message为失败状态描述。
+#### 2.没有殊说明均只有一个参数，该参数为一个对象，对象包含所有相关参数，其中也包含callback
 调用示例：
-```JavaScript
-	Var options={
-		callback:function(res){}
-	}
-	bcx.getPrivateKey(options)
-```
-
-#### 除订阅类API，其他API在不传入callback参数情况下均返回promise对象
-调用示例：
-```JavaScript
-	//转账
-	bcx.transferAsset({
-		to:test2,
-		amount:1
-		assetId:"1.3.0",
-		memo:"",
-		onlyGetFee:false
-	}).then(res=>{
-			console.info('transferAsset res',res);
-		})
-```
-#### API的参数类型不做特殊说明时均为字符串
-#### API的参数不做特殊说明均不能为空，其中callback为可选参数
-查询类API的callback返回数据实例:{status:1,data:[]}
-非查询类API的callback返回数据会多一个数据字段trxData，值为一个对象
+```js
+bcl.getPrivateKey({
+     callback:res=>{}
+})
+```    
+#### 3.除订阅类接口，其他接口在不传callback参数时均返回promise对象
+#### 4.接口的参数类型没有特殊说明均为字符串
+#### 5.接口的参数没有特殊说明均不能为空，callback为可选参数
+#### 6.查询类接口返回数据实例:{code:1,data:[]}
+#### 7.非查询类接口返回数据会多一个数据字段trxData,值为一个对象
 示例：
-```JavaScript
-	trxData:{
-		block_num:112260,//区块高度
-		trx_id:"c34021555e01e846ade1e119e2060a60eb514309"//交易ID
-	}
+```js
+trxData:{
+ block_num:*****,//区块高度
+ trx_id:"************************"//交易ID
+}
 ```
-非查询类API如果涉及到关联ID业务(如创建道具产生道具ID)的callback返回数据中将包含data对象
-示例：
-```JavaScript
-	data:{
-		real_running_time: 387//运行时间
-		result: "4.2.288"//关联业务id
-	}
+#### 8.非查询类接口若涉及关联ID业务(如创建NH资产产生的ID)返回的数据中将包含data对象
+//示例
+```js
+data:{
+  real_running_time: 387//运行时间
+  result: "4.2.288"//关联业务id
+}
 ```
-#### demo上的API调用返回数据在控制台会有打印
 
 ## 状态码说明
 
@@ -98,11 +81,11 @@ bcx.transferAsset({
 | 301 | RPC connection failed. Please check your network | 连接RPC失败，请检查你的网络 | init | 
 | 1 | 无 | 操作成功 | 　 | 
 | 0 | failed | 操作失败，返回错误状态描述不固定，可直接提示res.message或统一提示为操作失败 | 　 | 
-| 1010 | Parameter is missing | 参数缺失 | 　 | 
+| 101 | Parameter is missing | 参数缺失 | 　 | 
 | 1011 | Parameter error | 参数错误 | QueryBlock, queryTXID | 
-| 1020 | The network is busy, please check your network connection | 网络繁忙，请检查你的网络连接 | passwordLogin等 | 
-| 1030 | Please enter the correct account name(/^[a-z]([a-z0-9\.-]){4,63}/$) | 请输入正确的账户名(正则/^[a-z]([a-z0-9\.-]){4,63}/$) | CreateAccountWithPassword | 
-| 1040 | XX not found | XX 不存在 | passwordLogin等 | 
+| 102 | The network is busy, please check your network connection | 网络繁忙，请检查你的网络连接 | passwordLogin等 | 
+| 103 | Please enter the correct account name(/^[a-z]([a-z0-9\.-]){4,63}/$) | 请输入正确的账户名(正则/^[a-z]([a-z0-9\.-]){4,63}/$) | CreateAccountWithPassword | 
+| 104 | XX not found | XX 不存在 | passwordLogin等 | 
 | 105 | wrong password | 密码错误 | passwordLogin,unlockAccount | 
 | 106 | The account is already unlocked | 账户已经处于解锁状态 | unlockAccount | 
 | 107 | Please import the private key | 请先导入私钥 | unlockAccount | 
