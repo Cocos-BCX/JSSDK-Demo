@@ -213,7 +213,7 @@ bcx.transferAsset({
 功能：获取钱包账户列表
 参数：
 	直接返回数据，格式示例：
-	```json
+	```js
 		"accounts": ["tom0002"],
 		"currentAccount": {
 			"userId": "1.2.20",
@@ -303,7 +303,7 @@ bcx.transferAsset({
 参数：
 	callback：设置获取私钥成功后的回调函数，回调参数result为Object对象，
 	对象结构为：
-    ```json
+    ```js
 		{
 			status:1,data:{
 			activePrivateKey:”xxxxxxxxxxx”
@@ -368,7 +368,7 @@ bcx.transferAsset({
 	onlyGetFee：设置只返回本次调用所需手续费
 	callback：见统一API说明
 	coreExchangeRate(Object)：
-```json
+```js
 		{
 			quoteAmount:标价资产(即创建的代币，默认1),
 			baseAmount: 基准资产(即核心资产，默认1)
@@ -387,7 +387,7 @@ bcx.transferAsset({
 	onlyGetFee：设置只返回本次调用所需手续费
 	callback：见统一API说明
 	coreExchangeRate(Object)：手续费汇率
-	```json
+	```js
 	{ 
 		quoteAmount:标价资产
 		baseAmount:基准资产
@@ -479,7 +479,7 @@ bcx.transferAsset({
 	NHAssetsCount (Number)：创建NH资产的数量，默认值为1，只有type为0即创建同一种NH资产生效
 	type：创建NH资产方式的类型，默认值为0。值为0时默认创建同一种NH资产，1是创建不同NH资产。
 	NHAssets(Array)示例: 
-	```json
+	```js
 	[{
 	 "assetId": "X.X.X",
 	 "worldView": "TEST",
