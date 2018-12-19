@@ -59,7 +59,7 @@ bcl.getPrivateKey({
 #### 7.非查询类接口返回数据会多一个数据字段trxData,值为一个对象
 示例：
 ```js
-trxData:{
+trx_data:{
  block_num:*****,//区块高度
  trx_id:"************************"//交易ID
 }
@@ -77,13 +77,13 @@ data:{
 
 | code | message | 说明 | 关联API | 
 | --- | --- | --- | --- |
-| 300 | Chain sync error, please check your system clock | 链同步错误，请检查您的系统时钟 | init | 
-| 301 | RPC connection failed. Please check your network | 连接RPC失败，请检查你的网络 | init | 
-| 1 | 无 | 操作成功 | 　 | 
-| 0 | failed | 操作失败，返回错误状态描述不固定，可直接提示res.message或统一提示为操作失败 | 　 | 
-| 101 | Parameter is missing | 参数缺失 | 　 | 
-| 1011 | Parameter error | 参数错误 | QueryBlock, queryTXID | 
-| 102 | The network is busy, please check your network connection | 网络繁忙，请检查你的网络连接 | passwordLogin等 | 
+| 300 | Chain sync error, please check your system clock | 链同步错误，请检查您的系统时钟 | * | 
+| 301 | RPC connection failed. Please check your network | 连接RPC失败，请检查你的网络 | * | 
+| 1 | 无 | 操作成功 | *　 | 
+| 0 | failed | 操作失败，返回错误状态描述不固定，可直接提示res.message或统一提示为操作失败 | *　 | 
+| 101 | Parameter is missing | 参数缺失 | *　 | 
+| 1011 | Parameter error | 参数错误 | * | 
+| 102 | The network is busy, please check your network connection | 网络繁忙，请检查你的网络连接 | * | 
 | 103 | Please enter the correct account name(/^[a-z]([a-z0-9\.-]){4,63}/$) | 请输入正确的账户名(正则/^[a-z]([a-z0-9\.-]){4,63}/$) | CreateAccountWithPassword | 
 | 104 | XX not found | XX 不存在 | passwordLogin等 | 
 | 105 | wrong password | 密码错误 | passwordLogin,unlockAccount | 
@@ -770,7 +770,6 @@ callback：见统一API说明
 | limit_order_create | createLimitOrder |   
 | limit_order_cancel | cancelLimitOrder |   
 | account_create | createAccountWithPassword |   
-| createAccountWithWallet |   
 | account_update | changePassword |   
 | account_upgrade | upgradeAccount |   
 | asset_create | createAsset |   
