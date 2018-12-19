@@ -6,17 +6,16 @@ var url = require("url");
 var querystring = require('querystring')
 
 let bcx=new BCX({
-    api_node:{
-        url:"ws://39.106.139.132:8010",
-        name:"bcxjs1.0"
-    },
-    faucet_url:"http://39.106.139.132:6000",
-    networks:[
-    {
+    default_ws_node:"ws://47.93.62.96:8050",
+    ws_node_list:[
+        {url:"ws://47.93.62.96:8050",name:"cocos新链"}
+    ],
+    networks:[{
         core_asset:"COCOS",
-        chain_id:"52e65ef663454f910ba3fe5f0b97a359f6a15aa50a329ae8de4d2b38eb0ee7a1" 
+        chain_id:"53b98adf376459cc29e5672075ed0c0b1672ea7dce42b0b1fe5e021c02bda640" 
     }], 
-    auto_reconnect:true                      
+    faucet_url:"http://47.93.62.96:3000",
+    auto_reconnect:true                     
 });
 
 bcx.passwordLogin({

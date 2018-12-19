@@ -1091,24 +1091,22 @@
 
                 loadLeftNavs();
                 
-                var _configParams={
-                    api_node:{
-                        url:"ws://39.106.139.132:8010",
-                        name:"COCOS最新链"
-                    },
+                var bcx=new BCX({
+                    default_ws_node:"ws://47.93.62.96:8050",
+                    ws_node_list:[
+                        {url:"ws://47.93.62.96:8050",name:"COCOS最新链(香港)"}
+                    ],
                     networks:[
-                    {
+                      {
                         core_asset:"COCOS",
-                        chain_id:"52e65ef663454f910ba3fe5f0b97a359f6a15aa50a329ae8de4d2b38eb0ee7a1" 
-                    }], 
-                    faucet_url:"http://39.106.139.132:4000",
+                        chain_id:"53b98adf376459cc29e5672075ed0c0b1672ea7dce42b0b1fe5e021c02bda640" 
+                      }
+                    ], 
+                    faucet_url:"http://47.93.62.96:3000",
                     auto_reconnect:true,
                     worker:false
                     //app_keys:["5HxzZncKDjx7NEaEv989Huh7yYY7RukcJLKBDQztXAmZYCHWPgd"]
-                };
-
-                var bcx=new BCX(_configParams);
-                //可以不用初始化，直接调用，API会自动判断是否初始化，热没有初始化则自动初始化
+                });//可以不用初始化，直接调用，API会自动判断是否初始化，热没有初始化则自动初始化
                 bcx.init().then(res=>{
                     _wallet.init();
                     _user.init();
