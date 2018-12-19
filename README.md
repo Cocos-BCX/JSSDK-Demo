@@ -213,14 +213,14 @@ bcx.transferAsset({
 功能：获取钱包账户列表
 参数：
 	直接返回数据，格式示例：
-	```js
+```js
 		"accounts": ["tom0002"],
 		"currentAccount": {
 			"userId": "1.2.20",
 			"isLocked": true,
 			"name": "tom0002"
 		}
-	```
+```
 
 ### 切换账户
 方法：setCurrentAccount
@@ -387,12 +387,12 @@ bcx.transferAsset({
 	onlyGetFee：设置只返回本次调用所需手续费
 	callback：见统一API说明
 	coreExchangeRate(Object)：手续费汇率
-	```js
+```js
 	{ 
 		quoteAmount:标价资产
 		baseAmount:基准资产
 	}
-	```
+```
 
 
 ### 资产销毁
@@ -479,7 +479,7 @@ bcx.transferAsset({
 	NHAssetsCount (Number)：创建NH资产的数量，默认值为1，只有type为0即创建同一种NH资产生效
 	type：创建NH资产方式的类型，默认值为0。值为0时默认创建同一种NH资产，1是创建不同NH资产。
 	NHAssets(Array)示例: 
-	```js
+```js
 	[{
 	 "assetId": "X.X.X",
 	 "worldView": "TEST",
@@ -496,7 +496,7 @@ bcx.transferAsset({
 	 "baseDescribe": "{name:\"猎人\"}",
 	 "ownerAccount": "test2"
 	}]
-	```
+```
 
 
 ### 删除NH资产
@@ -767,5 +767,3 @@ bcx.transferAsset({
 	userNameOrId：账户名或Id
 	contractNameOrId：合约名字或Id
 	callback：回调函数
-
-
