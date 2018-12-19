@@ -165,6 +165,7 @@ bcx.transferAsset({
 # Part 2. 区块链系统的互操作API
 
 ## 钱包模式
+
 ### 创建账户
 方法：createAccountWithWallet
 功能：钱包模式创建账户，钱包模式创建的账户不能用账户名密码登录。如果钱包模式已经存在账户，该操作会创建子账户，创建该子账户需要先成为终身会员账户
@@ -172,23 +173,27 @@ bcx.transferAsset({
 	account：用户名
 	password：密码
 	callback：回调函数
+
 ### 备份钱包
 方法：backupDownload
 功能：备份钱包，调用该API会生成一个钱包文件，自动下载
 参数：
 	callback：回调函数
+
 ### 加载备份钱包文件
 方法：loadWalletFile
 功能：对于web来说，file input绑定change事件，读取钱包文件
 参数：
 	file：宿主环境若在web => file input 的 change事件触发返回的事件对象event.target，files[0]
 	callback：回调函数
+
 ### 从备份文件恢复钱包
 方法：restoreWallet
 功能：备份钱包，调用该API会生成一个钱包文件，自动下载。该API调用后，钱包处于锁定状态。
 参数：
 	password：备份文件的钱包密码
 	callback：回调函数
+
 ### 导入私钥
 方法：importPrivateKey
 功能：导入私钥到钱包
@@ -196,11 +201,13 @@ bcx.transferAsset({
 	privateKey：明文私钥
 	password：如果是已经创建钱包或恢复钱包，此时的密码为原来钱包的密码，否则是可以随意填写的临时密码
 	callback：回调函数
+
 ### 删除钱包
 方法：deleteWallet
 功能：删除钱包，使用账户模式时，最好让用户先执行删除钱包
 参数：
 	callback：回调函数 
+
 ### 获取钱包账户列表
 方法：getAccounts
 功能：获取钱包账户列表
@@ -221,12 +228,14 @@ bcx.transferAsset({
 参数：
 	account：要切换的账户 
 	callback：回调函数
+
 ### 解锁账户
 方法：unlockAccount
 功能：导入私钥或钱包模式才可以使用此方法解锁账户
 参数：
 	password：导入私钥时设置的临时密码
 	callback：回调函数
+
 ### 锁定账户
 方法：lockAccount
 功能：锁定账户
@@ -234,6 +243,7 @@ bcx.transferAsset({
 	callback：回调函数
     
 ## 账户模式
+
 ### 创建账户
 方法：createAccountWithPassword
 功能：账户注册。如果账户模式已经有账户登录，该操作会创建子账户，创建该子账户需要操作账户为终身会员账户
@@ -242,6 +252,7 @@ bcx.transferAsset({
 	password：密码
 	autoLogin：boolean类型，指定是否自动登录，默认值为false
 	callback：回调函数
+
 ### 账户登录
 方法：passwordLogin
 功能：账户登录
@@ -249,6 +260,7 @@ bcx.transferAsset({
 	account：用户名
 	password：密码
 	callback：回调函数
+
 ### 私钥登录
 方法：privateKeyLogin
 功能：之前这个API只是过渡，严格上导入私钥只存在于钱包模式。现在为了兼容，此API还暂时留在这里，依然可用调用 
@@ -256,11 +268,13 @@ bcx.transferAsset({
 	privateKey：私钥 
 	password：设置的临时密码
 	callback：回调函数
+
 ### 退出登录
 方法：logout
 功能：该方法会清除用户相关缓存，其中包括清除加密后的密文key
 参数：
 	callback：回调函数
+
 ### 修改密码
 方法：changePassword
 功能：只有账户模式，才能修改密码；修改密码成功后，API将会自动调用退出登录。
@@ -268,18 +282,21 @@ bcx.transferAsset({
 	oldPassword：旧密码
 	newPassword：新密码
 	callback：回调函数
+
 ### 获取当前账户信息
 方法：getUserInfo
 功能：当账户处于解锁状态，返回数据中将包含账户名name
 参数：无
 
 ## 账户操作
+
 ### 升级成为终身会员账户
 方法：upgradeAccount
 功能：购买终身会员账户后，可以创建子账户，此操作需消耗一定的手续费
 参数：
 	onlyGetFee：是否只获取此操作手续费
 	callback：回调函数
+
 ### 导出用户私钥
 方法：getPrivateKey
 功能：获取用户Active PrivateKey，本秘钥可用于为账户所有花费行为签名
@@ -303,12 +320,14 @@ bcx.transferAsset({
 	account：账户名
 	limit：查询记录条数
 	callback：查看API统一参数说明
+
 ### 订阅用户操作记录变更
 方法：subscribeToUserOperations
 功能：订阅用户操作记录变更
 参数：
 	account：账户名
 	callback：只要用户操作记录有变化，就调用此callback：回调函数
+
 ### 查询账户信息
 方法：queryAccountInfo
 功能：账户信息中包含用户id用户名等信息
@@ -323,6 +342,7 @@ bcx.transferAsset({
 需要注意的是，任何数据的写操作，都将在区块中留下记录。
 
 ## 代币操作接口
+
 ### 代币资产转移
 方法：transferAsset
 功能：向目标对象发送代币
@@ -336,6 +356,7 @@ bcx.transferAsset({
 	isPropose：是否发起提议
 	onlyGetFee（boolean）：是否只获取本次操作所需手续费
 	callback：设置转账后的回调函数
+
 ### 创建资产
 方法：createAsset
 功能：创建token
@@ -353,6 +374,7 @@ bcx.transferAsset({
 			baseAmount: 基准资产(即核心资产，默认1)
 		}
 ```
+
 
 ### 更新资产
 方法：updateAsset
@@ -372,6 +394,7 @@ bcx.transferAsset({
 	}
 	```
 
+
 ### 资产销毁
 方法：reserveAsset
 功能：销毁代币资产
@@ -380,6 +403,7 @@ bcx.transferAsset({
 	amount：销毁数量
 	onlyGetFee：设置只返回本次调用所需手续费
 	callback：回调函数
+
 ### 资产发行
 方法：issueAsset
 功能：代币资产token发行
@@ -390,6 +414,7 @@ bcx.transferAsset({
 	memo：备注消息，选填
 	onlyGetFee：设置只返回本次调用所需手续费
 	callback：回调函数
+
 ### 注资资产手续费池
 方法：assetFundFeePool
 功能：所有网络手续费最终将使用核心资产代币进行支付。手续费资金池用来承担从 二级资产代币 转换为 核心资产代币 的费用，以便用户可以使用 二级资产代币 来支付手续费。如果资金池中余额用完，用户将无法继续使用 二级资产代币 支付手续费。目前支持使用二级资产代币作为手续费的API有“转账、投票、升级终身会员、资产发行”，后续会继续扩展
@@ -398,6 +423,7 @@ bcx.transferAsset({
 	amount：注资核心资产代币数量
 	onlyGetFee：设置只返回本次调用所需手续费
 	callback：回调函数
+
 ### 领取资产手续费
 方法：assetClaimFees
 功能：资产发行人可以在这里领取累积的资产手续费。
@@ -406,12 +432,14 @@ bcx.transferAsset({
 	amount：二级资产代币数量
 	onlyGetFee：设置只返回本次调用所需手续费
 	callback：回调函数
+
 ### 查询链上发行的资产
 方法：queryAsset
 功能：代币资产查询
 参数：
 	assetId：资产符号，此参数若为空，则查询链上发行的所有资产 
 	callback：回调函数
+
 ### 查询账户指定资产余额
 方法：queryAccountBalances
 功能：获取用户对应的数字资产，如果assetId为空，则返回用户所有代币。
@@ -419,6 +447,7 @@ bcx.transferAsset({
 	assetId：资产ID或代币符号，资产ID：数字代币的唯一代币标识ID（如："X.X.X"），代币符号（如：”BTC”）
 	account：用户名
 	callback：回调函数
+
 ### 查询账户所有资产余额列表
 方法：queryAccountAllBalances
 功能：查询用户拥有的所有资产列表，列表中包含资产对记账单位的换算值。当账户无任何资产余额将会返回余额为0的核心资产
@@ -428,14 +457,17 @@ bcx.transferAsset({
 	callback：回调函数
 
 ## NH资产操作
+
 ### 注册开发者
 方法：registerCreator
 功能：将当前账户注册成为开发者
+
 ### 创建世界观
 方法：creatWorldView
 功能：创建支持的NH资产世界观，向区块链系统注册当前账号（通常为游戏的账号）支持的NH资产世界观
 参数：
 	worldView：世界观名称，区分大小写;
+
 ### 创造NH资产
 方法：creatNHAsset
 功能：创建一个唯一的NH资产，具有唯一性。本接口仅限NH资产制造商（铁匠铺）使用。
@@ -466,33 +498,39 @@ bcx.transferAsset({
 	}]
 	```
 
+
 ### 删除NH资产
 方法：deleteNHAsset
 功能：删除整条NH资产数据记录，通常在商品销毁时使用（仅能由用户自己授权处理自己想要销毁的数据）。
 参数：
 	NHAssetIds (Array)：NH资产实例的唯一标识ID;示例：\[X.X.X, X.X.X\]
+
 ### 转移NH资产
 方法：transferNHAsset
 功能：用户可以将自己的NH资产转移到另外一个用户
 参数：
 	toAccount：转移NH资产的目标用户名
 	NHAssetIds（Array）：多个NH资产id组成的数组，示例：\[X.X.X, X.X.X\]
+
 ### 提议关联世界观
 方法：proposeRelateWorldView
 功能：提议关联到某一个世界观，需要该世界观的创建人审批
 参数：
 	worldView：需要关联的世界观名
 	viewOwner：需要关联的世界观创建者
+
 ### 批准关联世界观的提议
 方法：approvalProposal
 功能：批准其他用户关联自己的世界观的提议
 参数：
 	proposalId：提议ID
+
 ### 获取当前用户收到的提议
 方法：getAccountProposals
 功能：获取当前操作用户收到的提议
 
 ## NH资产买卖接口
+
 ### 创建NH资产出售单
 方法：creatNHAssetOrder
 功能：卖出NH资产（在交易前可调用queryAccountGameItems函数，列举用户NH资产，以便用户选着卖出）
@@ -505,12 +543,14 @@ bcx.transferAsset({
 	expiration：挂单时间，如3600(秒)，为1小时
 	memo：挂单备注信息；
 	callback：设置执行挂单卖出后的回调函数
+
 ### 购买订单NH资产
 方法：fillNHAssetOrder
 功能：买入NH资产，支付购买游戏装备的代币费用，同时修改用户拥有的商品数据。该操作是一个多步合成的原子操作，在支付费用的同时完成用户账户NH资产数据的更新，如果支付动作或账户商品数据更新动作中某一个动作不被主链区块认可，则整个交易将被回滚，避免异常交易。
 参数：
 	orderId：订单ID
 	callback：回调函数
+
 ### 取消NH资产出售单
 方法：cancelNHAssetOrder
 功能：取消NH资产挂卖订单
@@ -520,6 +560,7 @@ bcx.transferAsset({
  
 
 ## NH资产查询类接口
+
 ### 查询全网用户NH资产售卖订单
 方法：queryNHAssetOrders
 功能：查询全网用户NH资产的售卖订单 
@@ -528,6 +569,7 @@ bcx.transferAsset({
 	worldViews (array)：版本名称或版本id筛选条件
 	pageSize：页容量
 	page：页数
+
 ### 查询指定用户的NH资产售卖订单
 方法：queryAccountNHAssetOrders
 功能：查询指定用户的NH资产售卖订单
@@ -536,6 +578,7 @@ bcx.transferAsset({
 	pageSize：页容量
 	page：页数
 	callback：回调函数
+
 ### 查询账户下所拥有的道具NH资产
 方法：queryAccountNHAssets
 功能：读取当前用户账户下所有可在对应游戏中使用的NH资产
@@ -546,24 +589,28 @@ bcx.transferAsset({
 	pageSize：页容量，每页的数据条数
 	callback：返回值。示例：
 		{status:1,data:[],total:0}
+
 ### 查询开发者所关联的世界观
 方法：queryNHCreator
 功能：查询开发者所关联的世界观 
 参数：
 	account：账户名或账户ID
 	callback：回调函数
+
 ### 查询开发者创建的NH资产
 方法：queryNHCreator
 功能：查询开发者所创建的世界观 
 参数：
 	account：账户名或账户ID
 	callback：回调函数
+
 ### 查询NH资产详细信息
 方法：queryNHAssets
 功能：查询NH资产详细信息 
 参数：
 	NHAssetHashOrIds：NH资产id或hash
 	callback：回调函数
+
 ### 查询世界观详细信息
 方法：lookupWorldViews
 功能：查询世界观详细信息 
@@ -572,11 +619,13 @@ bcx.transferAsset({
 	callback：回调函数
 
 ## 节点投票
+
 ### 查询节点投票信息数据
 方法：queryVotes
 功能：查询节点投票信息数据 
 参数：
 	callback：回调函数
+
 ### 用户提交投票信息
 方法：publishVotes
 功能：保存的时候设置了代理账户，用户投票信息将统一跟随代理账户 
@@ -586,36 +635,43 @@ bcx.transferAsset({
 	callback：回调函数
 
 ## 区块链浏览器类接口
+
 ### 查询区块
 方法：queryBlock
 功能：通过区块高度查询区块信息
 参数：
 	block：区块高度
+
 ### 查询交易
 方法：queryTransaction
 功能：通过交易id（即交易hash）查询交易信息
 参数：
 	transactionId：交易id
+
 ### 订阅区块
 方法：subscribeToBlocks
 功能：监听实时出块信息
 参数：
 	callback：回调函数
+
 ### 订阅区块链交易
 方法：subscribeToChainTranscation
 功能：监听区块链全网发生的交易 
 参数：
 	callback：回调函数
+
 ### 查看节点出块信息
 方法：lookupWitnessesForExplorer
 功能：这里重点是参照demo解析节点出块信息数据
 参数：
 	callback：回调函数
+
 ### 查看账户节点出块奖励
 方法：lookupBlockRewards
 功能：参照demo解析数据
 参数：
 	callback：回调函数
+
 ### 领取节点出块奖励
 方法：claimVestingBalance
 功能：领取节点出块奖励
@@ -624,17 +680,20 @@ bcx.transferAsset({
 	callback：回调函数
 
 ## API服务器节点相关接口
+
 ### 查看API服务器节点列表
 方法：lookupWSNodeList
 功能：查看API服务器节点列表信息
 参数：
 	callback：回调函数
+
 ### 连接API服务器节点
 方法：switchAPINode
 功能：切换节点
 参数：
 	url：API服务器节点地址，此地址必须是API服务器节点列表中的websoket地址
 	callback：回调函数
+
 ### 添加新的API服务器节点
 方法：addAPINode
 功能：添加新节点
@@ -642,12 +701,14 @@ bcx.transferAsset({
 	name：新节点名称
 	url：API服务器节点websoket地址
 	callback：回调函数
+
 ### 删除API服务器节点
 方法：deleteAPINode
 功能：删除节点
 参数：
 	url：API服务器节点websoket地址
 	callback：回调函数
+
 ### 监听与API服务器节点的连接状态变化
 方法：subscribeToRpcConnectionStatus
 功能：监听rpc连接状态变化
@@ -658,9 +719,11 @@ bcx.transferAsset({
 	realopen：rpc连接成功
 
 ## 合约
+
 ### 一键生成私钥/公钥（随机生成）
 方法：generateKeys
 功能：随机生成一对公私钥，创建带有权限的合约会用到，生成的私钥用于API初始化对合约授权，没有回调，直接返回
+
 ### 合约创建
 方法：createContract
 功能：创建智能合约，如果要对合约设置权限，创建合约时得加入特定的lua代码，并调用合约函数set_permissions_flag => 合约权限代码:function my_change_contract_authority( publickey) assert(is_owner()) change_contract_authority( publickey) end function set_permissions_flag(flag) assert(is_owner()) set_permissions_flag(flag) end 
@@ -670,6 +733,7 @@ bcx.transferAsset({
 	data：合约lua代码
 	onlyGetFee：设置只返回本次操作所需手续费 
 	callback：见统一API说明
+
 ### 合约更新
 方法：updateContract
 功能：更新合约代码
@@ -677,6 +741,7 @@ bcx.transferAsset({
 	nameOrId合约名称或Id，示例：contract.test02
 	data：合约lua代码
 	onlyGetFee：设置只返回本次操作所需手续费 
+
 ### 合约调用
 方法：callContractFunction
 功能：调用合约函数接口 
@@ -687,12 +752,14 @@ bcx.transferAsset({
 	runtime：运行合约函数的时间(单位毫秒)，默认为5
 	onlyGetFee：设置只返回本次操作所需手续费，默认为false
 	callback：回调函数
+
 ### 查询合约信息
 方法：queryContract
 功能：查询合约信息数据
 参数：
 	nameOrId：合约名字或Id
 	callback：回调函数
+
 ### 查询账户合约数据
 方法：queryAccountContractData
 功能：查询账户合约里产生数据
@@ -700,4 +767,5 @@ bcx.transferAsset({
 	userNameOrId：账户名或Id
 	contractNameOrId：合约名字或Id
 	callback：回调函数
+
 
