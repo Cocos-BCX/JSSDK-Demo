@@ -16,13 +16,13 @@ Javascript API，用于使用COCOS-BCX RPC API与基于COCOS-BCX的区块链集�
 var bcx=new BCX({
             default_ws_node:”ws://XXXXXXXXX” //节点rpc地址,选填。惹没有指定此项则会自动连接ws_node_list中速度最快的节点
             ws_node_list:[{url:"ws://xxxxxxx",name:"xxxxx"}]//API服务器节点列表，必填
-            faucet_url:"http://***.***.***.***:****", //注册入口
+            faucet_url:"http://xxx.xxx.xxx.xxx:xxxx", //注册入口
             networks:[{
-                core_asset:"***",//核心资产符号
-                chain_id:"***************************"//链id   
+                core_asset:"xxx",//核心资产符号
+                chain_id:"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"//链id   
             }], 
             auto_reconnect:false,//当RPC断开时是否自动连接，默认为true
-            app_keys:["************************"]//合约授权，不进行合约授权，则不用配置此选项
+            app_keys:["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"]//合约授权，不进行合约授权，则不用配置此选项
 	 })
 ```
 
@@ -214,6 +214,7 @@ bcx.transferAsset({
 			"name": "tom0002"
 		}
 	```
+
 ### 切换账户
 方法：setCurrentAccount
 功能：钱包模式切换当前使用账户
@@ -285,12 +286,16 @@ bcx.transferAsset({
 参数：
 	callback：设置获取私钥成功后的回调函数，回调参数result为Object对象，
 	对象结构为：
+    ```json
 		{
 			status:1,data:{
 			activePrivateKey:”xxxxxxxxxxx”
 			}
 		}
-	其中：activePrivateKey为私钥串
+    ```
+
+其中：activePrivateKey为私钥串
+
 ### 查询账户记录
 方法：queryUserOperations
 功能：查询用户近期操作记录
@@ -338,16 +343,17 @@ bcx.transferAsset({
 	assetId：资产符号，正则^\[\.A-Z\]+$
 	precision：精度(小数位数)
 	maxSupply：最大资产总量
+	description: 资产描述，可不填
+	onlyGetFee：设置只返回本次调用所需手续费
+	callback：见统一API说明
 	coreExchangeRate(Object)：
-	```json
+```json
 		{
 			quoteAmount:标价资产(即创建的代币，默认1),
 			baseAmount: 基准资产(即核心资产，默认1)
 		}
-	```
-	description: 资产描述，可不填
-	onlyGetFee：设置只返回本次调用所需手续费
-	callback：见统一API说明
+```
+
 ### 更新资产
 方法：updateAsset
 功能：更新token
@@ -355,6 +361,9 @@ bcx.transferAsset({
 	assetId：资产符号，正则^\[\.A-Z\]+$
 	maxSupply：最大资产总量
 	newIssuer：更新发行人
+    description：资产描述，可不填
+	onlyGetFee：设置只返回本次调用所需手续费
+	callback：见统一API说明
 	coreExchangeRate(Object)：手续费汇率
 	```json
 	{ 
@@ -362,9 +371,7 @@ bcx.transferAsset({
 		baseAmount:基准资产
 	}
 	```
-	description：资产描述，可不填
-	onlyGetFee：设置只返回本次调用所需手续费
-	callback：见统一API说明
+
 ### 资产销毁
 方法：reserveAsset
 功能：销毁代币资产
@@ -458,6 +465,7 @@ bcx.transferAsset({
 	 "ownerAccount": "test2"
 	}]
 	```
+
 ### 删除NH资产
 方法：deleteNHAsset
 功能：删除整条NH资产数据记录，通常在商品销毁时使用（仅能由用户自己授权处理自己想要销毁的数据）。
