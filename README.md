@@ -14,15 +14,15 @@ Javascript API，用于使用COCOS-BCX RPC API与基于COCOS-BCX的区块链集�
 
 ```js
 var bcx=new BCX({
-		default_ws_node:”ws://XXXXXXXXX” //节点rpc地址,选填。惹没有指定此项则会自动连接ws_node_list中速度最快的节点
-        ws_node_list:[{url:"ws://xxxxxxx",name:"xxxxx"}]//API服务器节点列表，必填
-        faucet_url:"http://***.***.***.***:****", //注册入口
-	    networks:[{
-            core_asset:"***",//核心资产符号
-            chain_id:"***************************"   
-        }], 
-        auto_reconnect:false,//当RPC断开时是否自动连接，默认为true
-        app_keys:["************************"]//合约授权，不进行合约授权，则不用配置此选项
+                default_ws_node:”ws://XXXXXXXXX” //节点rpc地址,选填。惹没有指定此项则会自动连接ws_node_list中速度最快的节点
+            ws_node_list:[{url:"ws://xxxxxxx",name:"xxxxx"}]//API服务器节点列表，必填
+            faucet_url:"http://***.***.***.***:****", //注册入口
+                networks:[{
+                    core_asset:"***",//核心资产符号
+                    chain_id:"***************************"   
+            }], 
+            auto_reconnect:false,//当RPC断开时是否自动连接，默认为true
+            app_keys:["************************"]//合约授权，不进行合约授权，则不用配置此选项
 	 })
 ```
 
