@@ -196,13 +196,15 @@ data:{
 功能：获取钱包账户列表  
 参数：  
 	直接返回数据，格式示例：  
-```JavaScript  
+```JavaScript
+  {  
 		"accounts": ["tom0002"],  
 		"currentAccount": {  
 			"userId": "1.2.20",  
 			"isLocked": true,  
 			"name": "tom0002"  
-		}  
+		}
+  }  
 ```  
   
 ### 切换账户  
@@ -282,19 +284,10 @@ data:{
   
 ### 导出用户私钥  
 方法：getPrivateKey  
-功能：获取用户Active PrivateKey，本秘钥可用于为账户所有花费行为签名  
+功能：获取用户active_private_key，本秘钥可用于为账户所有花费行为签名，返回的owner_private_key：可修改账户相关的各种设置，包括权限设置  
 参数：  
-	callback：设置获取私钥成功后的回调函数，回调参数result为Object对象，  
-	对象结构为：  
-```JavaScript  
-		{  
-			status:1,data:{  
-			activePrivateKey:”xxxxxxxxxxx”  
-			}  
-		}  
-```  
+	callback：设置获取私钥成功后的回调函数
   
-其中：activePrivateKey为私钥串  
   
 ### 查询账户记录  
 方法：queryUserOperations  
@@ -317,12 +310,7 @@ data:{
 参数：  
 	account：账户名  
 	callback：查看API统一参数说明  
-  
-## 数据结构  
-本产品支持自定义数据结构的链上存储。  
-对于游戏定制版而言，数据在链上的存储结构分为数据头、数据内容两部分。  
-数据头由游戏数字资产(assetId)、道具版本(itemVER)、道具唯一标识(itemId)组成，数据内容用于描述道具详细信息由制造者定义，通常为游戏角色、游戏装备等等游戏信息。  
-需要注意的是，任何数据的写操作，都将在区块中留下记录。  
+   
   
 ## 代币操作接口  
   
@@ -366,7 +354,7 @@ data:{
 	assetId：资产符号，正则^\[\.A-Z\]+$  
 	maxSupply：最大资产总量  
 	newIssuer：更新发行人  
-    description：资产描述，可不填  
+  description：资产描述，可不填  
 	onlyGetFee：设置只返回本次调用所需手续费  
 	callback：见统一API说明  
 	coreExchangeRate(Object)：手续费汇率  
@@ -548,7 +536,7 @@ data:{
 方法：queryNHAssetOrders  
 功能：查询全网用户NH资产的售卖订单   
 参数：  
-	assetSymbolsOrIds(array）：资产符号或id筛选条件  
+	assetIds(array）：资产符号或id筛选条件  
 	worldViews (array)：版本名称或版本id筛选条件  
 	pageSize：页容量  
 	page：页数  
@@ -591,14 +579,14 @@ data:{
 方法：queryNHAssets  
 功能：查询NH资产详细信息   
 参数：  
-	NHAssetHashOrIds：NH资产id或hash  
+	NHAssetIds：NH资产id或hash  
 	callback：回调函数  
   
 ### 查询世界观详细信息  
 方法：lookupWorldViews  
 功能：查询世界观详细信息   
 参数：  
-	worldViewNameOrIds (array)：世界观名称或id  
+	worldViews (array)：世界观名称或id  
 	callback：回调函数  
   
 ## 节点投票  
@@ -731,7 +719,7 @@ data:{
 参数：  
 	nameOrId：合约名称或Id，示例：contract.test02  
 	functionName：合约里的函数名称，my_nht_describe_change （修改道具属性）  
-	valueList(array)： 调用合约函数的参数列表，示例：\['X.X.X','name','女巫'\]   
+	valueList(array)： 调用合约函数的参数列表，示例：[4.2.0,{"size":"large"}] ，这里的参数若传json字符串，则合约需调用cjson解析，若传对象则无需cjson解析  
 	runtime：运行合约函数的时间(单位毫秒)，默认为5  
 	onlyGetFee：设置只返回本次操作所需手续费，默认为false  
 	callback：回调函数  
@@ -747,7 +735,7 @@ data:{
 方法：queryAccountContractData  
 功能：查询账户合约里产生数据  
 参数：  
-	userNameOrId：账户名或Id  
+	account：账户名或Id  
 	contractNameOrId：合约名字或Id  
 	callback：回调函数
     
