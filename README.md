@@ -755,7 +755,7 @@ data:{
 ## 其他    
   
 ### 获取交易类型基础手续费    
-方法：getTransactionBaseFee  
+方法：queryTransactionBaseFee 
 功能：	获取交易类型基础手续费   
 参数：  
 transactionType：交易类型，示例transfer  
@@ -767,8 +767,6 @@ callback：见统一API说明
 | transactionType | 对应相关API |   
 |---|---|  
 | transfer | transferAsset |   
-| limit_order_create | createLimitOrder |   
-| limit_order_cancel | cancelLimitOrder |   
 | account_create | createAccountWithPassword |   
 | account_update | changePassword |   
 | account_upgrade | upgradeAccount |   
@@ -778,13 +776,14 @@ callback：见统一API说明
 | vesting_balance_withdraw | claimVestingBalance |   
 | contract_create | createContract |   
 | call_contract_function | callContractFunction |   
-| register_creator | createGameVersion |   
-| creat_world_view | createGameItem |   
-| propose_relate_game_version | proposeRelateGameVersion |   
-| creat_nh_asset | createGameItem |   
-| updata_nh_asset | updateGameItem |   
-| delete_nh_asset | deleteGameItem |   
-| transfer_nh_asset | transferGameItem |   
-| creat_nh_asset_order | creatGameItemOrder |   
-| cancel_nh_asset_order | cancelGameItemOrder |   
-| fill_nh_asset_order | fillGameItemOrder |   
+| register_creator | registerCreator |   
+| creat_world_view | creatWorldView |   
+| propose_relate_world_view | proposeRelateWorldView |   
+| creat_nh_asset | creatNHAsset |   
+| delete_nh_asset | delete_nh_asset |   
+| transfer_nh_asset | transferNHAsset |   
+| creat_nh_asset_order | creatNHAssetOrder |   
+| cancel_nh_asset_order | cancelNHAssetOrder |   
+| fill_nh_asset_order | fillNHAssetOrder |   
+| limit_order_create | createLimitOrder |   
+| limit_order_cancel | cancelLimitOrder |   
