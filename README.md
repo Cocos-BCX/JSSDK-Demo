@@ -748,7 +748,7 @@ data:{
 方法：unsubscribe  
 功能：取消订阅   
 参数：  
-method：取消指定订阅的方法名，如订阅区块subscribeToBlocks，不传该参数则取消所有订阅。该方法不传callback则返回promise 
+method：取消指定订阅的方法名，如订阅区块subscribeToBlocks，不传该参数则取消所有订阅。该方法不传callback则返回promise  
 callback：回调函数 
 
 ### 获取交易类型基础手续费    
