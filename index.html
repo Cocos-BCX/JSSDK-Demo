@@ -1203,6 +1203,13 @@
                                     <p class="res"></p>
                                 </div>
                             </div> 
+                            <div class="div_module_c" id="div_unsubscribe"  pclass="class_12" >
+                                <h2>取消订阅</h2>
+                                <div class="div_unsubscribe div_module">
+                                    取消指定的订阅方法<input  type="text" class="method" value="subscribeToBlocks"><br><br>
+                                    <input type="button" id="btn_unsubscribe" value="确认取消" /><br><br>
+                                </div>
+                            </div>
                 </div>
         </div>
        
@@ -1267,6 +1274,8 @@
                     gel("#btn_getVotes").onclick=queryVotes;
                     gel("#btn_publishVotes").onclick=publishVotes;
                     gel("#btn_getTransactionBaseFee").onclick=getTransactionBaseFee;
+                    gel("#btn_unsubscribe").onclick=unsubscribe;
+
                 });
                 var _market={
                     init:function(){
@@ -2941,6 +2950,13 @@
                             
                         }
                     })
+                }
+
+                function unsubscribe(){
+                    bcx.unsubscribe({method:gel(".div_unsubscribe .method").value})
+                    .then(res=>{
+                        console.info("unsubscribe res",res);
+                    });
                 }
 
                 function renderOp(operations,selector,isAllOP=false){

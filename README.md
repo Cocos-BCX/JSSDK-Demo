@@ -151,7 +151,7 @@ data:{
   
 ### 创建账户  
 方法：createAccountWithWallet  
-功能：钱包模式创建账户，钱包模式创建的账户不能用账户名密码登录。如果钱包模式已经存在账户，该操作会创建子账户，创建该子账户需要先成为终身会员账户  
+功能：钱包模式创建账户，正则/^[a-z][a-z0-9\.-]{4,63}$/，首字母开头+字母或数字或点.或短横线-，长度4至63。钱包模式创建的账户不能用账户名密码登录。如果钱包模式已经存在账户，该操作会创建子账户，创建该子账户需要先成为终身会员账户  
 参数：  
 	account：用户名  
 	password：密码  
@@ -233,7 +233,7 @@ data:{
 方法：createAccountWithPassword  
 功能：账户注册。如果账户模式已经有账户登录，该操作会创建子账户，创建该子账户需要操作账户为终身会员账户  
 参数：  
-	account：用户名  
+	account：账户名，正则/^[a-z][a-z0-9\.-]{4,63}$/，首字母开头+字母或数字或点.或短横线-，长度4至63
 	password：密码  
 	autoLogin：boolean类型，指定是否自动登录，默认值为false  
 	callback：回调函数  
@@ -242,7 +242,7 @@ data:{
 方法：passwordLogin  
 功能：账户登录  
 参数：  
-	account：用户名  
+	account：账户名 
 	password：密码  
 	callback：回调函数  
   
@@ -700,7 +700,7 @@ data:{
 功能：创建智能合约，如果要对合约设置权限，创建合约时得加入特定的lua代码，并调用合约函数set_permissions_flag => 合约权限代码:function my_change_contract_authority( publickey) assert(is_owner()) change_contract_authority( publickey) end function set_permissions_flag(flag) assert(is_owner()) set_permissions_flag(flag) end   
 参数：  
 	authority：合约权限(一对公私钥中的公钥publicKey)，开发者在使用API初始化的时候，可以配置私钥，配置了该公钥对应的私钥才可以调用合约。  
-	name：合约名称，规则/^\[a-z\]\[a-z0-9\\\.-\]\{4,\}/  
+	name：合约名称，正则/^[a-z][a-z0-9\.-]{4,63}$/，首字母开头+字母或数字或点.或短横线-，长度4至63
 	data：合约lua代码  
 	onlyGetFee：设置只返回本次操作所需手续费   
 	callback：见统一API说明  
@@ -741,7 +741,14 @@ data:{
     
     
 ## 其他    
-  
+
+### 取消订阅   
+方法：unsubscribe 
+功能：取消订阅   
+参数：  
+method：取消指定订阅的方法名，如订阅区块subscribeToBlocks，不传该参数则取消所有订阅。该方法不传callback则返回promise 
+callback：回调函数 
+
 ### 获取交易类型基础手续费    
 方法：queryTransactionBaseFee 
 功能：	获取交易类型基础手续费   
@@ -749,7 +756,11 @@ data:{
 transactionType：交易类型，示例transfer  
 feeAssetId：选择支付手续费的代币类型资产符号或ID  
 callback：见统一API说明  
-  
+
+### 交易备注解密   
+方法：decodeMemo 
+功能：无回调，直接返回结果，结果是一个对象，对象中包含备注文本text。该方法传参是直接传入，非包裹式options对象传参。 示例：bcl.decodeMemo(raw_data.memo) ,其中raw_data为交易原始数据。
+
 ### transactionType列表  
   
 | transactionType | 对应相关API |   
