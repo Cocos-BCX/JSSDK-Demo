@@ -144,6 +144,8 @@ data:{
 | 165 | There is no wallet account information on the chain | 链上没有该钱包账户信息 | restoreWallet | 
 | 166 | The Wallet Chain ID does not match the current chain configuration information. The chain ID of the wallet is: XX | 该钱包链id与当前链配置信息不匹配，该钱包的链id为： XXX | restoreWallet | 
 | 167 | The current contract version ID was not found | 当前合约版本id没有找到 X | queryContract | 
+| 168 | This subscription does not exist | 当前没有订阅此项 | unsubscribe | 
+| 169 | Method does not exist | API方法不存在 | unsubscribe | 
 
 # Part 2. 区块链系统的互操作API  
   
@@ -743,14 +745,14 @@ data:{
 ## 其他    
 
 ### 取消订阅   
-方法：unsubscribe
+方法：unsubscribe  
 功能：取消订阅   
 参数：  
 method：取消指定订阅的方法名，如订阅区块subscribeToBlocks，不传该参数则取消所有订阅。该方法不传callback则返回promise 
 callback：回调函数 
 
 ### 获取交易类型基础手续费    
-方法：queryTransactionBaseFee
+方法：queryTransactionBaseFee  
 功能：	获取交易类型基础手续费   
 参数：  
 transactionType：交易类型，示例transfer  
@@ -758,7 +760,7 @@ feeAssetId：选择支付手续费的代币类型资产符号或ID
 callback：见统一API说明  
 
 ### 交易备注解密   
-方法：decodeMemo
+方法：decodeMemo  
 功能：无回调，直接返回结果，结果是一个对象，对象中包含备注文本text。该方法传参是直接传入，非包裹式options对象传参。 示例：bcl.decodeMemo(raw_data.memo) ,其中raw_data为交易原始数据。
 
 ### transactionType列表  
