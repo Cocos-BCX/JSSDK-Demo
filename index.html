@@ -283,11 +283,6 @@
 
                     </ul>
                 </li>
-                <li>交易市场
-                    <ul class="class_10">
-
-                    </ul>
-                </li>
                 <li>其他
                     <ul class="class_12">
 
@@ -501,15 +496,6 @@
                                     基准资产数量：<input type="text" class="base" value="10" onKeyUp="_assets.c_priceChange()" />
                                     <p>单价：<span class="price">0.1 TEST/COCOS</span></p>
                                 </fieldset>
-                                <!-- <div class="checkbox">
-                                        收取交易手续费:<input type="checkbox" class="is_charge_market_fee" style="width:auto;" />          
-                                </div>
-                               
-                                <fieldset style="display:none" class="fieldset_charge_market_fee">
-                                    <legend>交易手续费率 </legend>
-                                    交易手续费率 (%)：<input type="text" class="market_fee_percent" value="1" />
-                                    最大交易手续费：<input type="text" class="max_market_fee" value="1" />
-                                </fieldset> -->
                                 <br>
                                 描述<textarea rows="6" class="description"></textarea>
                                 <p>创建资产手续费：<span class="fee"></span></p>
@@ -1060,140 +1046,8 @@
                                     <br>
                                 </div>
                             </div>
-                            <div class="div_module_c" id="div_createLimitOrder"  pclass="class_10" >
-                                <h2>代币资产“限价单”交易</h2>
-                                <div class="div_createLimitOrder div_module">
-                                    交易对transactionPair(TEST_COCOS为买卖COCOS交易市场的TEST)
-                                    <input  type="text" class="transactionPair" value="TEST_COCOS"><br><br>
-                                    交易类型type(0:卖单，1:买单)<input  type="text" class="type" value="1"><br><br>
-                                    价格price(单位为交易市场顶级资产,如COCOS)<input  type="text" class="price" value="0.26"><br><br>
-                                    数量(单位如二级资产TEST)<input  type="text" class="amount" value="0.1"><br><br>
-                                    <input type="button" id="btn_createLimitOrder" value="立即下单" /><br><br>
-                                </div>
-                            </div> 
-                            <div class="div_module_c" id="div_subscribeToTransactionPair"  pclass="class_10" >
-                                    <h2>查询&订阅市场交易对相关数据</h2>
-                                    <div class="div_subscribeToTransactionPair div_module" style="width:96%;">
-                                        交易对transactionPair(TEST_COCOS为买卖COCOS的交易市场的TEST)
-                                        <input  type="text" class="transactionPair" value="TEST_COCOS"><br>
-                                        <div class="checkbox">
-                                                是否订阅:<input type="checkbox" class="subscribe" style="width:auto;" />          
-                                        </div>
-                                        <input type="button" id="btn_subscribeToTransactionPair" value="立即查询" /><br><br>
-                                        <div class="container">
-                                            <div class="opt">
-                                                  价格 <span class="price_unit"></span><input  type="text" class="price" value=""><br><br>  
-                                                  数量 <span class="amount_unit"></span><input  type="text" class="amount" value=""><br><br>   
-                                                  成交总额 <span class="turnover_unit"></span> <input  readonly type="text" class="turnover" value=""><br><br>   
-                                                  手续费 <span class="fee_unit"></span><input  type="text" class="fee" value=""><br><br>   
-                                                  <P class="buy_balances"></P>
-                                                  <input type="button" class="btn btn_buy"  value="立即买入" style="background:green;"/><br><br>
-                                                  <P class="sell_balances"></P>
-                                                  <input type="button" class="btn btn_sell"  value="立即卖出" style="background:red;"/><br><br>
-                                            </div>
-                                            <div class="orders">
-                                                <fieldset class="sell scroll">
-                                                    <legend>卖单</legend>
-                                                    <table class="table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>价格</th>
-                                                                    <th>数量</th>
-                                                                    <th>成交金额</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            </tbody>
-                                                     </table>
-                                                </fieldset>
-                                                <fieldset class="buy scroll">
-                                                    <legend>买单</legend>
-                                                    <table class="table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>价格</th>
-                                                                    <th>数量</th>
-                                                                    <th>成交金额</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            </tbody>
-                                                        </table>
-                                                </fieldset>
-                                            </div>
-                                        </div>
-                                        <fieldset class="myOrders scroll">
-                                            <legend>我的委托</legend>
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>价格</th>
-                                                        <th>数量</th>
-                                                        <th>成交金额</th>
-                                                        <th>过期时间</th>
-                                                        <th>操作</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-                                        </fieldset>
-                                        <fieldset class="myHistory scroll">
-                                            <legend>我的交易历史</legend>
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>价格</th>
-                                                        <th>数量</th>
-                                                        <th>成交金额</th>
-                                                        <th>区块时间</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-                                        </fieldset>
-                                        <fieldset class="history scroll" >
-                                            <legend>所有交易历史</legend>
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>价格</th>
-                                                        <th>数量</th>
-                                                        <th>成交金额</th>
-                                                        <th>区块时间</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-                                        </fieldset>
-                                    </div>
-                                </div> 
-                            <div class="div_module_c" id="div_getMarketStats"  pclass="class_10" >
-                                <h2>查询&订阅交易市场行情</h2>
-                                <div class="div_getMarketStats div_module">
-                                    交易市场<input  type="text" class="baseAsset" value="COCOS"><br><br>
-                                    相关交易对的币种<input  type="text" class="coins" value="TEST,TUSD"><br><br>
-                                    <div class="checkbox">
-                                         是否订阅:<input type="checkbox" class="subscribe" style="width:auto;" />          
-                                    </div>
-                                    <input type="button" id="btn_getMarketStats" value="立即查询" /><br><br>
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>资产</th>
-                                                <th>价格</th>
-                                                <th>成交量</th>
-                                                <th>涨跌幅</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>   
+      
+                         
                             <div class="div_module_c" id="div_getTransactionBaseFee"  pclass="class_12" >
                                 <h2>查询交易类型基础手续费</h2>
                                 <div class="div_getTransactionBaseFee div_module">
@@ -1269,7 +1123,6 @@
                     _nodes.init();
                     _assets.init();
                     _explorer.init();
-                    _market.init();
 
                     gel("#btn_getVotes").onclick=queryVotes;
                     gel("#btn_publishVotes").onclick=publishVotes;
@@ -1277,196 +1130,7 @@
                     gel("#btn_unsubscribe").onclick=unsubscribe;
 
                 });
-                var _market={
-                    init:function(){
-                        gel("#btn_getMarketStats").onclick=this.getMarketStats;
-                        gel("#btn_createLimitOrder").onclick=function(){
-                            _market.createLimitOrder(gel(".div_createLimitOrder .type").value,
-                            gel(".div_createLimitOrder .price").value,
-                            gel(".div_createLimitOrder .amount").value,
-                            gel(".div_createLimitOrder .transactionPair").value);
-                        };
-                        gel("#btn_subscribeToTransactionPair").onclick=this.subscribeToTransactionPair;
-                        gel(".div_subscribeToTransactionPair .btn_buy").onclick=function(){
-                            _market.createLimitOrder(1,
-                            gel(".div_subscribeToTransactionPair .price").value,
-                            gel(".div_subscribeToTransactionPair .amount").value,
-                            gel(".div_subscribeToTransactionPair .transactionPair").value);
-                        }
-                        gel(".div_subscribeToTransactionPair .btn_sell").onclick=function(){
-                            _market.createLimitOrder(0,
-                            gel(".div_subscribeToTransactionPair .price").value,
-                            gel(".div_subscribeToTransactionPair .amount").value,
-                            gel(".div_subscribeToTransactionPair .transactionPair").value);
-                        }
-                    },
-                    setForm:function(index,type){
-                        var order= _market.orders[type][index];
-                        gel(".div_subscribeToTransactionPair .price").value=Number(order.price);
-                        gel(".div_subscribeToTransactionPair .amount").value=Number(order.amount);
-                        gel(".div_subscribeToTransactionPair .turnover").value=Number(order.turnover);
-                    },
-                    subscribeToTransactionPair:function(){
-                        var trxPair=gel(".div_subscribeToTransactionPair .transactionPair").value;
-                        var trxPairArr=trxPair.split("_");
-                        gel(".div_subscribeToTransactionPair .price_unit").innerText=trxPairArr[1]+" / "+trxPairArr[0];
-                        gel(".div_subscribeToTransactionPair .amount_unit").innerText=trxPairArr[0];
-                        gel(".div_subscribeToTransactionPair .turnover_unit").innerText=trxPairArr[1]; 
-
-                        bcx.queryTransactionBaseFee({
-                            transactionType:"limit_order_create",
-                            callback:res=>{
-                                if(res.code==1){
-                                    gel(".div_subscribeToTransactionPair .fee").value=res.data.fee_amount;
-                                    gel(".div_subscribeToTransactionPair .fee_unit").innerText=res.data.fee_symbol;
-                                }
-                            }
-                        });
-                        
-                        gel(".div_subscribeToTransactionPair .amount").onkeyup=e=>{
-                            gel(".div_subscribeToTransactionPair .turnover").value=Number((e.target.value*gel(".div_subscribeToTransactionPair .price").value).toFixed(8));
-                        }
-
-                        bcx.queryTransactionPair({
-                            transactionPair:trxPair,
-                            subscribe:gel(".div_subscribeToTransactionPair .subscribe").checked,
-                            hasMyTradeHistory:true,
-                            callback:res=>{
-                                console.info("subscribeToTransactionPair res",res);
-                                
-                                if(res.code==1){
-                                    gel(".div_subscribeToTransactionPair .sell tbody").innerHTML="";
-                                    gel(".div_subscribeToTransactionPair .buy tbody").innerHTML="";
-
-                                    _market.orders=res.data.orders;
-                                    res.data.orders.sell.forEach((order,index)=>{
-                                        let {turnover,turnover_unit,amount,amount_unit,price,price_unit}=order;
-                                        gel(".div_subscribeToTransactionPair .sell tbody").innerHTML+=`
-                                            <tr class="animated fadeIn"  onclick="_market.setForm(${index},'sell')">
-                                                <td>${price+" "+price_unit}</td>
-                                                <td>${amount+" "+amount_unit}</td>
-                                                <td >${turnover+" "+turnover_unit}</td>
-                                            </tr>`
-                                    })
-
-                                    res.data.orders.buy.forEach((order,index)=>{
-                                        let {turnover,turnover_unit,amount,amount_unit,price,price_unit}=order;
-                                        gel(".div_subscribeToTransactionPair .buy tbody").innerHTML+=`
-                                            <tr class="animated fadeIn" onclick="_market.setForm(${index},'buy')">
-                                                <td>${price+" "+price_unit}</td>
-                                                <td>${amount+" "+amount_unit}</td>
-                                                <td >${turnover+" "+turnover_unit}</td>
-                                            </tr>`
-                                    })
-
-                                    gel(".div_subscribeToTransactionPair .myOrders tbody").innerHTML="";
-
-                                    res.data.my_orders.forEach((order,index)=>{
-                                        let {turnover,turnover_unit,amount,amount_unit,
-                                            price,price_unit,type,expiration,order_id}=order;
-                                        
-                                        gel(".div_subscribeToTransactionPair .myOrders tbody").innerHTML+=`
-                                            <tr class="animated fadeIn" >
-                                                <td class="${type=='buy'?'green':'red'}">${price+" "+price_unit}</td>
-                                                <td>${amount+" "+amount_unit}</td>
-                                                <td >${turnover+" "+turnover_unit}</td>
-                                                <td >${expiration}</td>
-                                                <td ><a href="javascript:_market.cancelLimitOrder('${order_id}')">取消</a></td>
-                                            </tr>    
-                                            `
-                                    })
-                                    
-                                    gel(".div_subscribeToTransactionPair .history tbody").innerHTML="";
-
-                                    res.data.last_trade_history.forEach((order,index)=>{
-                                        let {turnover,turnover_unit,amount,amount_unit,
-                                            price,price_unit,type,block_time}=order;
-
-                                        gel(".div_subscribeToTransactionPair .history tbody").innerHTML+=`
-                                            <tr >
-                                                <td class="${type=='buy'?'green':'red'}">${price+" "+price_unit}</td>
-                                                <td>${amount+" "+amount_unit}</td>
-                                                <td >${turnover+" "+turnover_unit}</td>
-                                                <td >${block_time}</td>
-                                            </tr>    
-                                            `
-                                    })
-
-                                    gel(".div_subscribeToTransactionPair .myHistory tbody").innerHTML="";
-
-                                    res.data.my_last_trade_history.forEach((order,index)=>{
-                                        let {turnover,turnover_unit,amount,amount_unit,
-                                            price,price_unit,type,block_time}=order;
-
-                                        gel(".div_subscribeToTransactionPair .myHistory tbody").innerHTML+=`
-                                            <tr >
-                                                <td class="${type=='buy'?'green':'red'}">${price+" "+price_unit}</td>
-                                                <td>${amount+" "+amount_unit}</td>
-                                                <td >${turnover+" "+turnover_unit}</td>
-                                                <td >${block_time}</td>
-                                            </tr>`
-                                    })
-
-                                    var account=gel(".current_account").innerText;
-                                    if(account)
-                                    bcx.queryAccountBalances({
-                                        account
-                                    }).then(res=>{
-                                        if(res.code==1){
-                                            gel(".buy_balances").innerText=trxPairArr[1]+"余额："+res.data[trxPairArr[1]];
-                                            gel(".sell_balances").innerText=trxPairArr[0]+"余额："+res.data[trxPairArr[0]];
-                                        }
-                                    })
-                                }  
-                            }
-                        })
-                    },
-                    getMarketStats:function(){
-                        bcx.queryMarketStats({
-                            baseAsset:gel(".div_getMarketStats .baseAsset").value,
-                            quoteAssets:gel(".div_getMarketStats .coins").value.split(","),
-                            subscribe:gel(".div_getMarketStats .subscribe").checked,
-                            assetCache:false,
-                            callback:function(res){
-                                console.info("getMarketStats res",res);
-                                if(res.code==1){
-                                    gel(".div_getMarketStats tbody").innerHTML="";
-                                    res.data.forEach((item,index)=>{
-                                        let {quote_symbol,base_symbol,latest_price,volume_base,volume_quote,change}=item;
-                                        let changeClass=Number(change)!=0?(Number(change)>0?"green":"red"):"";
-                                        gel(".div_getMarketStats tbody").innerHTML+=`<tr>
-                                                <th >${(index+1)}</th>
-                                                <td >${quote_symbol}</td>
-                                                <td>${latest_price} ${base_symbol+"/"+quote_symbol}</td>
-                                                <td>${volume_quote} ${quote_symbol}</td>
-                                                <td class="${changeClass}">${Number(change)>0?"+":""} ${change}%</td>
-                                        </tr>`
-                                    })
-                                }
-                            }
-                        });
-                  },
-                  createLimitOrder:function(type,price,amount,transactionPair){
-                      bcx.createLimitOrder({
-                        transactionPair,
-                        type,
-                        price,
-                        amount,
-                        callback:function(res){
-                            console.info("createLimitOrder res",res);
-                        }
-                      })
-                  },
-                  cancelLimitOrder:function(orderId){
-                      bcx.cancelLimitOrder({
-                         orderId,
-                         callback:function(res){
-                             console.info("cancelLimitOrder res",res);
-                         }
-                      })
-                  }
-                }
-
+                
                 var _explorer={
                     init:function(){
                         gel("#btn_queryBlock").onclick=this.queryBlock;
@@ -1796,7 +1460,6 @@
 
                var _assets={
                     init:function(){
-                        // gel(".is_charge_market_fee").onclick=this.charge_market_fee_change;
                         gel("#btn_get_createAsset_fee").onclick=function(){
                             _assets.createAsset(true);
                         }
@@ -2002,11 +1665,7 @@
                                   `;
                                     return;
                                 }
-
-                                // <p>市场手续费：<span class="market_fee_percent">${options.market_fee_percent} %</span></p>
-                                // <p>市场手续费上限：<span class="max_market_fee">${options.max_market_fee} ${symbol}</span></p>
-                               
-
+                         
                                 var assets_html=""
                                 res.data.forEach(function(asset,index){
                                     assets_html+=`<tr>
@@ -2035,10 +1694,6 @@
                                 quoteAmount:gel(".div_createAsset .quote").value,
                                 baseAmount:gel(".div_createAsset .base").value
                             },
-                            // chargeMarketFee:{//是否收取交易手续费,不传该参数说明不收取交易手续费
-                            //     marketFeePercent:gel(".div_createAsset .market_fee_percent").value,
-                            //     maxMarketFee:gel(".div_createAsset .max_market_fee").value
-                            // },
                             description:gel(".div_createAsset .description").value,
                             onlyGetFee:isOnlyGetFee,
                             callback:function(res){
