@@ -748,7 +748,8 @@ data:{
 方法：unsubscribe  
 功能：取消订阅   
 参数：  
-method：取消指定订阅的方法名，如订阅区块subscribeToBlocks，不传该参数则取消所有订阅。该方法不传callback则返回promise  
+method(Array)：取消指定订阅的方法名，如取消订阅区块和区块链交易['subscribeToBlocks','subscribeToBlocks']，不传该参数则取消所有订阅。该方法不传callback则返回promise。  
+注：若需指定取消某一用户的订阅,则参数为['subscribeToUserOperations|account'] 
 callback：回调函数 
 
 ### 交易备注解密   

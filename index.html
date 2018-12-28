@@ -496,6 +496,15 @@
                                     基准资产数量：<input type="text" class="base" value="10" onKeyUp="_assets.c_priceChange()" />
                                     <p>单价：<span class="price">0.1 TEST/COCOS</span></p>
                                 </fieldset>
+                                <!-- <div class="checkbox">
+                                        收取交易手续费:<input type="checkbox" class="is_charge_market_fee" style="width:auto;" />          
+                                </div>
+                               
+                                <fieldset style="display:none" class="fieldset_charge_market_fee">
+                                    <legend>交易手续费率 </legend>
+                                    交易手续费率 (%)：<input type="text" class="market_fee_percent" value="1" />
+                                    最大交易手续费：<input type="text" class="max_market_fee" value="1" />
+                                </fieldset> -->
                                 <br>
                                 描述<textarea rows="6" class="description"></textarea>
                                 <p>创建资产手续费：<span class="fee"></span></p>
@@ -684,7 +693,7 @@
                         
                         <div class="div_module_c" id="div_sell" pclass="class_3">
                             <h2>创建游戏NH资产出售单</h2>
-                            <div class="div_multiple_opt div_module">
+                            <div class="div_creatNHAssetOrder div_module">
                                 OTC交易平台账户otcAccount，用于收取挂单费用
                                 <input  type="text" class="receiver" value="otcaccount" ><br><br>
                                 挂单费用fee<input  type="text" class="token" value="1"><br><br>
@@ -699,8 +708,9 @@
                                             <option value ="1">请选择您要卖的NH资产</option>
                                         </select>
                                 <br><br><br>
-                                
-                                <input type="button" id="btn_sell" value="确认卖出NH资产"  />
+                                <p>手续费：<span class="fee"></span></p>
+                                <input type="button" id="btn_get_creatNHAssetOrder_fee" value="获取本次交易所需手续费"  /><br><br>
+                                <input type="button" id="btn_creatNHAssetOrder" value="确认卖出NH资产"  />
                             </div>
                         </div>
 
@@ -1046,8 +1056,8 @@
                                     <br>
                                 </div>
                             </div>
-      
-                         
+ 
+                           
                             <div class="div_module_c" id="div_getTransactionBaseFee"  pclass="class_12" >
                                 <h2>查询交易类型基础手续费</h2>
                                 <div class="div_getTransactionBaseFee div_module">
@@ -1069,9 +1079,9 @@
        
     </div>
 
-        <script src="bcx.min.js?v=7"></script>
-        <script type="text/javascript" src="./FELib/jquery-1.8.3.min.js" charset="utf-8"></script>
-        <script type="text/javascript" src="./FELib/jsonview/jquery.jsonview.min.js" charset="utf-8"></script>
+        <script src="bcx.min.js"></script>
+        <script type="text/javascript" src="FELib/jquery-1.8.3.min.js" charset="utf-8"></script>
+        <script type="text/javascript" src="FELib/jsonview/jquery.jsonview.min.js" charset="utf-8"></script>
 
         <script>
                 function loadLeftNavs(){
@@ -1095,11 +1105,10 @@
 
                 loadLeftNavs();
                 
-
-                var bcx=new BCX({
+                var _configParams={
                     default_ws_node:"ws://47.93.62.96:8050",
                     ws_node_list:[
-                     {url:"ws://47.93.62.96:8050",name:"COCOS最新链(香港)"}
+                        {url:"ws://47.93.62.96:8050",name:"COCOS最新链"}
                     ],
                     networks:[
                       {
@@ -1111,8 +1120,9 @@
                     auto_reconnect:true,
                     worker:false
                     //app_keys:["5HxzZncKDjx7NEaEv989Huh7yYY7RukcJLKBDQztXAmZYCHWPgd"]
-                });
-                
+                };
+
+                var bcx=new BCX(_configParams);
                 //可以不用初始化，直接调用，API会自动判断是否初始化，热没有初始化则自动初始化
                 bcx.init().then(res=>{
                     console.info("init res",res);
@@ -1128,9 +1138,9 @@
                     gel("#btn_publishVotes").onclick=publishVotes;
                     gel("#btn_getTransactionBaseFee").onclick=getTransactionBaseFee;
                     gel("#btn_unsubscribe").onclick=unsubscribe;
-
                 });
                 
+
                 var _explorer={
                     init:function(){
                         gel("#btn_queryBlock").onclick=this.queryBlock;
@@ -1145,9 +1155,12 @@
                     subscribeToChainTranscation:function(){
                         bcx.subscribeToChainTranscation({
                             callback:function(res){
-                                console.info("subscribeToChainTranscation res",res);
+                                // console.info("subscribeToChainTranscation res",res);
                                 if(res.code==1){
                                     _explorer.allOps.unshift(res.data);
+                                    if( _explorer.allOps.length>20){
+                                        _explorer.allOps.length=20;
+                                    }
                                     renderOp(_explorer.allOps,".div_subscribeToChainTranscation tbody",true);
                                 }
                             }
@@ -1160,8 +1173,8 @@
                                 console.info("subscribeBlocks res",res);
                                 if(res.code==1){
                                     _explorer.blocks.unshift(res.data);
-                                    if(_explorer.blocks.length>10){
-                                        _explorer.blocks.length=10; 
+                                    if(_explorer.blocks.length>20){
+                                        _explorer.blocks.length=20; 
                                     }
                                     var blocks_html="";
                                     _explorer.blocks.forEach(function(block){
@@ -1359,7 +1372,7 @@
                         clearTimeout(_explorer.getWitnessesForExplorerTimer);
                         bcx.lookupWitnessesForExplorer({
                             callback:function(res){
-                                // console.info("getWitnessesForExplorer res",res);
+                                console.info("getWitnessesForExplorer res",res);
                                 if(res.code==1){
                                     let {active_witnesses,current_witness_name,participation,coreAssetSymbol,
                                         witness_pay_per_block,witness_budget,next_maintenance_time}=res.data;
@@ -1460,6 +1473,7 @@
 
                var _assets={
                     init:function(){
+                        // gel(".is_charge_market_fee").onclick=this.charge_market_fee_change;
                         gel("#btn_get_createAsset_fee").onclick=function(){
                             _assets.createAsset(true);
                         }
@@ -1665,7 +1679,11 @@
                                   `;
                                     return;
                                 }
-                         
+
+                                // <p>市场手续费：<span class="market_fee_percent">${options.market_fee_percent} %</span></p>
+                                // <p>市场手续费上限：<span class="max_market_fee">${options.max_market_fee} ${symbol}</span></p>
+                               
+
                                 var assets_html=""
                                 res.data.forEach(function(asset,index){
                                     assets_html+=`<tr>
@@ -1694,6 +1712,10 @@
                                 quoteAmount:gel(".div_createAsset .quote").value,
                                 baseAmount:gel(".div_createAsset .base").value
                             },
+                            // chargeMarketFee:{//是否收取交易手续费,不传该参数说明不收取交易手续费
+                            //     marketFeePercent:gel(".div_createAsset .market_fee_percent").value,
+                            //     maxMarketFee:gel(".div_createAsset .max_market_fee").value
+                            // },
                             description:gel(".div_createAsset .description").value,
                             onlyGetFee:isOnlyGetFee,
                             callback:function(res){
@@ -1865,15 +1887,20 @@
                                 renderOp(res.data,".div_getOperations tbody")
                             }
                         })
-
+                        let count=0;
                         bcx.subscribeToUserOperations({
                             account: gel(".div_getOperations .account").value,
                             callback:function(res){
-                                console.info("subscribeToUserOperations res",res);
+                                // console.info("subscribeToUserOperations111111 res",res);
+                                console.info("count",count);
+                                count++;
                                 if(res.code==1){
                                     // _user.operations=res.data.operations;
                                     _user.operations.unshift(res.data.operation);
-                                    console.info(" _user.operations", _user.operations);
+                                    if(_user.operations.length>100){
+                                        _user.operations.length=100;
+                                    }
+                                    // console.info(" _user.operations", _user.operations);
                                     renderOp(_user.operations,".div_getOperations tbody")
                                 }
                             }
@@ -2133,7 +2160,13 @@
 
                         gel("#btn_transferNHAsset").onclick=this.transferNHAsset;
 
-                        gel("#btn_sell").onclick=this.creatNHAssetOrder;
+                        gel("#btn_get_creatNHAssetOrder_fee").onclick=()=>{
+                            this.creatNHAssetOrder(true);
+                        };
+
+                        gel("#btn_creatNHAssetOrder").onclick=()=>{
+                            this.creatNHAssetOrder(false);
+                        };
 
                         gel("#btn_queryNHAssetOrders").onclick=this.queryNHAssetOrders;
 
@@ -2237,22 +2270,28 @@
                             }
                         })
                     },
-                    creatNHAssetOrder:function(){
+                    creatNHAssetOrder:function(onlyGetFee){
                         var selData= gel("#div_sell .sel_goods");
                         bcx.creatNHAssetOrder(
                             {
-                                otcAccount:gel(".div_multiple_opt .receiver").value,
-                                orderFee:gel(".div_multiple_opt .token").value,
+                                otcAccount:gel(".div_creatNHAssetOrder .receiver").value,
+                                orderFee:gel(".div_creatNHAssetOrder .token").value,
                                 NHAssetId:selData.value,
-                                price:gel(".div_multiple_opt .price").value,
-                                priceAssetId:gel(".div_multiple_opt .priceAssetSymbol").value,
-                                expiration:gel(".div_multiple_opt .expiration").value,
-                                memo:gel(".div_multiple_opt .memo").value
+                                price:gel(".div_creatNHAssetOrder .price").value,
+                                priceAssetId:gel(".div_creatNHAssetOrder .priceAssetSymbol").value,
+                                expiration:gel(".div_creatNHAssetOrder .expiration").value,
+                                memo:gel(".div_creatNHAssetOrder .memo").value,
+                                onlyGetFee
                             }
                         ).then(res=>{
                             console.info('creatNHAssetOrder result',res);
                             if(res.code!=1){
                                 alert(res.message);
+                                return;
+                            }
+                            if(onlyGetFee){
+                                let {fee_amount,fee_symbol}=res.data;
+                                gel(".div_creatNHAssetOrder .fee").innerText=fee_amount+" "+fee_symbol;
                             }
                         })
                     },
@@ -2270,7 +2309,8 @@
                     fillNHAssetOrder:function(item_orders_index){
                         let {order,seller_name,game_item_id,price_amount,price_asset_id,price_asset_symbol}=this.sell_nh_orders[item_orders_index];
                         bcx.fillNHAssetOrder({
-                            orderId:order, 
+                            orderId:order,
+                            onlyGetFee:true,
                             callback:function(res){
                                 console.info("fillNHAssetOrder res",res)
                                 _NHAssets.queryNHAssetOrders();
@@ -2431,7 +2471,7 @@
                             callback:function(res){
                                 console.info('queryAccountNHAssets res',res);
 
-                                var sel_goods=gel(".div_multiple_opt .sel_goods");
+                                var sel_goods=gel(".div_creatNHAssetOrder .sel_goods");
                                 var sel_goods_htmls='<option value="-1">请选择您要卖的NH资产</option>'
                                 if(res.code==1){
                                     if(res.data.length){
@@ -2608,7 +2648,7 @@
                 }
 
                 function unsubscribe(){
-                    bcx.unsubscribe({method:gel(".div_unsubscribe .method").value})
+                    bcx.unsubscribe({methods:[gel(".div_unsubscribe .method").value]})
                     .then(res=>{
                         console.info("unsubscribe res",res);
                     });
@@ -2625,23 +2665,26 @@
 
                         if(memo){
                             if(item.type=="transfer"&&!isAllOP){
-                                    if(isLocked){
-                                    memo=`<a href="javascript:decodeMemo(${index});">解锁</a>`
-                                }else{
-                                    memo=bcx.decodeMemo(memo);
-                                    if(memo.code==1){
-                                        memo=memo.data.text||"";
-                                    }
+                                console.info("memo",memo)
 
-                                    if(memo)
-                                        memo="备注："+memo;
-                                }
+                                    if(isLocked){
+                                        memo=`<a href="javascript:decodeMemo(${index});">解锁</a>`
+                                    }else{
+                                        memo=bcx.decodeMemo(memo);
+                                        if(memo.code==1){
+                                            memo=memo.data.text||"";
+                                        }
+
+                                        if(memo)
+                                            memo="备注："+memo;
+                                    }
                             }else if(item.type=="creat_nh_asset_order"){
                                 memo="备注："+memo;
+                            }else{
+                                memo="";
                             }
                            
                         }
-
                         if(item.type=="call_contract_function"&& item.result.contract_affecteds.length){
                             var results="";
                             item.result.contract_affecteds.forEach(c_op=>{

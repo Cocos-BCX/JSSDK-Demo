@@ -76,3 +76,4 @@ bcx.subscribeToBlocks({
         console.info("subscribeToBlocks res",res);
     }
 })
+
