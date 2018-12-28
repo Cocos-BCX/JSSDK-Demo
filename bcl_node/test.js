@@ -55,25 +55,24 @@ bcx.subscribeToRpcConnectionStatus({
     }
 })
 
-bcx.subscribeToChainTranscation({
-    callback:function(res){
-        console.log("subscribeToChainTranscation res",res);
-        if(res.status==1&&res.data.type=="account_create"){
-            bcx.transferAsset({
-                to:res.data.parseOperations.new_account,//query.to,
-                amount:100,//query.token,
-                assetId:"COCOS",
-                memo:"新账户注册送100(node服务)"
-            }).then(result=>{
-                console.info('bcx transferAsset',result);
-            })
-        }
-    }
-})
+// bcx.subscribeToChainTranscation({
+//     callback:function(res){
+//         console.log("subscribeToChainTranscation res",res);
+//         if(res.status==1&&res.data.type=="account_create"){
+//             bcx.transferAsset({
+//                 to:res.data.parseOperations.new_account,//query.to,
+//                 amount:100,//query.token,
+//                 assetId:"COCOS",
+//                 memo:"新账户注册送100(node服务)"
+//             }).then(result=>{
+//                 console.info('bcx transferAsset',result);
+//             })
+//         }
+//     }
+// })
 
 bcx.subscribeToBlocks({
     callback:res=>{
         console.info("subscribeToBlocks res",res);
     }
 })
-
