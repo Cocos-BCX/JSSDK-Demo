@@ -1887,13 +1887,10 @@
                                 renderOp(res.data,".div_getOperations tbody")
                             }
                         })
-                        let count=0;
-                        bcx.subscribeToUserOperations({
+                        bcx.subscribeToAccountOperations({
                             account: gel(".div_getOperations .account").value,
                             callback:function(res){
                                 // console.info("subscribeToUserOperations111111 res",res);
-                                console.info("count",count);
-                                count++;
                                 if(res.code==1){
                                     // _user.operations=res.data.operations;
                                     _user.operations.unshift(res.data.operation);
@@ -2665,8 +2662,6 @@
 
                         if(memo){
                             if(item.type=="transfer"&&!isAllOP){
-                                console.info("memo",memo)
-
                                     if(isLocked){
                                         memo=`<a href="javascript:decodeMemo(${index});">解锁</a>`
                                     }else{
