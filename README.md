@@ -101,10 +101,10 @@ data:{
 | 117 | The current asset precision is configured as X ,and the decimal cannot exceed X | 当前资产精度配置为 X ，小数点不能超过 X | transferAsset等 | 
 | 118 | Encrypt memo failed | 备注加密失败 | transferAsset等 | 
 | 119 | Expiry of the transaction | 交易过期 | transferAsset等 | 
-| 120 | Error fetching account record | 获取帐户记录错误 | queryUserOperations | 
+| 120 | Error fetching account record | 获取帐户记录错误 | queryAccountOperations | 
 | 121 | block and transaction information cannot be found | 查询不到相关区块及交易信息 | queryBlockTXID | 
 | 122 | Parameter blockOrTXID is incorrect | 参数blockOrTXID不正确 | queryBlockTXID | 
-| 123 | Parameter account can not be empty | 参数account不能为空 | queryUserInfo | 
+| 123 | Parameter account can not be empty | 参数account不能为空 | queryAccountInfo | 
 | 124 | Receivables account name can not be empty | 收款方账户名不能为空 | transferAsset | 
 | 125 | Users do not own XX assets | 用户未拥有 XX 资产 | queryAccountBalances | 
 | 127 | No reward available | 没有可领取的奖励 | getVestingBalances,claimVestingBalance | 
@@ -202,9 +202,9 @@ data:{
   {  
 		"accounts": ["tom0002"],  
 		"currentAccount": {  
-			"userId": "1.2.20",  
-			"isLocked": true,  
-			"name": "tom0002"  
+			"account_id": "1.2.20",  
+			"locked": true,  
+			"account_name": "tom0002"  
 		}
   }  
 ```  
@@ -271,7 +271,7 @@ data:{
 	callback：回调函数  
   
 ### 获取当前账户信息  
-方法：getUserInfo  
+方法：getAccountInfo  
 功能：当账户处于解锁状态，返回数据中将包含账户名name  
 参数：无  
   
@@ -292,7 +292,7 @@ data:{
   
   
 ### 查询账户记录  
-方法：queryUserOperations  
+方法：queryAccountOperations  
 功能：查询用户近期操作记录  
 参数：  
 	account：账户名  
