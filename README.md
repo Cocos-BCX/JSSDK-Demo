@@ -670,7 +670,7 @@ data:{
 方法：lookupWSNodeList  
 功能：查看API服务器节点列表信息  
 参数：   
-	isRefreshPing:是否刷新ping，此刷新只能刷新非当前连接节点，若想全刷新则调用init({refresh:true})   
+	refresh:是否刷新ping，此刷新只能刷新非当前连接节点，若想全刷新则调用init({refresh:true})   
 	callback：回调函数  
   
 ### 连接API服务器节点  
