@@ -660,10 +660,10 @@ data:{
 ### bcx初始化 
 方法：init  
 功能：初始化内容包括RPC连接、重新载入Indexedb数据等 
-参数：
-	refresh:选填，第一次init后，第二次init会使用缓存信息。只有当refresh为true才会重新载入数据，重新初始化RPC模块
-	autoReconnect:选填，RPC断开后是否进行重连  
-	subscribeToRpcConnectionStatusCallback:选填，监听RPC连接状态,返回 status=>closed：rpc连接关闭,error：rpc连接错误，realopen：rpc连接成功。此监听有单独的方法提供  
+参数：  
+	refresh:选填，第一次init后，第二次init会使用缓存信息。只有当refresh为true才会重新载入数据，重新初始化RPC模块  
+	autoReconnect:选填，RPC断开后是否进行重连    
+	subscribeToRpcConnectionStatusCallback:选填，监听RPC连接状态,返回 status=>closed：rpc连接关闭,error：rpc连接错误，realopen：rpc连接成功。此监听有单独的方法提供     
 	callback：选填，回调函数  
 	
 方法：lookupWSNodeList  
