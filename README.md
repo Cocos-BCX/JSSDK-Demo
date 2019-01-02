@@ -297,6 +297,8 @@ data:{
 参数：  
 	account：账户名  
 	limit：查询记录条数  
+	startId:开始账户记录id,如果查询范围是整个账户记录，则最开始的账户记录则是startId    
+	endId:结束账户记录id,如果查询范围是整个账户记录，则最新的账户记录则是endId  
 	callback：查看API统一参数说明  
   
 ### 订阅用户操作记录变更  
@@ -625,6 +627,7 @@ data:{
 方法：subscribeToBlocks  
 功能：监听实时出块信息  
 参数：  
+	isReqTrx:订阅的区块是否包含交易信息，默认包含
 	callback：回调函数  
   
 ### 订阅区块链交易  
@@ -654,10 +657,19 @@ data:{
   
 ## API服务器节点相关接口  
   
-### 查看API服务器节点列表  
+### bcx初始化 
+方法：init  
+功能：初始化内容包括RPC连接、重新载入Indexedb数据等 
+参数：
+	refresh:选填，第一次init后，第二次init会使用缓存信息。只有当refresh为true才会重新载入数据，重新初始化RPC模块
+	autoReconnect:选填，RPC断开后是否进行重连  
+	subscribeToRpcConnectionStatusCallback:选填，监听RPC连接状态,返回 status=>closed：rpc连接关闭,error：rpc连接错误，realopen：rpc连接成功。此监听有单独的方法提供  
+	callback：选填，回调函数  
+	
 方法：lookupWSNodeList  
 功能：查看API服务器节点列表信息  
-参数：  
+参数：
+	isRefreshPing:是否刷新ping，此刷新只能刷新非当前连接节点，若想全刷新则调用init({refresh:true})
 	callback：回调函数  
   
 ### 连接API服务器节点  
