@@ -665,11 +665,12 @@ data:{
 	autoReconnect:选填，RPC断开后是否进行重连    
 	subscribeToRpcConnectionStatusCallback:选填，监听RPC连接状态,返回 status=>closed：rpc连接关闭,error：rpc连接错误，realopen：rpc连接成功。此监听有单独的方法提供     
 	callback：选填，回调函数  
-	
+
+### 查看API服务器节点列表  	
 方法：lookupWSNodeList  
 功能：查看API服务器节点列表信息  
-参数：
-	isRefreshPing:是否刷新ping，此刷新只能刷新非当前连接节点，若想全刷新则调用init({refresh:true})
+参数：   
+	isRefreshPing:是否刷新ping，此刷新只能刷新非当前连接节点，若想全刷新则调用init({refresh:true})   
 	callback：回调函数  
   
 ### 连接API服务器节点  
