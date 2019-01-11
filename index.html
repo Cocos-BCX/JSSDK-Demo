@@ -637,7 +637,6 @@
                             <div class="div_proposeRelateWorldView div_module">
                                 <p>提议关联到某一个世界观，需要该世界观的创建人审批</p>
                                 世界观<input  type="text" class="world_view" value="TEST"><br><br>
-                                世界观创建人<input  type="text" class="view_owner" value="test1"><br><br>
                                 <input type="button" id="btn_proposeRelateWorldView" value="确认关联"  />
                             </div>
                         </div>
@@ -2230,7 +2229,6 @@
                     proposeRelateWorldView:function(){
                         bcx.proposeRelateWorldView({
                             worldView:gel(".div_proposeRelateWorldView .world_view").value,
-                            viewOwner:gel(".div_proposeRelateWorldView .view_owner").value,
                             callback:function(res){
                                 console.info('proposeRelateWorldView res',res);
                             }

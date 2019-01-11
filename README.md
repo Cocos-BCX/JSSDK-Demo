@@ -492,7 +492,6 @@ data:{
 功能：提议关联到某一个世界观，需要该世界观的创建人审批  
 参数：  
 	worldView：需要关联的世界观名  
-	viewOwner：需要关联的世界观创建者  
   
 ### 批准关联世界观的提议  
 方法：approvalProposal  
