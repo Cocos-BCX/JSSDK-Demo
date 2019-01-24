@@ -494,7 +494,7 @@
                                     <legend>手续费汇率</legend>
                                     标价资产数量：<input type="text" class="quote" value="1" onKeyUp="_assets.c_priceChange()" />
                                     基准资产数量：<input type="text" class="base" value="10" onKeyUp="_assets.c_priceChange()" />
-                                    <p>单价：<span class="price">0.1 TEST/COCOS</span></p>
+                                    <p>单价：<span class="price">0.1 COCOS/TEST</span></p>
                                 </fieldset>
                                 <!-- <div class="checkbox">
                                         收取交易手续费:<input type="checkbox" class="is_charge_market_fee" style="width:auto;" />          
@@ -637,12 +637,14 @@
                             <div class="div_proposeRelateWorldView div_module">
                                 <p>提议关联到某一个世界观，需要该世界观的创建人审批</p>
                                 世界观<input  type="text" class="world_view" value="TEST"><br><br>
+                                <!-- 世界观创建人<input  type="text" class="view_owner" value="test1"><br><br> -->
                                 <input type="button" id="btn_proposeRelateWorldView" value="确认关联"  />
                             </div>
                         </div>
                         <div class="div_module_c" id="loadAccountProposals" pclass="class_3" >
                             <h2>获取当前用户收到的提议并审批</h2>
                             <div class="div_loadAccountProposals div_module" style="width:90%;">
+                                account<input  type="text" class="account" value="test1"><br><br>
                                 <input type="button" id="btn_loadAccountProposals" value="立即获取"  /><br><br>
                                 <table class="table">
                                     <thead>
@@ -670,6 +672,8 @@
                                     NH资产数量(默认为1)<input  type="text" class="nh_count" value="1" placeholder="" ><br><br><br>
                                     type(默认为0,可不传,如果批量创建不同NH资产传1)<input  type="text" class="type" value="0" placeholder="" ><br><br>
                                     批量创建不同NH资产(type为1才使用该参数)<textarea rows="6" class="items"></textarea><br><br><br>
+                                    
+                                    提议目标账户<input  type="text" class="propose_account" value="test1" ><br><br>
                                     <input type="button" id="btn_create_nh" value="确认创建"  />
                                 </div>
                             </div>    
@@ -1055,8 +1059,6 @@
                                     <br>
                                 </div>
                             </div>
- 
-                           
                             <div class="div_module_c" id="div_getTransactionBaseFee"  pclass="class_12" >
                                 <h2>查询交易类型基础手续费</h2>
                                 <div class="div_getTransactionBaseFee div_module">
@@ -1078,9 +1080,9 @@
        
     </div>
 
-        <script src="bcx.min.js"></script>
-        <script type="text/javascript" src="FELib/jquery-1.8.3.min.js" charset="utf-8"></script>
-        <script type="text/javascript" src="FELib/jsonview/jquery.jsonview.min.js" charset="utf-8"></script>
+        <script src="bcx.min.js?v=7"></script>
+        <script type="text/javascript" src="./FELib/jquery-1.8.3.min.js" charset="utf-8"></script>
+        <script type="text/javascript" src="./FELib/jsonview/jquery.jsonview.min.js" charset="utf-8"></script>
 
         <script>
                 function loadLeftNavs(){
@@ -1107,9 +1109,16 @@
                 var _configParams={
                     default_ws_node:"ws://47.93.62.96:8050",
                     ws_node_list:[
-                        {url:"ws://47.93.62.96:8050",name:"COCOS最新链"}
+                        {url:"ws://47.93.62.96:8050",name:"COCOS最新链(香港)"},
+                        {url:"ws://39.96.33.61:8080",name:"COCOS节点2"},
+                        {url:"ws://39.96.29.40:8050",name:"COCOS节点3"},
+                        {url:"ws://39.106.126.54:8050",name:"COCOS节点4"}
                     ],
                     networks:[
+                    //   {
+                    //     core_asset:"COCOS",
+                    //     chain_id:"52e65ef663454f910ba3fe5f0b97a359f6a15aa50a329ae8de4d2b38eb0ee7a1" 
+                    //   },
                       {
                         core_asset:"COCOS",
                         chain_id:"53b98adf376459cc29e5672075ed0c0b1672ea7dce42b0b1fe5e021c02bda640" 
@@ -1120,10 +1129,13 @@
                     worker:false
                     //app_keys:["5HxzZncKDjx7NEaEv989Huh7yYY7RukcJLKBDQztXAmZYCHWPgd"]
                 };
-
                 var bcx=new BCX(_configParams);
                 //可以不用初始化，直接调用，API会自动判断是否初始化，热没有初始化则自动初始化
-                bcx.init().then(res=>{
+                bcx.init({
+                    subscribeToRpcConnectionStatusCallback:res=>{
+                        console.info("subscribeToRpcConnectionStatusCallback res",res);
+                    }
+                }).then(res=>{
                     console.info("init res",res);
                     _wallet.init();
                     _user.init();
@@ -1138,7 +1150,7 @@
                     gel("#btn_getTransactionBaseFee").onclick=getTransactionBaseFee;
                     gel("#btn_unsubscribe").onclick=unsubscribe;
                 });
-                
+           
 
                 var _explorer={
                     init:function(){
@@ -1154,7 +1166,7 @@
                     subscribeToChainTranscation:function(){
                         bcx.subscribeToChainTranscation({
                             callback:function(res){
-                                // console.info("subscribeToChainTranscation res",res);
+                                console.info("subscribeToChainTranscation res",res);
                                 if(res.code==1){
                                     _explorer.allOps.unshift(res.data);
                                     if( _explorer.allOps.length>20){
@@ -1168,6 +1180,7 @@
                     blocks:[],
                     subscribeBlocks:function(){
                         bcx.subscribeToBlocks({
+                            isReqTrx:true,
                             callback:function(res){
                                 console.info("subscribeBlocks res",res);
                                 if(res.code==1){
@@ -1878,6 +1891,8 @@
                     fetchAndSubscribe:function(){
                         bcx.queryUserOperations({
                             account: gel(".div_getOperations .account").value,
+                            startId:"1.11.0",
+                            endId:"1.11.0",
                             limit:gel(".div_getOperations .limit").value
                         }).then(res=>{
                             console.info("queryUserOperations res",res);
@@ -2043,29 +2058,31 @@
                         }})
                     },
                     lookupWSNodeList:function(){
-                       var nodes=bcx.lookupWSNodeList({
-                           callback:res=>{
-                                console.info("getWSNodeList res",res);
-                               if(res.code==1){
-                                gel(".div_getWSNodeList .selected_url").innerText=res.data.selectedNodeUrl
-                                 var nodes_html="";
-                                 res.data.nodes.forEach((node,index)=>{
-                                    let {name,url,ping}=node;
-                                    let connect=url!=res.data.selectedNodeUrl?
-                                    `<a href="javascript:_nodes.switchAPINode('${url}')">连接</a>
-                                    <a href="javascript:_nodes.deleteAPINode('${url}')">删除</a>`:"";
-                                    nodes_html+=`<tr>
-                                            <td>${index+1}</td>
-                                            <td >${name}</td>
-                                            <td>${url}</td>
-                                            <td>${ping} ms</td>
-                                            <td>${connect}</td>
-                                        </tr>`
-                                 });
-                                 gel(".div_getWSNodeList tbody").innerHTML=nodes_html;
-                               }
-                           }
-                       });  
+                        var nodes=bcx.lookupWSNodeList({
+                                refresh:false,
+                                callback:res=>{
+                                    console.info("getWSNodeList res",res);
+                                    if(res.code==1){
+                                        gel(".div_getWSNodeList .selected_url").innerText=res.data.selectedNodeUrl
+                                        var nodes_html="";
+                                        res.data.nodes.forEach((node,index)=>{
+                                            let {name,url,ping}=node;
+                                            let connect=url!=res.data.selectedNodeUrl?
+                                            `<a href="javascript:_nodes.switchAPINode('${url}')">连接</a>
+                                            <a href="javascript:_nodes.deleteAPINode('${url}')">删除</a>`:"";
+                                            nodes_html+=`<tr>
+                                                    <td>${index+1}</td>
+                                                    <td >${name}</td>
+                                                    <td>${url}</td>
+                                                    <td>${ping} ms</td>
+                                                    <td>${connect}</td>
+                                                </tr>`
+                                        });
+                                        gel(".div_getWSNodeList tbody").innerHTML=nodes_html;
+                                    }
+                                }
+                            }); 
+                      
                     },
                     switchAPINode:function(url){
                         bcx.switchAPINode({
@@ -2193,7 +2210,9 @@
                         })
                     },
                     getAccountProposals:function(){
-                        bcx.getAccountProposals().then(res=>{
+                        bcx.getAccountProposals({
+                            account:gel(".div_loadAccountProposals .account").value
+                        }).then(res=>{
                             console.info("res",res);
                             if(res.code==1){
                                 var htmls="";
@@ -2202,7 +2221,7 @@
                                         <td>${index+1}</td>
                                         <td>${proposal.id}</td>
                                         <td>${proposal.parse_operations_text}</td>
-                                        <td>${proposal.expiration_time}</td>
+                                        <td>${proposal.expiration}</td>
                                         <td><a  href="javascript:_NHAssets.approvalProposal('${proposal.id}')">批准</a></td>
                                     </tr>`
                                 });
@@ -2229,6 +2248,7 @@
                     proposeRelateWorldView:function(){
                         bcx.proposeRelateWorldView({
                             worldView:gel(".div_proposeRelateWorldView .world_view").value,
+                            // viewOwner:gel(".div_proposeRelateWorldView .view_owner").value,
                             callback:function(res){
                                 console.info('proposeRelateWorldView res',res);
                             }
@@ -2243,6 +2263,7 @@
                             NHAssetsCount:gel(".div_create_nh .nh_count").value,
                             type:gel(".div_create_nh .type").value,
                             NHAssets:_NHAssets.create_nh_assets,
+                            proposeAccount:gel(".div_create_nh .propose_account").value,
                             callback:function(res){
                                 console.info("creatNHAsset res",res);
                             }
@@ -2633,17 +2654,15 @@
                 function getTransactionBaseFee(){
                     bcx.queryTransactionBaseFee({
                         transactionType:gel(".div_getTransactionBaseFee .transactionType").value,
-                        feeAssetId:gel(".div_getTransactionBaseFee .feeAssetId").value,
-                        callback:function(res){
-                            console.info("getTransactionBaseFee res",res);
-                            $(".div_getTransactionBaseFee .res").JSONView(res);
-                            
-                        }
+                        feeAssetId:gel(".div_getTransactionBaseFee .feeAssetId").value
+                    }).then(res=>{
+                        console.info("getTransactionBaseFee res",res);
+                        $(".div_getTransactionBaseFee .res").JSONView(res);
                     })
                 }
 
                 function unsubscribe(){
-                    bcx.unsubscribe({methods:[gel(".div_unsubscribe .method").value]})
+                    bcx.unsubscribe({methods:gel(".div_unsubscribe .method").value.split(",")})//
                     .then(res=>{
                         console.info("unsubscribe res",res);
                     });
@@ -2661,23 +2680,22 @@
                         if(memo){
                             if(item.type=="transfer"&&!isAllOP){
                                     if(isLocked){
-                                        memo=`<a href="javascript:decodeMemo(${index});">解锁</a>`
-                                    }else{
-                                        memo=bcx.decodeMemo(memo);
-                                        if(memo.code==1){
-                                            memo=memo.data.text||"";
-                                        }
-
-                                        if(memo)
-                                            memo="备注："+memo;
+                                    memo=`<a href="javascript:decodeMemo(${index});">解锁</a>`
+                                }else{
+                                    memo=bcx.decodeMemo(memo);
+                                    if(memo.code==1){
+                                        memo=memo.data.text||"";
                                     }
+
+                                    if(memo)
+                                        memo="备注："+memo;
+                                }
                             }else if(item.type=="creat_nh_asset_order"){
                                 memo="备注："+memo;
-                            }else{
-                                memo="";
                             }
                            
                         }
+
                         if(item.type=="call_contract_function"&& item.result.contract_affecteds.length){
                             var results="";
                             item.result.contract_affecteds.forEach(c_op=>{
