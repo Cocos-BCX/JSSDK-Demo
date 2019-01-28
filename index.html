@@ -904,6 +904,16 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <div class="div_module_c" id="div_queryDataByIds" pclass="class_7" >
+                                <h2>查询数据通过id</h2>
+                                <div class="div_queryDataByIds div_module" style="width:90%;">
+                                     ids(Array)<input  type="text" class="ids" value="4.2.1" placeholder="查询区块或交易ID"><br><br>
+                                    <input type="button" id="btn_queryDataByIds" value="立即查询" /><br><br>
+                                    <p class="res"></p>
+                                </div>
+                            </div>
+
 
                             <div class="div_module_c" id="div_getWitnessesForExplorer" pclass="class_7" >
                                 <h2>查看节点出块信息</h2>
@@ -1156,11 +1166,21 @@
                     init:function(){
                         gel("#btn_queryBlock").onclick=this.queryBlock;
                         gel("#btn_queryTXID").onclick=this.queryTXID;
+                        gel("#btn_queryDataByIds").onclick=this.queryDataByIds;  
 
                         gel("#btn_subscribeToChainTranscation").onclick=this.subscribeToChainTranscation;
                         gel("#btn_subscribeBlocks").onclick=this.subscribeBlocks;
                         gel("#btn_getWitnessesForExplorer").onclick=this.getWitnessesForExplorer;
                         gel("#btn_lookupBlockRewards").onclick=this.lookupBlockRewards;
+                    },
+                    queryDataByIds:function(){
+                        bcx.queryDataByIds({
+                            ids:gel(".div_queryDataByIds .ids").value.split(",")
+                        }).then(res=>{
+                            console.info("queryDataByIds res",res);
+                            if(res.code==1)
+                            $(".div_queryDataByIds .res").JSONView(res);
+                        })
                     },
                     allOps:[],
                     subscribeToChainTranscation:function(){

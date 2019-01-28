@@ -621,7 +621,13 @@ data:{
 功能：通过交易id（即交易hash）查询交易信息  
 参数：  
 	transactionId：交易id  
-  
+
+### 查询信息通过id  
+方法：queryDataByIds 
+功能：通过id查询相关数据信息  
+参数：  
+	ids(Array)：id数组集合  
+
 ### 订阅区块  
 方法：subscribeToBlocks  
 功能：监听实时出块信息  
