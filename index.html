@@ -38,6 +38,7 @@
             .div_module input,.div_module select,.div_module textarea{
                 width: 100%;
             }
+   
             .div_module_c{
                 margin-bottom: 30px;
             }
@@ -121,7 +122,9 @@
             .listCard .row .field{
                 width: 160px;
             }
-
+            .listCard .row .value{
+                flex: 1;
+            }
             .transactions h4{
                 margin:8px 0;
             }
@@ -226,11 +229,7 @@
                 max-width: 600px;
                 overflow: auto;
             }
-/* 
-            .scroll{
-                max-height:250px;
-                overflow:auto;
-            } */
+
         </style>
     </head>
     <body>
@@ -469,7 +468,7 @@
                         <div class="div_module_c" id="div_transferAsset" pclass="class_2"  >
                             <h2>转账</h2>
                             <div class="div_transferAsset div_module">
-                                <div class="div_from_account" style="display:none;">来自<input  type="text" class="from_account" value="test1"><br><br></div>
+                                <div class="div_from_account" style="display:none;">来自<input  type="text" class="from_account" value=""><br><br></div>
                                 发往<input  type="text" class="to_account" value="test2"><br><br>
                                 数量<input type="number" class="transfer_amount"  value="1"><br><br>
                                 资产id<input type="text" class="asset_id"  value="COCOS"><br><br>
@@ -637,14 +636,12 @@
                             <div class="div_proposeRelateWorldView div_module">
                                 <p>提议关联到某一个世界观，需要该世界观的创建人审批</p>
                                 世界观<input  type="text" class="world_view" value="TEST"><br><br>
-                                <!-- 世界观创建人<input  type="text" class="view_owner" value="test1"><br><br> -->
                                 <input type="button" id="btn_proposeRelateWorldView" value="确认关联"  />
                             </div>
                         </div>
                         <div class="div_module_c" id="loadAccountProposals" pclass="class_3" >
                             <h2>获取当前用户收到的提议并审批</h2>
                             <div class="div_loadAccountProposals div_module" style="width:90%;">
-                                account<input  type="text" class="account" value="test1"><br><br>
                                 <input type="button" id="btn_loadAccountProposals" value="立即获取"  /><br><br>
                                 <table class="table">
                                     <thead>
@@ -672,8 +669,6 @@
                                     NH资产数量(默认为1)<input  type="text" class="nh_count" value="1" placeholder="" ><br><br><br>
                                     type(默认为0,可不传,如果批量创建不同NH资产传1)<input  type="text" class="type" value="0" placeholder="" ><br><br>
                                     批量创建不同NH资产(type为1才使用该参数)<textarea rows="6" class="items"></textarea><br><br><br>
-                                    
-                                    提议目标账户<input  type="text" class="propose_account" value="test1" ><br><br>
                                     <input type="button" id="btn_create_nh" value="确认创建"  />
                                 </div>
                             </div>    
@@ -768,6 +763,7 @@
                             <div class="div_queryNHAssetOrders div_module"  style="width:98%;">
                                 资产ID或资产符号<input type="text" class="assetSymbolsOrIds" placeholder="" value="COCOS" ><br><br>
                                 世界观ID或世界观名<input type="text" class="world_views" placeholder="" value="" ><br><br>
+                                baseDescribe<input type="text" class="baseDescribe" placeholder="" value="" ><br><br>
                                 page<input type="text" class="page" placeholder="" value="1" ><br><br>
                                 pageSize<input type="text" class="pageSize" placeholder="" value="10" ><br><br>
                                 <input type="button" id="btn_queryNHAssetOrders" value="立即查询" ><br><br>
@@ -884,7 +880,7 @@
                             <div class="div_module_c" id="div_queryBlock" pclass="class_7" >
                                 <h2>查询区块</h2>
                                 <div class="div_queryBlock blockOrTXID div_module" style="width:90%;">
-                                    block<input  type="text" class="block_num" value="362817" placeholder="查询区块或交易ID"><br><br>
+                                    block<input  type="text" class="block_num" value="71037" placeholder="查询区块或交易ID"><br><br>
                                     <input type="button" id="btn_queryBlock" value="立即查询" /><br><br>
                                     <div class="block listCard">
                                     </div>
@@ -896,7 +892,7 @@
                             <div class="div_module_c" id="div_queryTXID" pclass="class_7" >
                                 <h2>查询交易</h2>
                                 <div class="div_queryTXID blockOrTXID div_module" style="width:90%;">
-                                     TXID<input  type="text" class="trx_id" value="1119f2fd778895add03887b738b2930081b12e0f" placeholder="查询区块或交易ID"><br><br>
+                                     TXID<input  type="text" class="trx_id" value="48ca4a8ec13c0f6d6ee7dd6e0e7197154f642bd10155382b3619ad5835dee365" placeholder="查询区块或交易ID"><br><br>
                                     <input type="button" id="btn_queryTXID" value="立即查询" /><br><br>
                                     <div class="block listCard">
                                     </div>
@@ -904,7 +900,6 @@
                                     </div>
                                 </div>
                             </div>
-                            
                             <div class="div_module_c" id="div_queryDataByIds" pclass="class_7" >
                                 <h2>查询数据通过id</h2>
                                 <div class="div_queryDataByIds div_module" style="width:90%;">
@@ -913,7 +908,6 @@
                                     <p class="res"></p>
                                 </div>
                             </div>
-
 
                             <div class="div_module_c" id="div_getWitnessesForExplorer" pclass="class_7" >
                                 <h2>查看节点出块信息</h2>
@@ -1077,7 +1071,7 @@
                                     <input type="button" id="btn_getTransactionBaseFee" value="立即获取" /><br><br>
                                     <p class="res"></p>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="div_module_c" id="div_unsubscribe"  pclass="class_12" >
                                 <h2>取消订阅</h2>
                                 <div class="div_unsubscribe div_module">
@@ -1085,12 +1079,22 @@
                                     <input type="button" id="btn_unsubscribe" value="确认取消" /><br><br>
                                 </div>
                             </div>
+                            <div class="div_module_c" id="div_apiConfig"  pclass="class_12" >
+                                <h2>API参数配置</h2>
+                                <div class="div_apiConfig div_module">
+                                    <!-- worker<input  type="text" class="worker" value="1"><br><br> -->
+                                    <div class="checkbox">
+                                        实时订阅: <input type="checkbox" class="realSub" style="width:auto;" checked />          
+                                    </div>
+                                    <input type="button" id="btn_apiConfig" value="确认" /><br><br>
+                                </div>
+                            </div>
                 </div>
         </div>
        
     </div>
 
-        <script src="bcx.min.js?v=7"></script>
+        <script src="assets/bcx.min.js?v=7"></script>
         <script type="text/javascript" src="./FELib/jquery-1.8.3.min.js" charset="utf-8"></script>
         <script type="text/javascript" src="./FELib/jsonview/jquery.jsonview.min.js" charset="utf-8"></script>
 
@@ -1117,35 +1121,25 @@
                 loadLeftNavs();
                 
                 var _configParams={
-                    default_ws_node:"ws://47.93.62.96:8050",
+                    // default_ws_node:"ws://47.93.62.96:8020",
                     ws_node_list:[
-                        {url:"ws://47.93.62.96:8050",name:"COCOS最新链(香港)"},
-                        {url:"ws://39.96.33.61:8080",name:"COCOS节点2"},
-                        {url:"ws://39.96.29.40:8050",name:"COCOS节点3"},
-                        {url:"ws://39.106.126.54:8050",name:"COCOS节点4"}
+                         {url:"ws://47.93.62.96:8020",name:"COCOS节点4"}    
                     ],
                     networks:[
-                    //   {
-                    //     core_asset:"COCOS",
-                    //     chain_id:"52e65ef663454f910ba3fe5f0b97a359f6a15aa50a329ae8de4d2b38eb0ee7a1" 
-                    //   },
                       {
                         core_asset:"COCOS",
-                        chain_id:"53b98adf376459cc29e5672075ed0c0b1672ea7dce42b0b1fe5e021c02bda640" 
+                        chain_id:"9fc429a48b47447afa5e6618fde46d1a5f7b2266f00ce60866f9fdd92236e137" 
                       }
                     ], 
-                    faucet_url:"http://47.93.62.96:3000",
+                    faucet_url:"http://47.93.62.96:4000",
                     auto_reconnect:true,
-                    worker:false
+                    worker:false,
+                    real_sub:true
                     //app_keys:["5HxzZncKDjx7NEaEv989Huh7yYY7RukcJLKBDQztXAmZYCHWPgd"]
                 };
                 var bcx=new BCX(_configParams);
                 //可以不用初始化，直接调用，API会自动判断是否初始化，热没有初始化则自动初始化
-                bcx.init({
-                    subscribeToRpcConnectionStatusCallback:res=>{
-                        console.info("subscribeToRpcConnectionStatusCallback res",res);
-                    }
-                }).then(res=>{
+                bcx.init().then(res=>{
                     console.info("init res",res);
                     _wallet.init();
                     _user.init();
@@ -1159,9 +1153,17 @@
                     gel("#btn_publishVotes").onclick=publishVotes;
                     gel("#btn_getTransactionBaseFee").onclick=getTransactionBaseFee;
                     gel("#btn_unsubscribe").onclick=unsubscribe;
-                });
-           
 
+                    gel("#btn_apiConfig").onclick=()=>{
+                        bcx.apiConfig({
+                            // worker:gel(".div_apiConfig .worker").value,
+                            real_sub:gel(".div_apiConfig .realSub").checked                            
+                        }).then(res=>{
+                            console.info("apiConfig res",res);
+                        })
+                    }
+                });
+               
                 var _explorer={
                     init:function(){
                         gel("#btn_queryBlock").onclick=this.queryBlock;
@@ -1172,6 +1174,8 @@
                         gel("#btn_subscribeBlocks").onclick=this.subscribeBlocks;
                         gel("#btn_getWitnessesForExplorer").onclick=this.getWitnessesForExplorer;
                         gel("#btn_lookupBlockRewards").onclick=this.lookupBlockRewards;
+
+
                     },
                     queryDataByIds:function(){
                         bcx.queryDataByIds({
@@ -1246,14 +1250,20 @@
                                             </div>`
 
                             gel(".div_queryTXID .block").innerHTML=block_htmls;
+                            gel(".div_queryTXID .transactions").innerHTML="";
                             let row_txid=document.createElement("div");
                             trx.parse_ops.forEach((op,op_index)=>{
                                 more="";
-                                if(op.type=="call_contract_function"&& op.result.contract_affecteds.length){
+                                if(op.result){
                                     var results="";
-                                    op.result.contract_affecteds.forEach(c_op=>{
-                                        results+="<p>"+c_op.parse_operations_text+"</p>"
-                                    });
+                                    if(op.result.type=="contract_result")
+                                        op.result.contract_affecteds.forEach(c_op=>{
+                                            results+="<p>"+c_op.parse_operations_text+"</p>"
+                                        });
+
+                                    if(op.result.type=="error_result")  results= op.result.message; 
+                                    
+                                    if(results)        
                                     more=`
                                     <a class="more" href="javascript:_explorer.showTXIDOpMore(${op_index});"  >查看结果</a>
                                     <div class="op_results">
@@ -1335,13 +1345,19 @@
                                     row_txid.innerHTML=`<h4>交易Hash: <span>${trx.trx_id}</span></h4>`;
                                     ops.forEach((op,op_index)=>{
                                         more="";
-                                        if(op.type=="call_contract_function"&& op.result.contract_affecteds.length){
+                                        
+                                        if(op.result){
                                             var results="";
-                                            op.result.contract_affecteds.forEach(c_op=>{
-                                                results+="<p>"+c_op.parse_operations_text+"</p>"
-                                            });
+                                            if(op.result.type=="contract_result")
+                                                op.result.contract_affecteds.forEach(c_op=>{
+                                                    results+="<p>"+c_op.parse_operations_text+"</p>"
+                                                });
+        
+                                            if(op.result.type=="error_result")  results= op.result.message; 
+                                            
+                                            if(results)    
                                             more=`
-                                            <a class="more" href="javascript:_explorer.showBlockOpMore(${op_index},${trx_index});"  >查看结果</a>
+                                            <a class="more" href="javascript:_explorer.showTXIDOpMore(${op_index});"  >查看结果</a>
                                             <div class="op_results">
                                                 ${results}
                                             </div>
@@ -1406,7 +1422,7 @@
                             callback:function(res){
                                 console.info("getWitnessesForExplorer res",res);
                                 if(res.code==1){
-                                    let {active_witnesses,current_witness_name,participation,coreAssetSymbol,
+                                    let {active_witnesses,current_witness_name,participation,core_asset_symbol,
                                         witness_pay_per_block,witness_budget,next_maintenance_time}=res.data;
                                         next_maintenance_time=Math.ceil((new Date(next_maintenance_time).getTime()-Date.now())/1000/60)+"分钟后";
                                 
@@ -1421,10 +1437,10 @@
                                         <div class="field">参与率：</div><div class="value">${participation}%</div>
                                     </div>
                                     <div class="row">
-                                        <div class="field">每块奖励：</div><div class="value">${witness_pay_per_block} ${coreAssetSymbol}</div>
+                                        <div class="field">每块奖励：</div><div class="value">${witness_pay_per_block} ${core_asset_symbol}</div>
                                     </div>
                                     <div class="row">
-                                        <div class="field">剩余预算：</div><div class="value">${witness_budget} ${coreAssetSymbol}</div>
+                                        <div class="field">剩余预算：</div><div class="value">${witness_budget} ${core_asset_symbol}</div>
                                     </div>
                                     <div class="row">
                                         <div class="field">投票更新时间：</div><div class="value">${next_maintenance_time}</div>
@@ -1668,7 +1684,7 @@
                     transferAsset:function(isOnlyGetFee){
                         var amount=Number(gel(".div_transferAsset .transfer_amount").value);
                         bcx.transferAsset({
-                            fromAccount:gel(".div_transferAsset .from_account").value,
+                            proposeAccount:gel(".div_transferAsset .from_account").value,
                             toAccount:gel(".div_transferAsset .to_account").value,
                             amount:amount,
                             assetId:gel(".div_transferAsset .asset_id").value,
@@ -1964,9 +1980,8 @@
                             }
                         })
                     },
-                    getUserInfo:function(){
-                        console.info("getUserInfo res", bcx.getUserInfo());
-                        gel(".div_getUserInfo .res").innerText=JSON.stringify(bcx.getUserInfo());
+                    getUserInfo:function(){                        
+                        $(".div_getUserInfo .res").JSONView(bcx.getAccountInfo())
                     },
                    
                     createAccountWithPassword:function(){
@@ -1986,7 +2001,7 @@
                             callback:function(res){
                                 console.info("passwordLogin res",res)
                                 if(res.code==1){
-                                    gel(".current_account").innerText=bcx.getUserInfo().account_name;
+                                    gel(".current_account").innerText=bcx.getAccountInfo().account_name;
                                 }
                             }
                         })
@@ -2011,8 +2026,8 @@
                             callback:function(res){
                                 console.info("res",res);
                                 if(res.code==1){
-                                    gel(".current_account").innerText=bcx.getUserInfo().account_name;
-                                    gel(".div_getOperations .account").value=bcx.getUserInfo().account_name;
+                                    gel(".current_account").innerText=bcx.getAccountInfo().account_name;
+                                    gel(".div_getOperations .account").value=bcx.getAccountInfo().account_name;
                                 }
                             }  
                         })
@@ -2037,23 +2052,13 @@
                                 console.info("unlockAccount res",res);
                                 gel(".h_msg").innerText=res.message;
                                 if(res.code==1){
-                                    gel(".current_account").innerText=bcx.getUserInfo().account_name;
-                                    gel(".div_getOperations .account").value=bcx.getUserInfo().account_name;
-                                    console.info("bcx.getUserInfo()",bcx.getUserInfo());
+                                    gel(".current_account").innerText=bcx.getAccountInfo().account_name;
+                                    gel(".div_getOperations .account").value=bcx.getAccountInfo().account_name;
+                                    console.info("bcx.getUserInfo()",bcx.getAccountInfo());
                                     // fetchAndSubscribe();
                                 }
                             }
                         })
-                        // .then(res=>{
-                        //     console.info("unlockAccount res",res);
-                        //     gel(".h_msg").innerText=res.message;
-                        //     if(res.code==1){
-                        //         gel(".current_account").innerText=bcx.getUserInfo().account_name;
-                        //         gel(".div_getOperations .account").value=bcx.getUserInfo().account_name;
-                        //         console.info("bcx.getUserInfo()",bcx.getUserInfo());
-                        //         // fetchAndSubscribe();
-                        //     }
-                        // })
                     },
                     lock:function(){
                         bcx.lockAccount({
@@ -2078,31 +2083,30 @@
                         }})
                     },
                     lookupWSNodeList:function(){
-                        var nodes=bcx.lookupWSNodeList({
-                                refresh:false,
-                                callback:res=>{
-                                    console.info("getWSNodeList res",res);
-                                    if(res.code==1){
-                                        gel(".div_getWSNodeList .selected_url").innerText=res.data.selectedNodeUrl
-                                        var nodes_html="";
-                                        res.data.nodes.forEach((node,index)=>{
-                                            let {name,url,ping}=node;
-                                            let connect=url!=res.data.selectedNodeUrl?
-                                            `<a href="javascript:_nodes.switchAPINode('${url}')">连接</a>
-                                            <a href="javascript:_nodes.deleteAPINode('${url}')">删除</a>`:"";
-                                            nodes_html+=`<tr>
-                                                    <td>${index+1}</td>
-                                                    <td >${name}</td>
-                                                    <td>${url}</td>
-                                                    <td>${ping} ms</td>
-                                                    <td>${connect}</td>
-                                                </tr>`
-                                        });
-                                        gel(".div_getWSNodeList tbody").innerHTML=nodes_html;
-                                    }
+                        bcx.lookupWSNodeList({
+                            refresh:false,
+                            callback:res=>{
+                                console.info("getWSNodeList res111",res);
+                                if(res.code==1){
+                                    gel(".div_getWSNodeList .selected_url").innerText=res.data.selectedNodeUrl
+                                    var nodes_html="";
+                                    res.data.nodes.forEach((node,index)=>{
+                                        let {name,url,ping}=node;
+                                        let connect=url!=res.data.selectedNodeUrl?
+                                        `<a href="javascript:_nodes.switchAPINode('${url}')">连接</a>
+                                        <a href="javascript:_nodes.deleteAPINode('${url}')">删除</a>`:"";
+                                        nodes_html+=`<tr>
+                                                <td>${index+1}</td>
+                                                <td >${name}</td>
+                                                <td>${url}</td>
+                                                <td>${ping} ms</td>
+                                                <td>${connect}</td>
+                                            </tr>`
+                                    });
+                                    gel(".div_getWSNodeList tbody").innerHTML=nodes_html;
                                 }
-                            }); 
-                      
+                            }
+                        }); 
                     },
                     switchAPINode:function(url){
                         bcx.switchAPINode({
@@ -2230,9 +2234,7 @@
                         })
                     },
                     getAccountProposals:function(){
-                        bcx.getAccountProposals({
-                            account:gel(".div_loadAccountProposals .account").value
-                        }).then(res=>{
+                        bcx.getAccountProposals().then(res=>{
                             console.info("res",res);
                             if(res.code==1){
                                 var htmls="";
@@ -2268,7 +2270,6 @@
                     proposeRelateWorldView:function(){
                         bcx.proposeRelateWorldView({
                             worldView:gel(".div_proposeRelateWorldView .world_view").value,
-                            // viewOwner:gel(".div_proposeRelateWorldView .view_owner").value,
                             callback:function(res){
                                 console.info('proposeRelateWorldView res',res);
                             }
@@ -2283,7 +2284,6 @@
                             NHAssetsCount:gel(".div_create_nh .nh_count").value,
                             type:gel(".div_create_nh .type").value,
                             NHAssets:_NHAssets.create_nh_assets,
-                            proposeAccount:gel(".div_create_nh .propose_account").value,
                             callback:function(res){
                                 console.info("creatNHAsset res",res);
                             }
@@ -2333,8 +2333,9 @@
                     },
                     cancelNHAssetOrder:function(nh_orders_index){
                         var NHAsset=this.account_sell_nh_orders[nh_orders_index];
+                        console.info("NHAsset",NHAsset);
                         bcx.cancelNHAssetOrder({
-                            orderId:NHAsset.order,
+                            orderId:NHAsset.id,
                             callback:function(res){
                                 console.info("cancelNHAssetOrder res",res)
                                 if(res.code==1)
@@ -2343,10 +2344,10 @@
                         })
                     },
                     fillNHAssetOrder:function(item_orders_index){
-                        let {order,seller_name,game_item_id,price_amount,price_asset_id,price_asset_symbol}=this.sell_nh_orders[item_orders_index];
+                        // let {id,seller_name,game_item_id,price_amount,price_asset_id,price_asset_symbol}=this.sell_nh_orders[item_orders_index];
                         bcx.fillNHAssetOrder({
-                            orderId:order,
-                            onlyGetFee:true,
+                            orderId:this.sell_nh_orders[item_orders_index].id,
+                            onlyGetFee:false,
                             callback:function(res){
                                 console.info("fillNHAssetOrder res",res)
                                 _NHAssets.queryNHAssetOrders();
@@ -2357,18 +2358,12 @@
                     sell_nh_orders:[],
                     queryNHAssetOrders:function(){
                         var assetSymbolsOrIds=gel(".div_queryNHAssetOrders .assetSymbolsOrIds").value;
-                        if(assetSymbolsOrIds){
-                            assetSymbolsOrIds=assetSymbolsOrIds.split(",")
-                        }
-
                         var world_views=gel(".div_queryNHAssetOrders .world_views").value;
-                        if(world_views){
-                            world_views=world_views.split(",")
-                        }
-
+ 
                         bcx.queryNHAssetOrders({
                             assetIds:assetSymbolsOrIds,
                             worldViews:world_views,
+                            baseDescribe:gel(".div_queryNHAssetOrders .baseDescribe").value,
                             pageSize:gel(".div_queryNHAssetOrders .pageSize").value,
                             page:gel(".div_queryNHAssetOrders .page").value,
                             callback:function(res){
@@ -2377,9 +2372,10 @@
                                     $(".div_queryNHAssetOrders tbody").html("");
                                      _NHAssets.sell_nh_orders=res.data;
                                      _NHAssets.sell_nh_orders.forEach(function(item,index){
-                                        $(".div_queryNHAssetOrders tbody").append(`<tr class="${item.seller_name+item.order.replace(/\./g,'')}">
+                                        let className=item.seller_name+item.id.replace(/\./g,'');
+                                        $(".div_queryNHAssetOrders tbody").append(`<tr class="${className}">
                                             <td>${index+1}</td>
-                                            <td >${item.order}</td>
+                                            <td >${item.id}</td>
                                             <td >${item.nh_asset_id}</td>
                                             <td  >
                                                 <div class="nh_base_describe"></div>
@@ -2393,9 +2389,9 @@
                                             <td width="120" style="padding:0 5px;">${item.memo}</td>
                                             <td><a href="javascript:_NHAssets.fillNHAssetOrder(${index})">购买</a></td>
                                         </tr>`)
-                                        $(".div_queryNHAssetOrders ."+item.seller_name+item.order.replace(/\./g,'')+" .nh_base_describe").JSONView(item.nh_asset_base_describe)
+                                        $(".div_queryNHAssetOrders ."+className+" .nh_base_describe").JSONView(item.base_describe)
                                         if(item.describe_with_contract)
-                                        $(".div_queryNHAssetOrders ."+item.seller_name+item.order.replace(/\./g,'')+" .describe_with_contract").JSONView(item.describe_with_contract)
+                                        $(".div_queryNHAssetOrders ."+className+" .describe_with_contract").JSONView(item.describe_with_contract)
                                     })
                                 }
                             }
@@ -2416,9 +2412,10 @@
                                     //<td width="80">${item.item_ID}</td>
                                      _NHAssets.account_sell_nh_orders=res.data;
                                      _NHAssets.account_sell_nh_orders.forEach(function(item,index){
-                                        $(".div_queryAccountNHAssetOrders tbody").append(`<tr class="${item.seller_name+item.order.replace(/\./g,'')}">
+                                        let className=item.seller_name+item.id.replace(/\./g,'');
+                                        $(".div_queryAccountNHAssetOrders tbody").append(`<tr class="${className}">
                                             <td>${index+1}</td>
-                                            <td >${item.order}</td>
+                                            <td >${item.id}</td>
                                             <td >${item.nh_asset_id}</td>
                                             <td  >
                                                 <div class="game_item_base_describe"></div>
@@ -2433,8 +2430,8 @@
                                             <td><a href="javascript:_NHAssets.cancelNHAssetOrder(${index})">取消</a></td>
                                         </tr>`)
 
-                                        $(".div_queryAccountNHAssetOrders ."+item.seller_name+item.order.replace(/\./g,'')+" .game_item_base_describe").JSONView(item.nh_asset_base_describe)
-                                        $(".div_queryAccountNHAssetOrders ."+item.seller_name+item.order.replace(/\./g,'')+" .describe_with_contract").JSONView(item.describe_with_contract)
+                                        $(".div_queryAccountNHAssetOrders ."+className+" .game_item_base_describe").JSONView(item.base_describe)
+                                        $(".div_queryAccountNHAssetOrders ."+className+" .describe_with_contract").JSONView(item.describe_with_contract)
                                     })
                                 }
                             }
@@ -2502,21 +2499,19 @@
                         //     alert("请先登录或解锁账户")
                         // }
                         bcx.queryAccountNHAssets({
-                            account:bcx.getUserInfo().account_id,
+                            account:bcx.getAccountInfo().account_id,
                             worldViews:[],
                             callback:function(res){
                                 console.info('queryAccountNHAssets res',res);
-
                                 var sel_goods=gel(".div_creatNHAssetOrder .sel_goods");
                                 var sel_goods_htmls='<option value="-1">请选择您要卖的NH资产</option>'
                                 if(res.code==1){
                                     if(res.data.length){
                                         res.data.forEach(function(nh_asset){
-                                            sel_goods_htmls+='<option value="'+nh_asset.nh_asset_id+'">'+nh_asset.nh_asset_id+" | "+nh_asset.base_describe+'</option>';
+                                            sel_goods_htmls+='<option value="'+nh_asset.id+'">'+nh_asset.id+" | "+nh_asset.base_describe+'</option>';
                                         });
                                     }
                                 }
-                                
                                 sel_goods.innerHTML=sel_goods_htmls;
                             }
                        })  
@@ -2606,7 +2601,7 @@
                         bcx.callContractFunction({
                             nameOrId:gel(".div_call_contract_function .nameOrId").value,
                             functionName:gel(".div_call_contract_function .function_name").value,//["1",1000001,'COCOS']
-                            valueList:(gel(".div_call_contract_function .value_list").value).split(","),//[{"level":1,"color":"red","clothes":{"size":7}}],//
+                            valueList:['4.2.0',{"type":"Employee","employeeId":"551"}],//(gel(".div_call_contract_function .value_list").value).split(","),//[{"level":1,"color":"red","clothes":{"size":7}}],//
                             runTime:gel(".div_call_contract_function .runTime").value,
                             onlyGetFee:false,
                             callback:function(res){
@@ -2674,10 +2669,12 @@
                 function getTransactionBaseFee(){
                     bcx.queryTransactionBaseFee({
                         transactionType:gel(".div_getTransactionBaseFee .transactionType").value,
-                        feeAssetId:gel(".div_getTransactionBaseFee .feeAssetId").value
-                    }).then(res=>{
-                        console.info("getTransactionBaseFee res",res);
-                        $(".div_getTransactionBaseFee .res").JSONView(res);
+                        feeAssetId:gel(".div_getTransactionBaseFee .feeAssetId").value,
+                        callback:function(res){
+                            console.info("getTransactionBaseFee res",res);
+                            $(".div_getTransactionBaseFee .res").JSONView(res);
+                            
+                        }
                     })
                 }
 
@@ -2692,66 +2689,61 @@
                     gel(selector).innerHTML="";
                     var operations_html=""
                     var memo="",more="";
-                    var isLocked=bcx.getUserInfo().locked;
+                    var isLocked=bcx.getAccountInfo().locked;
                     operations.forEach(function(item,index){
                         more="";
                         memo=item.raw_data.memo||"";
 
                         if(memo){
                             if(item.type=="transfer"&&!isAllOP){
-                                    if(isLocked){
+                               if(isLocked){
                                     memo=`<a href="javascript:decodeMemo(${index});">解锁</a>`
                                 }else{
                                     memo=bcx.decodeMemo(memo);
-                                    if(memo.code==1){
-                                        memo=memo.data.text||"";
-                                    }
-
-                                    if(memo)
-                                        memo="备注："+memo;
+                                    if(memo.code==1)  memo=memo.data.text||"";
+                                    if(memo)  memo="备注："+memo;
                                 }
                             }else if(item.type=="creat_nh_asset_order"){
                                 memo="备注："+memo;
+                            }else{
+                                memo="";
                             }
-                           
                         }
 
-                        if(item.type=="call_contract_function"&& item.result.contract_affecteds.length){
+                        if(item.result.type=="error_result"||item.result.type=="contract_result"){
                             var results="";
-                            item.result.contract_affecteds.forEach(c_op=>{
-                                results+="<p>"+c_op.parse_operations_text+"</p>"
-                            });
-                            more=`
-                            <a class="more" href="javascript:showOpMore(${index},${isAllOP});"  >${item.expand?"收起":"查看结果"}</a>
-                            <div class="op_results" style="display:${item.expand?'block':'none'}">
-                                ${results}
-                            </div>
-                            `
+                            if(item.result.type=="contract_result")
+                                item.result.contract_affecteds.forEach(c_op=>{
+                                     results+="<p>"+c_op.parse_operations_text+"</p>"
+                                });
+
+                            if(item.result.type=="error_result")  results= item.result.message; 
+                            
+                            more=`<a class="more" href="javascript:showOpMore(${index});" >查看结果</a>
+                                  <div class="op_results">
+                                    ${results}
+                                  </div>`
                         }
+
                         var new_options_html="";
-                        if(item.raw_data.new_options)
-                             new_options_html='<div class="new_options"><span class="green" >新的设定</span> <div></div></div>';
+                        if(item.raw_data.new_options) new_options_html='<div class="new_options"><span class="green" >新的设定</span> <div></div></div>';
 
                         var tr = document.createElement('tr');
                         var op_class="op_"+item.id.replace(/\./g,"");
                         tr.className=op_class;
                         tr.innerHTML=`
                             <td scope="row" width="80">${item.block_num}</th>
-                                <td width="135" >${item.type_name}</td>
+                                <td width="140" >${item.type_name}</td>
                             <td style="max-width:500px; word-wrap: break-word; padding-right:10px;">
                                 ${item.parse_operations_text} <span class="memo">${memo}</span>
                                 ${more}
                                 ${new_options_html}
                             </td>
                             <td>${item.parse_operations.fee}</td>
-                            <td>${item.date}</td>
-                        `
-                        // operations_html+=` <tr   >
-                                                
-                        //                     </tr>`
+                            <td>${item.date}</td>`
+
                         gel(selector).appendChild(tr);
-                        if(item.raw_data.new_options)
-                         $("."+op_class+" .new_options div").JSONView(item.raw_data.new_options,{ collapsed: true })
+                        if(item.raw_data.new_options) $("."+op_class+" .new_options div").JSONView(item.raw_data.new_options,{ collapsed: true })
                     })
                     //gel(selector).innerHTML=operations_html;
                 }
@@ -2768,7 +2760,7 @@
                 }
 
                 function decodeMemo(op_index){
-                    var isLocked=bcx.getUserInfo().locked;
+                    var isLocked=bcx.getAccountInfo().locked;
                     if(isLocked){
                         gel(".h_msg").innerText="请先解锁账户";
                         alert("请先解锁账户");
