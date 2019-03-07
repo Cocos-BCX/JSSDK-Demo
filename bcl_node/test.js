@@ -6,20 +6,20 @@ var url = require("url");
 var querystring = require('querystring')
 
 let bcx=new BCX({
-    default_ws_node:"ws://47.93.62.96:8020",
+    default_ws_node:"ws://47.93.62.96:8050",
     ws_node_list:[
-        {url:"ws://47.93.62.96:8020",name:"cocos新链"}
+        {url:"ws://47.93.62.96:8050",name:"cocos新链"}
     ],
     networks:[{
         core_asset:"COCOS",
-        chain_id:"9fc429a48b47447afa5e6618fde46d1a5f7b2266f00ce60866f9fdd92236e137" 
+        chain_id:"53b98adf376459cc29e5672075ed0c0b1672ea7dce42b0b1fe5e021c02bda640" 
     }], 
     faucet_url:"http://47.93.62.96:3000",
     auto_reconnect:true                     
 });
 
 bcx.passwordLogin({
-    account:"test1",//query.loginUserName,
+    account:"test2",//query.loginUserName,
     password:"12345678"
 }).then(res=>{
     console.info("bcx passwordLogin res",res);

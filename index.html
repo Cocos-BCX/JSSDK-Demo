@@ -229,7 +229,11 @@
                 max-width: 600px;
                 overflow: auto;
             }
-
+/* 
+            .scroll{
+                max-height:250px;
+                overflow:auto;
+            } */
         </style>
     </head>
     <body>
@@ -279,6 +283,11 @@
                 </li>
                 <li>合约
                     <ul class="class_9">
+
+                    </ul>
+                </li>
+                <li>交易市场
+                    <ul class="class_10">
 
                     </ul>
                 </li>
@@ -468,14 +477,14 @@
                         <div class="div_module_c" id="div_transferAsset" pclass="class_2"  >
                             <h2>转账</h2>
                             <div class="div_transferAsset div_module">
-                                <div class="div_from_account" style="display:none;">来自<input  type="text" class="from_account" value=""><br><br></div>
+                                <div class="div_from_account" style="display:none;">来自<input  type="text" class="from_account" value="test1"><br><br></div>
                                 发往<input  type="text" class="to_account" value="test2"><br><br>
                                 数量<input type="number" class="transfer_amount"  value="1"><br><br>
                                 资产id<input type="text" class="asset_id"  value="COCOS"><br><br>
                                 支付手续费资产类型<input type="text" class="feeAssetId"  value="COCOS"><br><br>
                                 备注消息<input class="transfer_memo" type="text" value="">
                                 <div class="checkbox">
-                                    是否发起提议: <input type="checkbox" onclick="document.querySelector('.div_from_account').style.display=this.checked?'block':'none'" class="isPropose" style="width:auto;" />          
+                                    是否发起提议: <input type="checkbox"  class="isPropose" style="width:auto;" />          
                                 </div>
                                 <p>手续费：<span class="fee"></span></p>
                                 <input type="button" id="btn_get_transferAsset_fee" value="获取本次转账所需手续费"  /><br><br>
@@ -553,7 +562,7 @@
                             </div>
                         </div>
                         <div class="div_module_c" id="div_assetFundFeePool" pclass="class_2"  >
-                            <h2>注资资产手续费池</h2>
+                            <h2>资产手续费池注资</h2>
                             <div class="div_assetFundFeePool div_module">
                                 资产符号<input  type="text" class="asset_id" value="TEST"><br><br>
                                 数量<input type="number" class="amount"  value="1"><br><br>
@@ -563,7 +572,7 @@
                             </div>
                         </div>
                         <div class="div_module_c" id="div_assetClaimFees" pclass="class_2"  >
-                            <h2>领取资产手续费</h2>
+                            <h2>资产手续费领取</h2>
                             <div class="div_assetClaimFees div_module">
                                 资产符号<input  type="text" class="asset_id" value="TEST"><br><br>
                                 数量<input type="number" class="amount"  value="1"><br><br>
@@ -625,14 +634,14 @@
                             </div>
                         </div>
                         <div class="div_module_c" id="div_creatWorldView" pclass="class_3">
-                            <h2>创建世界观</h2>
+                            <h2>世界观创建</h2>
                             <div class="div_creatWorldView div_module">
                                 世界观<input  type="text" class="world_view" value=""><br><br>
                                 <input type="button" id="btn_creatWorldView" value="确认创建"  />
                             </div>
                         </div>
                         <div class="div_module_c" id="div_proposeRelateWorldView" pclass="class_3" > 
-                            <h2>提议关联世界观</h2>
+                            <h2>世界观提议关联</h2>
                             <div class="div_proposeRelateWorldView div_module">
                                 <p>提议关联到某一个世界观，需要该世界观的创建人审批</p>
                                 世界观<input  type="text" class="world_view" value="TEST"><br><br>
@@ -660,7 +669,7 @@
                             </div>
                         </div>
                         <div class="div_module_c" id="div_create_nh" pclass="class_3" >
-                                <h2>创建NH资产</h2>
+                                <h2>NH资产创建</h2>
                                 <div class="div_create_nh div_module">
                                     资产id<input  type="text" class="asset_id" value="COCOS" ><br><br>
                                     世界观<input  type="text" class="world_view" value="TEST" ><br><br>
@@ -673,14 +682,14 @@
                                 </div>
                             </div>    
                             <div class="div_module_c" id="div_deleteNHAsset" pclass="class_3" >
-                                <h2>删除NH资产</h2>
+                                <h2>NH资产删除</h2>
                                 <div class="div_deleteNHAsset div_module">
                                     itemIds(Array)<textarea rows="10" class="NHAssetIds">4.2.195,4.2.194</textarea><br><br><br>
                                     <input type="button" id="btn_deleteNHAsset" value="确认删除" >
                                 </div>
                             </div>
                             <div class="div_module_c" id="div_transferNHAsset" pclass="class_3" >
-                                <h2>转移NH资产</h2>
+                                <h2>NH资产转移</h2>
                                 <div class="div_transferNHAsset div_module">
                                     转移目标账户<input  type="text" class="to_account" value="test2"><br><br>
                                     <input type="text" class="NHAssetIds"  value="4.2.2"><br><br>
@@ -690,7 +699,7 @@
                       
                         
                         <div class="div_module_c" id="div_sell" pclass="class_3">
-                            <h2>创建游戏NH资产出售单</h2>
+                            <h2>NH资产出售单创建</h2>
                             <div class="div_creatNHAssetOrder div_module">
                                 OTC交易平台账户otcAccount，用于收取挂单费用
                                 <input  type="text" class="receiver" value="otcaccount" ><br><br>
@@ -703,14 +712,31 @@
                                 <!-- 游戏开发者账户<input  type="text" class="developerAccount" value="" ><br><br> -->
                                 获取账户NH资产 <input type="button" id="btn_getAccountNHAssetForSell" value="立即获取"  /><br><br>     
                                 NH资产itemID<select class="sel_goods" >
-                                            <option value ="1">请选择您要卖的NH资产</option>
-                                        </select>
+                                                <option value ="1">请选择您要卖的NH资产</option>
+                                            </select>
                                 <br><br><br>
+                                
                                 <p>手续费：<span class="fee"></span></p>
                                 <input type="button" id="btn_get_creatNHAssetOrder_fee" value="获取本次交易所需手续费"  /><br><br>
                                 <input type="button" id="btn_creatNHAssetOrder" value="确认卖出NH资产"  />
                             </div>
                         </div>
+
+                        <div class="div_module_c" id="div_relateNHAsset" pclass="class_3" >
+                            <h2>NH资产关联</h2>
+                            <div class="div_relateNHAsset div_module">
+                                父级NH资产id<input  type="text" class="parent" value="4.2.0"><br><br>
+                                子级NH资产id<input type="text" class="child"  value="4.2.2"><br><br>
+                                合约<input type="text" class="contract"  value="1.16.1"><br><br>
+                                <div class="checkbox">
+                                     是否关联(ture为关联，false为取消关联):<input type="checkbox" class="relate" style="width:auto;" />          
+                                </div>
+                                <p class="res"></p>
+                                <input type="button" id="btn_get_relateNHAsset_fee" value="获取本次交易所需手续费"  /><br><br>
+                                <input type="button" id="btn_relateNHAsset" value="确认关联"  />
+                            </div>
+                        </div>
+
 
                         <div class="div_module_c" id="div_queryNHAssets" pclass="class_5" >
                             <h2>查询NH资产详细信息</h2>
@@ -880,7 +906,7 @@
                             <div class="div_module_c" id="div_queryBlock" pclass="class_7" >
                                 <h2>查询区块</h2>
                                 <div class="div_queryBlock blockOrTXID div_module" style="width:90%;">
-                                    block<input  type="text" class="block_num" value="71037" placeholder="查询区块或交易ID"><br><br>
+                                    block<input  type="text" class="block_num" value="362817" placeholder="查询区块或交易ID"><br><br>
                                     <input type="button" id="btn_queryBlock" value="立即查询" /><br><br>
                                     <div class="block listCard">
                                     </div>
@@ -892,7 +918,7 @@
                             <div class="div_module_c" id="div_queryTXID" pclass="class_7" >
                                 <h2>查询交易</h2>
                                 <div class="div_queryTXID blockOrTXID div_module" style="width:90%;">
-                                     TXID<input  type="text" class="trx_id" value="48ca4a8ec13c0f6d6ee7dd6e0e7197154f642bd10155382b3619ad5835dee365" placeholder="查询区块或交易ID"><br><br>
+                                     TXID<input  type="text" class="trx_id" value="1119f2fd778895add03887b738b2930081b12e0f" placeholder="查询区块或交易ID"><br><br>
                                     <input type="button" id="btn_queryTXID" value="立即查询" /><br><br>
                                     <div class="block listCard">
                                     </div>
@@ -1063,6 +1089,8 @@
                                     <br>
                                 </div>
                             </div>
+                         
+                         
                             <div class="div_module_c" id="div_getTransactionBaseFee"  pclass="class_12" >
                                 <h2>查询交易类型基础手续费</h2>
                                 <div class="div_getTransactionBaseFee div_module">
@@ -1071,7 +1099,7 @@
                                     <input type="button" id="btn_getTransactionBaseFee" value="立即获取" /><br><br>
                                     <p class="res"></p>
                                 </div>
-                            </div>
+                            </div> 
                             <div class="div_module_c" id="div_unsubscribe"  pclass="class_12" >
                                 <h2>取消订阅</h2>
                                 <div class="div_unsubscribe div_module">
@@ -1082,7 +1110,10 @@
                             <div class="div_module_c" id="div_apiConfig"  pclass="class_12" >
                                 <h2>API参数配置</h2>
                                 <div class="div_apiConfig div_module">
-                                    <!-- worker<input  type="text" class="worker" value="1"><br><br> -->
+                                    语言<select class="lang" >
+                                            <option value ="zh">简体中文</option>
+                                            <option value ="en">english</option>
+                                        </select>
                                     <div class="checkbox">
                                         实时订阅: <input type="checkbox" class="realSub" style="width:auto;" checked />          
                                     </div>
@@ -1121,17 +1152,33 @@
                 loadLeftNavs();
                 
                 var _configParams={
-                    // default_ws_node:"ws://47.93.62.96:8020",
+                    // default_ws_node:"ws://192.168.50.166:8050",
                     ws_node_list:[
-                         {url:"ws://47.93.62.96:8020",name:"COCOS节点4"}    
+                        // {url:"ws://39.106.158.132:8090",name:"COCOS最新链(香港)"},
+                        // {url:"ws://47.94.168.216:8090",name:"COCOS节点2"},
+                        //  {url:"ws://192.168.50.166:8050",name:"COCOS节点6"},
+                        // {url:"ws://192.168.50.175:8080",name:"COCOS节点5"},
+                        //,
+                        {url:"ws://47.93.62.96:8020",name:"COCOS节点4"},   
+                       //  {url:"ws://192.168.50.104:8001",name:"COCOS节点4"} ,
+                        //{url:"ws://192.168.50.166:8050",name:"COCOS节点4"}   
                     ],
                     networks:[
                       {
                         core_asset:"COCOS",
                         chain_id:"9fc429a48b47447afa5e6618fde46d1a5f7b2266f00ce60866f9fdd92236e137" 
+                      },
+                      {
+                        core_asset:"COCOS",
+                        chain_id:"08c88cf9456cfb6814a6d4eb7fcc35c2cf5d6d06086ef469bb55ed10edd12b28" 
+                      },
+                      {
+                        core_asset:"COCOS",
+                        chain_id:"48882f3481efd7110a953296e570fb73ecc1cbea085e059e7aaee782404383f2" 
                       }
                     ], 
-                    faucet_url:"http://47.93.62.96:4000",
+                    // faucet_url:"http://47.93.62.96:3000",
+                    faucet_url:"http://47.93.62.96:3000",
                     auto_reconnect:true,
                     worker:false,
                     real_sub:true
@@ -1139,7 +1186,12 @@
                 };
                 var bcx=new BCX(_configParams);
                 //可以不用初始化，直接调用，API会自动判断是否初始化，热没有初始化则自动初始化
-                bcx.init().then(res=>{
+                bcx.init({
+                    real_sub:true
+                    // subscribeToRpcConnectionStatusCallback:res=>{
+                    //     console.info("subscribeToRpcConnectionStatusCallback res",res);
+                    // }
+                }).then(res=>{
                     console.info("init res",res);
                     _wallet.init();
                     _user.init();
@@ -1157,6 +1209,7 @@
                     gel("#btn_apiConfig").onclick=()=>{
                         bcx.apiConfig({
                             // worker:gel(".div_apiConfig .worker").value,
+                            locale:gel(".div_apiConfig .lang").value,
                             real_sub:gel(".div_apiConfig .realSub").checked                            
                         }).then(res=>{
                             console.info("apiConfig res",res);
@@ -1164,6 +1217,7 @@
                     }
                 });
                
+
                 var _explorer={
                     init:function(){
                         gel("#btn_queryBlock").onclick=this.queryBlock;
@@ -1583,6 +1637,14 @@
                         gel("#btn_queryAccountAllBalances").onclick=this.queryAccountAllBalances;
                        
                         gel("#btn_queryAccountBalances").onclick=this.getAccountBalances;
+
+                        gel(".isPropose").onclick=function(e){
+                            var isPropose=e.target.checked;
+                            gel('.div_from_account').style.display=isPropose?'block':'none'
+                            // if(!isPropose){
+                            //     gel(".from_account").value="";
+                            // }
+                        }
                     },
                     c_priceChange:function(obj){
                         gel(".div_createAsset .price").innerText=(gel(".div_createAsset .base").value/gel(".div_createAsset .quote").value||1)
@@ -1684,7 +1746,7 @@
                     transferAsset:function(isOnlyGetFee){
                         var amount=Number(gel(".div_transferAsset .transfer_amount").value);
                         bcx.transferAsset({
-                            proposeAccount:gel(".div_transferAsset .from_account").value,
+                            fromAccount:gel(".div_transferAsset .from_account").value,
                             toAccount:gel(".div_transferAsset .to_account").value,
                             amount:amount,
                             assetId:gel(".div_transferAsset .asset_id").value,
@@ -2205,6 +2267,13 @@
                             this.creatNHAssetOrder(false);
                         };
 
+                        gel("#btn_get_relateNHAsset_fee").onclick=()=>{
+                            this.relateNHAsset(true);
+                        };
+                        gel("#btn_relateNHAsset").onclick=()=>{
+                            this.relateNHAsset(false);
+                        }
+
                         gel("#btn_queryNHAssetOrders").onclick=this.queryNHAssetOrders;
 
                         gel("#btn_queryAccountNHAssetOrders").onclick=this.queryAccountNHAssetOrders;
@@ -2221,6 +2290,18 @@
                         
                         gel("#btn_loadAccountProposals").onclick=this.getAccountProposals;
 
+                    },
+                    relateNHAsset(onlyGetFee){
+                        bcx.relateNHAsset({
+                            parent:gel(".div_relateNHAsset .parent").value,
+                            child:gel(".div_relateNHAsset .child").value,
+                            contract:gel(".div_relateNHAsset .contract").value,
+                            relate:gel(".div_relateNHAsset .relate").checked,
+                            onlyGetFee
+                        }).then(res=>{
+                            console.info(".div_relateNHAsset res",res);
+                            $(".div_relateNHAsset .res").JSONView(res);
+                        })
                     },
                     approvalProposal:function(proposal_id){
                         bcx.approvalProposal({
@@ -2601,7 +2682,7 @@
                         bcx.callContractFunction({
                             nameOrId:gel(".div_call_contract_function .nameOrId").value,
                             functionName:gel(".div_call_contract_function .function_name").value,//["1",1000001,'COCOS']
-                            valueList:['4.2.0',{"type":"Employee","employeeId":"551"}],//(gel(".div_call_contract_function .value_list").value).split(","),//[{"level":1,"color":"red","clothes":{"size":7}}],//
+                            valueList:(gel(".div_call_contract_function .value_list").value).split(","),//['4.2.0',{"type":"Employee","employeeId":"551"}],////[{"level":1,"color":"red","clothes":{"size":7}}],//
                             runTime:gel(".div_call_contract_function .runTime").value,
                             onlyGetFee:false,
                             callback:function(res){
@@ -2700,6 +2781,7 @@
                                     memo=`<a href="javascript:decodeMemo(${index});">解锁</a>`
                                 }else{
                                     memo=bcx.decodeMemo(memo);
+                                    console.info("memo",memo);
                                     if(memo.code==1)  memo=memo.data.text||"";
                                     if(memo)  memo="备注："+memo;
                                 }

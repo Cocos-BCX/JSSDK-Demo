@@ -22,9 +22,8 @@ var bcx=new BCX({
                 chain_id:"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"//链id   
             }], 
             auto_reconnect:false,//当RPC断开时是否自动连接，默认为true
-            app_keys:["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"],//合约授权，不进行合约授权，则不用配置此选项
-            real_sub:true//true：实时订阅，false:区块订阅，订阅通知频率为出块频率
-            sub_max_op:13//订阅时最大处理OP数量
+            app_keys:["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"]//合约授权，不进行合约授权，则不用配置此选项
+	 })
 ```
 
 ### 调用实例-转账
@@ -540,9 +539,8 @@ data:{
 方法：queryNHAssetOrders  
 功能：查询全网用户NH资产的售卖订单   
 参数：  
-	assetIds(string）：资产符号或id筛选条件  
-	worldViews(string)：版本名称或版本id筛选条件  
-  baseDescribe(string):基本描述
+	assetIds(array）：资产符号或id筛选条件  
+	worldViews (array)：版本名称或版本id筛选条件  
 	pageSize：页容量  
 	page：页数  
   
@@ -762,13 +760,7 @@ data:{
 	callback：回调函数
     
     
-## 其他  
-
-### API参数配置   
-方法：apiConfig  
-功能：API参数配置   
-参数：  
-API初始化相关参数
+## 其他    
 
 ### 取消订阅   
 方法：unsubscribe  
