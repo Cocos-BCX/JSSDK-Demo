@@ -1155,19 +1155,7 @@
                     networks:[
                       {
                         core_asset:"COCOS",
-                        chain_id:"53b98adf376459cc29e5672075ed0c0b1672ea7dce42b0b1fe5e021c02bda640" 
-                      },
-                      {
-                        core_asset:"COCOS",
                         chain_id:"9fc429a48b47447afa5e6618fde46d1a5f7b2266f00ce60866f9fdd92236e137" 
-                      },
-                      {
-                        core_asset:"COCOS",
-                        chain_id:"08c88cf9456cfb6814a6d4eb7fcc35c2cf5d6d06086ef469bb55ed10edd12b28" 
-                      },
-                      {
-                        core_asset:"COCOS",
-                        chain_id:"48882f3481efd7110a953296e570fb73ecc1cbea085e059e7aaee782404383f2" 
                       }
                     ], 
                     // faucet_url:"http://47.93.62.96:3000",
@@ -1182,9 +1170,6 @@
                 //可以不用初始化，直接调用，API会自动判断是否初始化，热没有初始化则自动初始化
                 bcx.init({
                     real_sub:true
-                    // subscribeToRpcConnectionStatusCallback:res=>{
-                    //     console.info("subscribeToRpcConnectionStatusCallback res",res);
-                    // }
                 }).then(res=>{
                     console.info("init res",res);
                     _wallet.init();
@@ -1195,28 +1180,6 @@
                     _assets.init();
                     _explorer.init();
                     _others.init();
-                    // gel("#btn_getVotes").onclick=queryVotes;
-                    // gel("#btn_publishVotes").onclick=publishVotes;
-
-                    // gel("#btn_getTransactionBaseFee").onclick=getTransactionBaseFee;
-                    // gel("#btn_unsubscribe").onclick=unsubscribe;
-
-                    // gel("#btn_apiConfig").onclick=()=>{
-                    //     bcx.apiConfig({
-                    //         ws_node_list:[
-                    //             {url:"ws://39.96.33.61:8050",name:"COCOS - China - Shanghai"},
-                    //             {url:"ws://39.96.29.40:8050",name:"COCOS - China - Chengdu"},
-                    //             {url:"ws://39.106.126.54:8050",name:"COCOS - China - Hong Kong"}
-                    //         ],
-                    //         check_cached_nodes_data:false,
-                    //         // worker:gel(".div_apiConfig .worker").value,
-                    //         locale:gel(".div_apiConfig .lang").value,
-                    //         real_sub:gel(".div_apiConfig .realSub").checked                            
-                    //     }).then(res=>{
-                    //         console.info("apiConfig res",res);
-                    //     })
-                    // }
-
                 });
                 var _others={
                     init(){
