@@ -286,11 +286,6 @@
 
                     </ul>
                 </li>
-                <li>交易市场
-                    <ul class="class_10">
-
-                    </ul>
-                </li>
                 <li>其他
                     <ul class="class_12">
 
@@ -1089,8 +1084,7 @@
                                     <br>
                                 </div>
                             </div>
-                         
-                         
+                   
                             <div class="div_module_c" id="div_getTransactionBaseFee"  pclass="class_12" >
                                 <h2>查询交易类型基础手续费</h2>
                                 <div class="div_getTransactionBaseFee div_module">
@@ -1108,7 +1102,7 @@
                                 </div>
                             </div>
                             <div class="div_module_c" id="div_apiConfig"  pclass="class_12" >
-                                <h2>API参数配置</h2>
+                                <h2>API参数配置&获取</h2>
                                 <div class="div_apiConfig div_module">
                                     语言<select class="lang" >
                                             <option value ="zh">简体中文</option>
@@ -1117,7 +1111,9 @@
                                     <div class="checkbox">
                                         实时订阅: <input type="checkbox" class="realSub" style="width:auto;" checked />          
                                     </div>
-                                    <input type="button" id="btn_apiConfig" value="确认" /><br><br>
+                                    <input type="button" id="btn_apiConfig" value="确认配置" /><br><br>
+                                    <input type="button" id="btn_getApiConfig" value="获取API参数配置" /><br><br>
+                                    <p class="res"></p>
                                 </div>
                             </div>
                 </div>
@@ -1125,7 +1121,7 @@
        
     </div>
 
-        <script src="bcx.min.js?v=7"></script>
+        <script src="assets/bcx.min.js?v=7"></script>
         <script type="text/javascript" src="./FELib/jquery-1.8.3.min.js" charset="utf-8"></script>
         <script type="text/javascript" src="./FELib/jsonview/jquery.jsonview.min.js" charset="utf-8"></script>
 
@@ -1159,11 +1155,19 @@
                         //  {url:"ws://192.168.50.166:8050",name:"COCOS节点6"},
                         // {url:"ws://192.168.50.175:8080",name:"COCOS节点5"},
                         //,
-                        {url:"ws://47.93.62.96:8020",name:"COCOS节点4"},   
+                        //{url:"ws://47.93.62.96:8020",name:"COCOS节点4"},   
                        //  {url:"ws://192.168.50.104:8001",name:"COCOS节点4"} ,
                         //{url:"ws://192.168.50.166:8050",name:"COCOS节点4"}   
+                        // {url:"ws://47.93.62.96:8050",name:"COCOS - China - Beijing"},
+                        {url:"ws://39.96.33.61:8050",name:"COCOS - China - Shanghai"},
+                        {url:"ws://39.96.29.40:8050",name:"COCOS - China - Chengdu"},
+                        {url:"ws://39.106.126.54:8050",name:"COCOS - China - Hong Kong"}
                     ],
                     networks:[
+                      {
+                        core_asset:"COCOS",
+                        chain_id:"53b98adf376459cc29e5672075ed0c0b1672ea7dce42b0b1fe5e021c02bda640" 
+                      },
                       {
                         core_asset:"COCOS",
                         chain_id:"9fc429a48b47447afa5e6618fde46d1a5f7b2266f00ce60866f9fdd92236e137" 
@@ -1178,10 +1182,11 @@
                       }
                     ], 
                     // faucet_url:"http://47.93.62.96:3000",
-                    faucet_url:"http://47.93.62.96:3000",
+                    faucet_url:"http://47.93.62.96:4000",
                     auto_reconnect:true,
                     worker:false,
-                    real_sub:true
+                    real_sub:true,
+                    check_cached_nodes_data:true
                     //app_keys:["5HxzZncKDjx7NEaEv989Huh7yYY7RukcJLKBDQztXAmZYCHWPgd"]
                 };
                 var bcx=new BCX(_configParams);
@@ -1200,22 +1205,60 @@
                     _nodes.init();
                     _assets.init();
                     _explorer.init();
+                    _others.init();
+                    // gel("#btn_getVotes").onclick=queryVotes;
+                    // gel("#btn_publishVotes").onclick=publishVotes;
 
-                    gel("#btn_getVotes").onclick=queryVotes;
-                    gel("#btn_publishVotes").onclick=publishVotes;
-                    gel("#btn_getTransactionBaseFee").onclick=getTransactionBaseFee;
-                    gel("#btn_unsubscribe").onclick=unsubscribe;
+                    // gel("#btn_getTransactionBaseFee").onclick=getTransactionBaseFee;
+                    // gel("#btn_unsubscribe").onclick=unsubscribe;
 
-                    gel("#btn_apiConfig").onclick=()=>{
-                        bcx.apiConfig({
-                            // worker:gel(".div_apiConfig .worker").value,
-                            locale:gel(".div_apiConfig .lang").value,
-                            real_sub:gel(".div_apiConfig .realSub").checked                            
-                        }).then(res=>{
-                            console.info("apiConfig res",res);
-                        })
-                    }
+                    // gel("#btn_apiConfig").onclick=()=>{
+                    //     bcx.apiConfig({
+                    //         ws_node_list:[
+                    //             {url:"ws://39.96.33.61:8050",name:"COCOS - China - Shanghai"},
+                    //             {url:"ws://39.96.29.40:8050",name:"COCOS - China - Chengdu"},
+                    //             {url:"ws://39.106.126.54:8050",name:"COCOS - China - Hong Kong"}
+                    //         ],
+                    //         check_cached_nodes_data:false,
+                    //         // worker:gel(".div_apiConfig .worker").value,
+                    //         locale:gel(".div_apiConfig .lang").value,
+                    //         real_sub:gel(".div_apiConfig .realSub").checked                            
+                    //     }).then(res=>{
+                    //         console.info("apiConfig res",res);
+                    //     })
+                    // }
+
                 });
+                var _others={
+                    init(){
+                        gel("#btn_getVotes").onclick=queryVotes;
+                        gel("#btn_publishVotes").onclick=publishVotes;
+
+                        gel("#btn_getTransactionBaseFee").onclick=getTransactionBaseFee;
+                        gel("#btn_unsubscribe").onclick=unsubscribe;
+
+                        gel("#btn_apiConfig").onclick=()=>{
+                            bcx.apiConfig({
+                                ws_node_list:[
+                                    {url:"ws://39.96.33.61:8050",name:"COCOS - China - Shanghai"},
+                                    {url:"ws://39.96.29.40:8050",name:"COCOS - China - Chengdu"},
+                                    {url:"ws://39.106.126.54:8050",name:"COCOS - China - Hong Kong"}
+                                ],
+                                check_cached_nodes_data:false,
+                                // worker:gel(".div_apiConfig .worker").value,
+                                locale:gel(".div_apiConfig .lang").value,
+                                real_sub:gel(".div_apiConfig .realSub").checked                            
+                            }).then(res=>{
+                                console.info("apiConfig res",res);
+                            })
+                        }
+
+                        gel("#btn_getApiConfig").onclick=()=>{
+                            $(".div_apiConfig .res").JSONView(bcx.getApiConfig());
+                            console.info("btn_getApiConfig res",bcx.getApiConfig());
+                        }
+                    }
+                }
                
 
                 var _explorer={
@@ -2186,7 +2229,7 @@
                             callback:res=>{
                                 console.info("addAPINode res",res);
                                 if(res.code==1){
-                                    _nodes.lookupWSNodeList();
+                                   _nodes.lookupWSNodeList();
                                 }
                             }
                         })
