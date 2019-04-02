@@ -229,6 +229,20 @@
                 max-width: 600px;
                 overflow: auto;
             }
+
+            .div_loadAccountProposals .rows{
+                width: 250px;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .td-status{
+                /* border:1px solid #eee; */
+                padding: 10px 0;
+            }
+            .div_loadAccountProposals input[type=checkbox]{
+                width: auto;
+            }
 /* 
             .scroll{
                 max-height:250px;
@@ -283,6 +297,11 @@
                 </li>
                 <li>合约
                     <ul class="class_9">
+
+                    </ul>
+                </li>
+                <li>交易市场
+                    <ul class="class_10">
 
                     </ul>
                 </li>
@@ -644,8 +663,9 @@
                             </div>
                         </div>
                         <div class="div_module_c" id="loadAccountProposals" pclass="class_3" >
-                            <h2>获取当前用户收到的提议并审批</h2>
+                            <h2>查询账户收到的提议并审批</h2>
                             <div class="div_loadAccountProposals div_module" style="width:90%;">
+                                account<input  type="text" class="account" value="1.2.0"><br><br>
                                 <input type="button" id="btn_loadAccountProposals" value="立即获取"  /><br><br>
                                 <table class="table">
                                     <thead>
@@ -654,6 +674,7 @@
                                             <th>id</th>
                                             <th>信息</th>
                                             <th>过期时间</th>
+                                            <th>状态</th>
                                             <th>操作</th>
                                         </tr>
                                     </thead>
@@ -838,8 +859,12 @@
                         </div>
                 
                         <div class="div_module_c" id="div_getVotes"   pclass="class_8">
-                                <h2>查询节点投票信息数据并投票</h2>
+                                <h2>查询见证人理事会员投票信息数据并投票</h2>
                                 <div class="div_getVotes div_module">
+                                    类型<select class="type" >
+                                        <option value ="witnesses">见证人</option>
+                                        <option value ="committee">理事会</option>
+                                    </select><br><br>
                                     查询投票账户<input  type="text" class="query_account" value=""><br><br>
                                     <input type="button" id="btn_getVotes" value="立即加载" /><br><br>
                                     <table class="table">
@@ -1044,7 +1069,6 @@
                                     合约name或ID<input  type="text" class="nameOrId" value="contract.test02"><br><br>
                                     目标函数名<input  type="text" class="function_name" value="my_nht_describe_change"><br><br>
                                     参数列表 <textarea rows="10" class="value_list">4.2.0,{"size":"large"}</textarea><br><br>
-                                    runTime(单位毫秒)<input  type="text" class="runTime" value="5"><br><br><br>
                                     <input type="button" id="btn_call_contract_function" value="确认执行合约函数" /><br><br>
                                 </div>
                             </div>
@@ -1084,7 +1108,29 @@
                                     <br>
                                 </div>
                             </div>
-                   
+                            <div class="div_module_c" id="div_createLimitOrder"  pclass="class_10" >
+                                <h2>代币资产“限价单”交易</h2>
+                                <div class="div_createLimitOrder div_module">
+                                    交易对transactionPair(TEST_COCOS为买卖COCOS交易市场的TEST)
+                                    <input  type="text" class="transactionPair" value="TEST_COCOS"><br><br>
+                                    交易类型type(0:卖单，1:买单)<input  type="text" class="type" value="1"><br><br>
+                                    价格price(单位为交易市场顶级资产,如COCOS)<input  type="text" class="price" value="0.26"><br><br>
+                                    数量(单位如二级资产TEST)<input  type="text" class="amount" value="0.1"><br><br>
+                                    <input type="button" id="btn_createLimitOrder" value="立即下单" /><br><br>
+                                </div>
+                            </div> 
+                            <div class="div_module_c" id="div_queryPriceHistory"  pclass="class_10" >
+                                <h2>查询交易对K线数据</h2>
+                                <div class="div_queryPriceHistory div_module">
+                                    交易对trx_symbol(TEST_USDT为买卖USDT交易市场的TEST)
+                                    <input  type="text" class="trxSymbol" value="TEST_USDT"><br>
+                                    周期(单位秒)<input  type="text" class="step" value="86400"><br><br>
+                                    pageSize(返回数据条数)<input  type="text" class="pageSize" value="10"><br><br>
+                                    page(第几页)<input  type="text" class="page" value="1"><br><br>
+
+                                    <input type="button" id="btn_queryPriceHistory" value="立即查询" /><br><br>
+                                </div>
+                            </div>  
                             <div class="div_module_c" id="div_getTransactionBaseFee"  pclass="class_12" >
                                 <h2>查询交易类型基础手续费</h2>
                                 <div class="div_getTransactionBaseFee div_module">
@@ -1148,9 +1194,8 @@
                 loadLeftNavs();
                 
                 var _configParams={
-                    // default_ws_node:"ws://192.168.50.166:8050",
                     ws_node_list:[
-                         {url:"ws://47.93.62.96:8020",name:"COCOS - China - Beijing"}
+                        {url:"ws://47.93.62.96:8020",name:"COCOS节点4"}//,   
                     ],
                     networks:[
                       {
@@ -1162,7 +1207,7 @@
                     auto_reconnect:true,
                     worker:false,
                     real_sub:true,
-                    check_cached_nodes_data:true
+                    check_cached_nodes_data:false
                     //app_keys:["5HxzZncKDjx7NEaEv989Huh7yYY7RukcJLKBDQztXAmZYCHWPgd"]
                 };
                 var bcx=new BCX(_configParams);
@@ -1171,6 +1216,7 @@
                     real_sub:true
                 }).then(res=>{
                     console.info("init res",res);
+            
                     _wallet.init();
                     _user.init();
                     _contracts.init();
@@ -1179,14 +1225,16 @@
                     _assets.init();
                     _explorer.init();
                     _others.init();
+
                 });
+
                 var _others={
                     init(){
-                        gel("#btn_getVotes").onclick=queryVotes;
-                        gel("#btn_publishVotes").onclick=publishVotes;
+                        gel("#btn_getVotes").onclick=this.queryVotes;
+                        gel("#btn_publishVotes").onclick=this.publishVotes;
 
-                        gel("#btn_getTransactionBaseFee").onclick=getTransactionBaseFee;
-                        gel("#btn_unsubscribe").onclick=unsubscribe;
+                        gel("#btn_getTransactionBaseFee").onclick=this.getTransactionBaseFee;
+                        gel("#btn_unsubscribe").onclick=this.unsubscribe;
 
                         gel("#btn_apiConfig").onclick=()=>{
                             bcx.apiConfig({
@@ -1208,10 +1256,68 @@
                             $(".div_apiConfig .res").JSONView(bcx.getApiConfig());
                             console.info("btn_getApiConfig res",bcx.getApiConfig());
                         }
+                    },
+                    queryVotes(){
+                        bcx.queryVotes({
+                            queryAccount:gel(".div_getVotes .query_account").value,
+                            type:gel(".div_getVotes .type").value
+                        }).then(res=>{
+                            console.info("getVotes res",res);
+                            //(id:${item.account_id},vote_id:${item.vote_id})
+                            if(res.code==1){
+                                var votes_html=""
+                                res.data.forEach(function(item,index){
+                                    votes_html+=` <tr>
+                                                    <th scope="row">${(index+1)}</th>
+                                                    <td >${item.account_name}</td>
+                                                    <td>${item.votes}</td>
+                                                    <td>${item.active?"活跃":"不活跃"}</td>
+                                                    <td><input type="checkbox" ${item.supported?"checked":""} value="${item.account_id}" ></td>
+                                                </tr>`
+                                })
+                                gel(".div_getVotes tbody").innerHTML=votes_html;
+                            }
+                        })
+                    },
+                    publishVotes(){
+                        var vote_ids=[]
+                        var checkboxs=document.querySelectorAll(".div_getVotes input[type=checkbox]")
+                                      .forEach(function(item){
+                                            if(item.checked){
+                                            vote_ids.push(item.value);
+                                            }
+                                        })
+                        let type=gel(".div_getVotes .type").value;
+                        bcx.publishVotes({
+                            witnessesIds:type=="witnesses"?vote_ids:null,
+                            committee_ids:type=="committee"?vote_ids:null,
+                            proxyAccount:gel(".div_getVotes .proxy_account").value,
+                            onlyGetFee:false,
+                            callback:function(res){
+                                console.info("publishVotes res",res);
+                            }
+                        })
+                    },
+                    getTransactionBaseFee(){
+                        bcx.queryTransactionBaseFee({
+                            transactionType:gel(".div_getTransactionBaseFee .transactionType").value,
+                            feeAssetId:gel(".div_getTransactionBaseFee .feeAssetId").value,
+                            callback:function(res){
+                                console.info("getTransactionBaseFee res",res);
+                                $(".div_getTransactionBaseFee .res").JSONView(res);
+                                
+                            }
+                        })
+                    },
+                    unsubscribe(){
+                        bcx.unsubscribe({methods:gel(".div_unsubscribe .method").value.split(",")})//
+                        .then(res=>{
+                            console.info("unsubscribe res",res);
+                        });
                     }
                 }
-               
 
+               
                 var _explorer={
                     init:function(){
                         gel("#btn_queryBlock").onclick=this.queryBlock;
@@ -1867,25 +1973,31 @@
                         _wallet.getAccounts();
                     },
                     getAccounts:function(){
-                        var res=bcx.getAccounts();
-                        console.info("getAccounts res",res);
-                        $(".div_getAccounts .res").JSONView(res);
+                        // var res=bcx.getAccounts();
+                        bcx.getAccounts({
+                            callback:res=>{
+                                console.info("getAccounts res",res);
+                                res=res.data;
+                                $(".div_getAccounts .res").JSONView(res);
 
-                        var accounts_html="";
-                        res.accounts.forEach(function(account,index){
-                            var opt_htmls="";
-                            if(account!=res.current_account.account_name){
-                                opt_htmls=`<a href="javascript:_wallet.setCurrentAccount('${account}')">切换到当前账户</a>`;
+                                var accounts_html="";
+                                res.accounts.forEach(function(account,index){
+                                    var opt_htmls="";
+                                    if(account!=res.current_account.account_name){
+                                        opt_htmls=`<a href="javascript:_wallet.setCurrentAccount('${account}')">切换到当前账户</a>`;
+                                    }
+                                    accounts_html+=`<tr  >
+                                        <th scope="row">${(index+1)}</th>
+                                        <td>${account}</td>
+                                        <td>${opt_htmls}</td>
+                                    </tr>`
+                                });
+                                gel(".div_getAccounts table tbody").innerHTML=accounts_html;
+
+                                gel(".current_account").innerText=res.current_account.account_name;
                             }
-                            accounts_html+=`<tr  >
-                                <th scope="row">${(index+1)}</th>
-                                <td>${account}</td>
-                                <td>${opt_htmls}</td>
-                            </tr>`
-                        });
-                        gel(".div_getAccounts table tbody").innerHTML=accounts_html;
-
-                        gel(".current_account").innerText=res.current_account.account_name;
+                        })
+                       
                     },
                     setCurrentAccount:function(accountName){
                         bcx.setCurrentAccount({
@@ -2309,16 +2421,27 @@
                         })
                     },
                     getAccountProposals:function(){
-                        bcx.getAccountProposals().then(res=>{
+                        bcx.getAccountProposals({
+                            account:gel(".div_loadAccountProposals .account").value
+                        }).then(res=>{
                             console.info("res",res);
                             if(res.code==1){
                                 var htmls="";
                                 res.data.forEach(function(proposal,index){
+                                    var status_htmls="";
+                                    proposal.status.forEach(permission=>{
+                                        status_htmls+=`<div class="rows" >
+                                             <span>(${permission.weight_percentage})</span>  
+                                             <span>${permission.account_name}</span>
+                                             <input type="checkbox" class="isPropose" ${permission.isAgree?'checked':''} disabled  />
+                                            </div>`
+                                    })
                                     htmls+=`<tr>
                                         <td>${index+1}</td>
                                         <td>${proposal.id}</td>
                                         <td>${proposal.parse_operations_text}</td>
                                         <td>${proposal.expiration}</td>
+                                        <td class="td-status" >${status_htmls}</td>
                                         <td><a  href="javascript:_NHAssets.approvalProposal('${proposal.id}')">批准</a></td>
                                     </tr>`
                                 });
@@ -2677,7 +2800,6 @@
                             nameOrId:gel(".div_call_contract_function .nameOrId").value,
                             functionName:gel(".div_call_contract_function .function_name").value,//["1",1000001,'COCOS']
                             valueList:(gel(".div_call_contract_function .value_list").value).split(","),//['4.2.0',{"type":"Employee","employeeId":"551"}],////[{"level":1,"color":"red","clothes":{"size":7}}],//
-                            runTime:gel(".div_call_contract_function .runTime").value,
                             onlyGetFee:false,
                             callback:function(res){
                                 console.info("callContractFunction res",res);
@@ -2696,27 +2818,6 @@
                     }
                 }
     
-
-
-                function publishVotes(){
-                  var vote_ids=[]
-                  var checkboxs=document.querySelectorAll(".div_getVotes input[type=checkbox]")
-                                .forEach(function(item){
-                                    if(item.checked){
-                                       vote_ids.push(item.value);
-                                    }
-                                })
-                   console.info("vote_ids",vote_ids);
-                   bcx.publishVotes({
-                      witnessesIds:vote_ids,
-                      proxyAccount:gel(".div_getVotes .proxy_account").value,
-                      onlyGetFee:false,
-                      callback:function(res){
-                          console.info("publishVotes res",res);
-                      }
-                   })
-                }
-
 
                 function queryVotes(){
                     bcx.queryVotes({
@@ -2740,25 +2841,7 @@
                     })
                 }
 
-
-                function getTransactionBaseFee(){
-                    bcx.queryTransactionBaseFee({
-                        transactionType:gel(".div_getTransactionBaseFee .transactionType").value,
-                        feeAssetId:gel(".div_getTransactionBaseFee .feeAssetId").value,
-                        callback:function(res){
-                            console.info("getTransactionBaseFee res",res);
-                            $(".div_getTransactionBaseFee .res").JSONView(res);
-                            
-                        }
-                    })
-                }
-
-                function unsubscribe(){
-                    bcx.unsubscribe({methods:gel(".div_unsubscribe .method").value.split(",")})//
-                    .then(res=>{
-                        console.info("unsubscribe res",res);
-                    });
-                }
+  
 
                 function renderOp(operations,selector,isAllOP=false){
                     gel(selector).innerHTML="";
