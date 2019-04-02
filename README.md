@@ -594,17 +594,20 @@ data:{
   
 ## 节点投票  
   
-### 查询节点投票信息数据  
+### 查询见证人和理事会投票信息数据  
 方法：queryVotes  
-功能：查询节点投票信息数据   
+功能：查询见证人和理事会投票信息数据   
 参数：  
+	queryAccount：可以指定某个账户的投票信息   
+	type：查询类型，witnesses：查询见证人，committee:"理事会"  
 	callback：回调函数  
   
 ### 用户提交投票信息  
 方法：publishVotes  
 功能：保存的时候设置了代理账户，用户投票信息将统一跟随代理账户   
 参数：  
-	witnessesIds（array）：节点账户id集合，查询节点投票信息数据中会有每个节点的账户ID  
+	witnessesIds（array）：见证人账户id集合，查询见证人投票信息数据中会有每个节点的账户ID  
+	committee_ids：理事会账户id集合，查询理事会投票信息数据中会有每个理事会的账户ID   
 	proxyAccount：代理账户名  
 	callback：回调函数  
   
