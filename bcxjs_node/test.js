@@ -4,22 +4,23 @@ require('./bcx.min.js');
 var http = require("http");
 var url = require("url");
 var querystring = require('querystring')
-
 let bcx=new BCX({
-    default_ws_node:"ws://47.93.62.96:8020",
+    default_ws_node:"ws://47.93.62.96:8049",
     ws_node_list:[
-        {url:"ws://47.93.62.96:8020",name:"cocos新链"}
+        {url:"ws://47.93.62.96:8049",name:"COCOS3.0节点1"},
+        {url:"ws://39.106.126.54:8049",name:"COCOS3.0节点2"}
     ],
     networks:[{
         core_asset:"COCOS",
-        chain_id:"9fc429a48b47447afa5e6618fde46d1a5f7b2266f00ce60866f9fdd92236e137" 
+        chain_id:"b9e7cee4709ddaf08e3b7cba63b71c211c845e37c9bf2b865a7b2a592c8adb28" 
     }], 
-    faucet_url:"http://47.93.62.96:4000",
-    auto_reconnect:true                     
+    faucet_url:"http://47.93.62.96:8041",
+    auto_reconnect:true,
+    check_cached_nodes_data:false                     
 });
 
 bcx.passwordLogin({
-    account:"test2",//query.loginUserName,
+    account:"test1",//query.loginUserName,
     password:"12345678"
 }).then(res=>{
     console.info("bcx passwordLogin res",res);
