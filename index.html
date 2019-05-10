@@ -2869,7 +2869,7 @@
                             }
                         }
 
-                        if(item.result.type=="error_result"||item.result.type=="contract_result"){
+                        if((item.result.type=="error_result"&&item.result.message)||item.result.type=="contract_result"){
                             var results="";
                             if(item.result.type=="contract_result")
                                 item.result.contract_affecteds.forEach(c_op=>{
