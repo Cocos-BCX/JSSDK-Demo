@@ -316,9 +316,9 @@ data:{
 方法：createAccountWithPublicKey 
 功能：通过随机生成的公钥和账户名创建账户。如果账户模式已经有账户登录，该操作会创建子账户，创建该子账户需要操作账户为终身会员账户 
 参数：  
-	account:账户名注册规则，/^[a-z][a-z0-9\.-]{4,63}$/，账户名长度为4-63位，由小写字母或数字构成且以字母开头   
-	ownerPubkey:账户权限公钥
-	activePubkey:资金权限公钥  
+	account(string):账户名注册规则，/^[a-z][a-z0-9\.-]{4,63}$/，账户名长度为4-63位，由小写字母或数字构成且以字母开头   
+	ownerPubkey(string):账户权限公钥
+	activePubkey(string):资金权限公钥  
 	callback：回调函数  
 
 ### 升级成为终身会员账户  
