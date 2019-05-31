@@ -1,5 +1,5 @@
 
-require('./bcx.min.js');
+require('./bcx.node.js');
 
 var http = require("http");
 var url = require("url");

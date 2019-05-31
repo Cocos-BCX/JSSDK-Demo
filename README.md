@@ -2,36 +2,73 @@
 
 Javascript API，用于使用COCOS-BCX RPC API与基于COCOS-BCX的区块链集成。
 
-## 类库引用说明
+## Preparation:
 
-### 引入API文件
+Node.js版本8.9.3或更高版本
+
+## Build:
+
+使用npm install安装本地依赖项。 
+使用开发构建npm run dev。
+
+### Browser Distribution
+
+构建用于发布npm run release。
+构建将在`./build`中找到
+### NPM
+
+构建用于发布npm run release-npm。
+构建将在`./build-npm`中找到
+
+
+## Import
+
+### Browser
 
 ```html
  <script type="text/javascript" src="bcx.min.js"></script>
  ```
  
+### NPM
+
+在用 bcxjs 构建大型应用时推荐使用 NPM 安装。NPM 能很好地和诸如 webpack 或 Browserify 模块打包器配合使用
+```js
+# 最新稳定版
+$ npm install bcxjs-api
+```
+
+如果您有一个转换器，例如Babel，则支持在浏览器中使用ES6模块语法导入。
+```js
+import BCX from "bcxjs-api"
+```
+
+
+## Start:
+
 ### 实例化类库对象
 
 ```JavaScript
 var bcx=new BCX({
-            default_ws_node:”ws://XXXXXXXXX” //节点rpc地址,选填。如果没有指定此项则会自动连接ws_node_list中速度最快的节点
-            ws_node_list:[{url:"ws://xxxxxxx",name:"xxxxx"}]//API服务器节点列表，必填
-            faucet_url:"http://xxx.xxx.xxx.xxx:xxxx", //注册入口
-            networks:[{
-                core_asset:"xxx",//核心资产符号
-                chain_id:"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"//链id   
-            }], 
-            auto_reconnect:false,//当RPC断开时是否自动连接，默认为true
-            app_keys:["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"]//合约授权，不进行合约授权，则不用配置此选项
-	 })
+		default_ws_node:”ws://XXXXXXXXX” //节点rpc地址,选填。如果没有指定此项则会自动连接ws_node_list中速度最快的节点
+		ws_node_list:[{url:"ws://xxxxxxx",name:"xxxxx"}]//API服务器节点列表，必填
+		faucet_url:"http://xxx.xxx.xxx.xxx:xxxx", //注册入口
+		networks:[{
+			core_asset:"xxx",//核心资产符号
+			chain_id:"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"//链id   
+		}], 
+		auto_reconnect:false,//当RPC断开时是否自动连接，默认为true
+		app_keys:["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"],//合约授权，不进行合约授权，则不用配置此选项
+		real_sub:true//true：实时订阅，false:区块订阅，订阅通知频率为出块频率
+		sub_max_op:13//订阅时最大处理OP数量
+});
 ```
 
 ### 调用实例-转账
 
 ```JavaScript
 bcx.transferAsset({
-     to:"test",
-     amount:1
+     to:"test2",
+     amount:1,
      assetId:"COCOS",
      memo:""
 }).then(res=>{
@@ -48,9 +85,7 @@ code!=1时意味执行失败，message为失败状态描述。
 #### 2.没有殊说明均只有一个参数，该参数为一个对象，对象包含所有相关参数，其中也包含callback
 调用示例：
 ```js
-bcl.getPrivateKey({
-     callback:res=>{}
-})
+bcl.getPrivateKey().then(res=>{});
 ```    
 #### 3.除订阅类接口，其他接口在不传callback参数时均返回promise对象
 #### 4.接口的参数类型没有特殊说明均为字符串
@@ -155,7 +190,7 @@ data:{
 方法：createAccountWithWallet  
 功能：钱包模式创建账户，钱包模式创建的账户不能用账户名密码登录。如果钱包模式已经存在账户，该操作会创建子账户，创建该子账户需要先成为终身会员账户  
 参数：  
-	account：账户名注册规则，/^[a-z][a-z0-9\.-]{4,63}$/，小写字母开头+数字或小写字母或点.或短横线-，长度4至63  
+	account：账户名注册规则，/^[a-z][a-z0-9\.-]{4,63}$/，账户名长度为4-63位，由小写字母或数字构成且以字母开头  
 	password：密码  
 	callback：回调函数  
   
@@ -235,7 +270,7 @@ data:{
 方法：createAccountWithPassword  
 功能：账户注册。如果账户模式已经有账户登录，该操作会创建子账户，创建该子账户需要操作账户为终身会员账户  
 参数：  
-	account：账户名注册规则，/^[a-z][a-z0-9\.-]{4,63}$/，小写字母开头+数字或小写字母或点.或短横线-，长度4至63  
+	account：账户名注册规则，/^[a-z][a-z0-9\.-]{4,63}$/，账户名长度为4-63位，由小写字母或数字构成且以字母开头  
 	password：密码  
 	autoLogin：boolean类型，指定是否自动登录，默认值为false  
 	callback：回调函数  
@@ -276,7 +311,16 @@ data:{
 参数：无  
   
 ## 账户操作  
-  
+
+### 公钥+账户名注册账户  
+方法：createAccountWithPublicKey 
+功能：通过随机生成的公钥和账户名创建账户。如果账户模式已经有账户登录，该操作会创建子账户，创建该子账户需要操作账户为终身会员账户 
+参数：  
+	account:账户名注册规则，/^[a-z][a-z0-9\.-]{4,63}$/，账户名长度为4-63位，由小写字母或数字构成且以字母开头   
+	ownerPubkey:账户权限公钥
+	activePubkey:资金权限公钥  
+	callback：回调函数  
+
 ### 升级成为终身会员账户  
 方法：upgradeAccount  
 功能：购买终身会员账户后，可以创建子账户，此操作需消耗一定的手续费  
@@ -540,8 +584,8 @@ data:{
 功能：查询全网用户NH资产的售卖订单   
 参数：  
 	assetIds(string）：资产符号或id筛选条件  
-	worldViews (string)：版本名称或版本id筛选条件  
-	baseDescribe(string):基本描述
+	worldViews(string)：版本名称或版本id筛选条件  
+    baseDescribe(string):基本描述
 	pageSize：页容量  
 	page：页数  
   
@@ -595,20 +639,17 @@ data:{
   
 ## 节点投票  
   
-### 查询见证人和理事会投票信息数据  
+### 查询节点投票信息数据  
 方法：queryVotes  
-功能：查询见证人和理事会投票信息数据   
+功能：查询节点投票信息数据   
 参数：  
-	queryAccount：可以指定某个账户的投票信息   
-	type：查询类型，witnesses：查询见证人，committee:"理事会"  
 	callback：回调函数  
   
 ### 用户提交投票信息  
 方法：publishVotes  
 功能：保存的时候设置了代理账户，用户投票信息将统一跟随代理账户   
 参数：  
-	witnessesIds（array）：见证人账户id集合，查询见证人投票信息数据中会有每个节点的账户ID  
-	committee_ids：理事会账户id集合，查询理事会投票信息数据中会有每个理事会的账户ID   
+	witnessesIds（array）：节点账户id集合，查询节点投票信息数据中会有每个节点的账户ID  
 	proxyAccount：代理账户名  
 	callback：回调函数  
   
@@ -764,7 +805,13 @@ data:{
 	callback：回调函数
     
     
-## 其他    
+## 其他  
+
+### API参数配置   
+方法：apiConfig  
+功能：API参数配置   
+参数：  
+API初始化相关参数
 
 ### 取消订阅   
 方法：unsubscribe  
