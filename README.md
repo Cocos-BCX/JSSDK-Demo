@@ -539,8 +539,9 @@ data:{
 方法：queryNHAssetOrders  
 功能：查询全网用户NH资产的售卖订单   
 参数：  
-	assetIds(array）：资产符号或id筛选条件  
-	worldViews (array)：版本名称或版本id筛选条件  
+	assetIds(string）：资产符号或id筛选条件  
+	worldViews (string)：版本名称或版本id筛选条件  
+	baseDescribe(string):基本描述
 	pageSize：页容量  
 	page：页数  
   
