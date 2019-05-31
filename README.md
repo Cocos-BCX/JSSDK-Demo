@@ -583,7 +583,7 @@ data:{
 方法：queryNHAssets  
 功能：查询NH资产详细信息   
 参数：  
-	NHAssetIds：NH资产id或hash  
+	NHAssetIds(Array)：NH资产id或hash  
 	callback：回调函数  
   
 ### 查询世界观详细信息  
