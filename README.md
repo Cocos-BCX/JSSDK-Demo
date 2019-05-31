@@ -2,24 +2,6 @@
 
 Javascript API，用于使用COCOS-BCX RPC API与基于COCOS-BCX的区块链集成。
 
-## Preparation:
-
-Node.js版本8.9.3或更高版本
-
-## Build:
-
-使用npm install安装本地依赖项。 
-使用开发构建npm run dev。
-
-### Browser Distribution
-
-构建用于发布npm run release。
-构建将在`./build`中找到
-### NPM
-
-构建用于发布npm run release-npm。
-构建将在`./build-npm`中找到
-
 
 ## Import
 
@@ -29,20 +11,6 @@ Node.js版本8.9.3或更高版本
  <script type="text/javascript" src="bcx.min.js"></script>
  ```
  
-### NPM
-
-在用 bcxjs 构建大型应用时推荐使用 NPM 安装。NPM 能很好地和诸如 webpack 或 Browserify 模块打包器配合使用
-```js
-# 最新稳定版
-$ npm install bcxjs-api
-```
-
-如果您有一个转换器，例如Babel，则支持在浏览器中使用ES6模块语法导入。
-```js
-import BCX from "bcxjs-api"
-```
-
-
 ## Start:
 
 ### 实例化类库对象
