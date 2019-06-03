@@ -433,21 +433,7 @@
                                 <p class="res"></p>
                             </div>
                         </div>
-                        <div class="div_module_c" id="div_createAccountWithPublicKey" pclass="class_11" >
-                            <h2>公钥+账户名注册账户</h2>
-                            <div class="div_createAccountWithPublicKey div_module">
-                                <p class="red">如果账户模式已经登录，该操作会创建子账户，创建该子账户需要操作账户为终身会员账户</p>
-                                用户名(规则/^[a-z][a-z0-9\.-]{4,63}$/)
-                                <input type="text" class="accountName"  value="test1"><br><br>
-                                owner public key(账户权限公钥)<input type="text" class="owner_public_key"  value=""><br><br>
-                                active public key(资金权限公钥)<input type="text" class="active_public_key"  value=""><br><br>
-                                <input type="button" class="btn_generateKey" value="随机生成公私钥"  /><br><br>
-                                <p class="res_key"></p><br>
-                                <input type="button" id="btn_createAccountWithPublicKey" value="确认"  /><br><br>
-                                <p class="res"></p>
-                            </div>
-                        </div>
-
+              
                         <div class="div_module_c" id="div_upgradeAccount" pclass="class_11" >
                             <h2>升级成为终身会员账户</h2>
                             <div class="div_upgradeAccount div_module">
@@ -2149,27 +2135,9 @@
                         gel("#btn_queryUserInfo").onclick=this.queryUserInfo;
                         gel("#btn_getPrivateKey").onclick=this.getPrivateKey;
                         gel("#btn_getOperations").onclick=this.fetchAndSubscribe
-
-                        gel(".div_createAccountWithPublicKey .btn_generateKey").onclick=this.generateKey;
-                     
-                        gel("#btn_createAccountWithPublicKey").onclick=this.createAccountWithPublicKey;             
+  
                     },
-                    createAccountWithPublicKey(){
-                        bcx.createAccountWithPublicKey({
-                            account:gel(".div_createAccountWithPublicKey .accountName").value,
-                            ownerPubkey:gel(".div_createAccountWithPublicKey .owner_public_key").value,
-                            activePubkey:gel(".div_createAccountWithPublicKey .active_public_key").value
-                        }).then(res=>{
-                            console.info("createAccountWithPublicKey res",res);
-                            $(".div_createAccountWithPublicKey .res").JSONView(res);
-                        })
-                    },
-                    generateKey(){
-                        var random_key=bcx.generateKeys();
-                        gel(".div_createAccountWithPublicKey .owner_public_key").value=random_key.public_key;
-                        gel(".div_createAccountWithPublicKey .active_public_key").value=random_key.public_key;
-                        $(".div_createAccountWithPublicKey .res_key").JSONView(random_key);
-                    },
+         
                     
                     operations:[],
                     fetchAndSubscribe:function(){
