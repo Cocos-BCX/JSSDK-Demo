@@ -15,7 +15,7 @@ let bcx=new BCX({
             chain_id:"7d89b84f22af0b150780a2b121aa6c715b19261c8b7fe0fda3a564574ed7d3e9" 
         }
     ], 
-    faucet_url:"http://47.93.62.96:3000",
+    faucet_url:"http://47.93.62.96:8041",
     auto_reconnect:false,
     check_cached_nodes_data:false                     
 });
