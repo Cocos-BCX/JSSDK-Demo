@@ -4,6 +4,7 @@ var http = require("http");
 var url = require("url");
 var querystring = require('querystring')
 let bcx=new BCX({
+    default_ws_node:"ws://47.93.62.96:8049",
     ws_node_list:[
         {url:"ws://39.97.110.222:8040",name:"Cocos - China - Beijing"},   
         {url:"ws://47.93.62.96:8049",name:"Cocos - China - Xiamen"} ,
