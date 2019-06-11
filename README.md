@@ -200,7 +200,7 @@ data:{
 方法：getAccounts  
 功能：获取钱包账户列表  
 参数：  
-	直接返回数据，格式示例：  
+callback:若有该参数，则内部会自动判断进行链初始化，否则直接返回数据，格式示例：  
 ```JavaScript
   {  
 		"accounts": ["tom0002"],  
