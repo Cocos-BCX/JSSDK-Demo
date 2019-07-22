@@ -2,36 +2,73 @@
 
 Javascript API，用于使用COCOS-BCX RPC API与基于COCOS-BCX的区块链集成。
 
-## 类库引用说明
+## Preparation:
 
-### 引入API文件
+Node.js版本8.9.3或更高版本
+
+## Build:
+
+使用npm install安装本地依赖项。 
+使用开发构建npm run dev。
+
+### Browser Distribution
+
+构建用于发布npm run release。
+构建将在`./build`中找到
+### NPM
+
+构建用于发布npm run release-npm。
+构建将在`./build-npm`中找到
+
+
+## Import
+
+### Browser
 
 ```html
  <script type="text/javascript" src="bcx.min.js"></script>
  ```
  
+### NPM
+
+在用 bcxjs 构建大型应用时推荐使用 NPM 安装。NPM 能很好地和诸如 webpack 或 Browserify 模块打包器配合使用
+```js
+# 最新稳定版
+$ npm install bcxjs-api
+```
+
+如果您有一个转换器，例如Babel，则支持在浏览器中使用ES6模块语法导入。
+```js
+import BCX from "bcxjs-api"
+```
+
+
+## Start:
+
 ### 实例化类库对象
 
 ```JavaScript
 var bcx=new BCX({
-            default_ws_node:”ws://XXXXXXXXX” //节点rpc地址,选填。如果没有指定此项则会自动连接ws_node_list中速度最快的节点
-            ws_node_list:[{url:"ws://xxxxxxx",name:"xxxxx"}]//API服务器节点列表，必填
-            faucet_url:"http://xxx.xxx.xxx.xxx:xxxx", //注册入口
-            networks:[{
-                core_asset:"xxx",//核心资产符号
-                chain_id:"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"//链id   
-            }], 
-            auto_reconnect:false,//当RPC断开时是否自动连接，默认为true
-            app_keys:["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"]//合约授权，不进行合约授权，则不用配置此选项
-	 })
+		default_ws_node:”ws://XXXXXXXXX” //节点rpc地址,选填。如果没有指定此项则会自动连接ws_node_list中速度最快的节点
+		ws_node_list:[{url:"ws://xxxxxxx",name:"xxxxx"}]//API服务器节点列表，必填
+		faucet_url:"http://xxx.xxx.xxx.xxx:xxxx", //注册入口
+		networks:[{
+			core_asset:"xxx",//核心资产符号
+			chain_id:"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"//链id   
+		}], 
+		auto_reconnect:false,//当RPC断开时是否自动连接，默认为true
+		app_keys:["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"],//合约授权，不进行合约授权，则不用配置此选项
+		real_sub:true//true：实时订阅，false:区块订阅，订阅通知频率为出块频率
+		sub_max_op:13//订阅时最大处理OP数量
+});
 ```
 
 ### 调用实例-转账
 
 ```JavaScript
 bcx.transferAsset({
-     to:"test",
-     amount:1
+     to:"test2",
+     amount:1,
      assetId:"COCOS",
      memo:""
 }).then(res=>{
@@ -48,9 +85,7 @@ code!=1时意味执行失败，message为失败状态描述。
 #### 2.没有殊说明均只有一个参数，该参数为一个对象，对象包含所有相关参数，其中也包含callback
 调用示例：
 ```js
-bcl.getPrivateKey({
-     callback:res=>{}
-})
+bcl.getPrivateKey().then(res=>{});
 ```    
 #### 3.除订阅类接口，其他接口在不传callback参数时均返回promise对象
 #### 4.接口的参数类型没有特殊说明均为字符串
@@ -155,7 +190,7 @@ data:{
 方法：createAccountWithWallet  
 功能：钱包模式创建账户，钱包模式创建的账户不能用账户名密码登录。如果钱包模式已经存在账户，该操作会创建子账户，创建该子账户需要先成为终身会员账户  
 参数：  
-	account：账户名注册规则，/^[a-z][a-z0-9\.-]{4,63}$/，小写字母开头+数字或小写字母或点.或短横线-，长度4至63  
+	account：账户名注册规则，/^[a-z][a-z0-9\.-]{4,63}$/，账户名长度为4-63位，由小写字母或数字构成且以字母开头  
 	password：密码  
 	callback：回调函数  
   
@@ -197,7 +232,7 @@ data:{
 方法：getAccounts  
 功能：获取钱包账户列表  
 参数：  
-	直接返回数据，格式示例：  
+callback:若有该参数，则内部会自动判断进行链初始化，否则直接返回数据，格式示例：  
 ```JavaScript
   {  
 		"accounts": ["tom0002"],  
@@ -235,7 +270,7 @@ data:{
 方法：createAccountWithPassword  
 功能：账户注册。如果账户模式已经有账户登录，该操作会创建子账户，创建该子账户需要操作账户为终身会员账户  
 参数：  
-	account：账户名注册规则，/^[a-z][a-z0-9\.-]{4,63}$/，小写字母开头+数字或小写字母或点.或短横线-，长度4至63  
+	account：账户名注册规则，/^[a-z][a-z0-9\.-]{4,63}$/，账户名长度为4-63位，由小写字母或数字构成且以字母开头  
 	password：密码  
 	autoLogin：boolean类型，指定是否自动登录，默认值为false  
 	callback：回调函数  
@@ -276,7 +311,16 @@ data:{
 参数：无  
   
 ## 账户操作  
-  
+
+### 公钥+账户名注册账户  
+方法：createAccountWithPublicKey 
+功能：通过随机生成的公钥和账户名创建账户。如果账户模式已经有账户登录，该操作会创建子账户，创建该子账户需要操作账户为终身会员账户 
+参数：  
+	account(string):账户名注册规则，/^[a-z][a-z0-9\.-]{4,63}$/，账户名长度为4-63位，由小写字母或数字构成且以字母开头   
+	ownerPubkey(string):账户权限公钥
+	activePubkey(string):资金权限公钥  
+	callback：回调函数  
+
 ### 升级成为终身会员账户  
 方法：upgradeAccount  
 功能：购买终身会员账户后，可以创建子账户，此操作需消耗一定的手续费  
@@ -539,8 +583,9 @@ data:{
 方法：queryNHAssetOrders  
 功能：查询全网用户NH资产的售卖订单   
 参数：  
-	assetIds(array）：资产符号或id筛选条件  
-	worldViews (array)：版本名称或版本id筛选条件  
+	assetIds(string）：资产符号或id筛选条件  
+	worldViews(string)：版本名称或版本id筛选条件  
+    baseDescribe(string):基本描述
 	pageSize：页容量  
 	page：页数  
   
@@ -582,7 +627,7 @@ data:{
 方法：queryNHAssets  
 功能：查询NH资产详细信息   
 参数：  
-	NHAssetIds：NH资产id或hash  
+	NHAssetIds(Array)：NH资产id或hash  
 	callback：回调函数  
   
 ### 查询世界观详细信息  
@@ -760,7 +805,13 @@ data:{
 	callback：回调函数
     
     
-## 其他    
+## 其他  
+
+### API参数配置   
+方法：apiConfig  
+功能：API参数配置   
+参数：  
+API初始化相关参数
 
 ### 取消订阅   
 方法：unsubscribe  
@@ -807,3 +858,864 @@ callback：见统一API说明
 | fill_nh_asset_order | fillNHAssetOrder |   
 | limit_order_create | createLimitOrder |   
 | limit_order_cancel | cancelLimitOrder |   
+
+[中文](https://github.com/Cocos-BCX/JSSDK/blob/master/README_cn.md "中文")
+
+# Part 1. Interoperable API for Cocos-BCX Chain System-BCXJS
+
+The Javascript API for integration with COCOS-BCX-based blockchain using the COCOS-BCX RPC API.
+
+## Preparation:
+
+Node.js 8.9.3 or higher version.
+
+## Build:
+
+Use npm install to install local dependencies.
+Run building npm run dev.
+
+### Browser Distribution
+
+Use the building to issue npm run release.
+The unpacked building shall be found at ./build.
+
+### NPM
+
+Use the building to issue npm run release-npm.
+The unpacked building shall be found at./build-npm.
+
+
+## Import
+
+### Browser
+
+```html
+ <script type="text/javascript" src="bcx.min.js"></script>
+ ```
+ 
+### NPM
+
+NPM, which works well with modules packagers such as webpack or Browserify, is highly recommended when building large applications with bcxjs. 
+
+```js
+# The latest stable version
+$ npm install bcxjs-api
+```
+
+ES6 module syntax import is supported when there is a converter like Babel.
+```js
+import BCX from "bcxjs-api"
+```
+
+
+## Start:
+
+### Instantiating the class library object
+
+```JavaScript
+var bcx=new BCX({
+		default_ws_node:”ws://XXXXXXXXX” //node rpc address, optional. If you do not specify this, it will automatically connect to the fastest node in ws_node_list
+		ws_node_list:[{url:"ws://xxxxxxx",name:"xxxxx"}]//API server node list, required
+		faucet_url:"http://xxx.xxx.xxx.xxx:xxxx", //Registration
+		networks:[{
+			core_asset:"xxx",//core asset symbol
+			chain_id:"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"//chain id 
+		}], 
+		auto_reconnect:false,//Whether to connect automatically when RPC is disconnected, the default is true
+		app_keys:["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"],//Contract authorization. Do not need to configure this if there is no contract authorization
+		real_sub:true//true：real-time subscription，false:blockchain subscription，the frequency of subscription notification is the frequency block production  
+		sub_max_op:13//Maximum number of OP processed at subscription
+});
+```
+
+### Instance of call - transfer
+
+```JavaScript
+bcx.transferAsset({
+     to:"test2",
+     amount:1,
+     assetId:"COCOS",
+     memo:""
+}).then(res=>{
+     console.log('transferAsset res',res);
+})
+```  
+
+
+## API User Guide
+#### 1.There is one optional parameter callback unless otherwise specified
+The result returned by callback is an Object with an structure of {code:0,message:""}.
+If it is code=1, it means the result is success, and there is no message status description.
+If it is Code!=1, it means that the result is failure, the message is the description of the failure status.
+#### 2.There is only one parameter unless otherwise specified. The parameter is an object that contains all relevant parameters, including callback.
+Example:
+```js
+bcl.getPrivateKey().then(res=>{});
+```    
+#### 3.In addition to the subscription interface, other interfaces return a promise object when not passing callback parameter.
+#### 4.The parameter type of the interface is a string unless otherwise specified.
+#### 5.The parameter of the interface cannot be empty unless otherwise specified. Callback is an optional parameter.
+#### 6.The searching interface returns a data instance: {code:1,data:[]}
+#### 7.The data returned by other interfaces will have an additional data field trxData with a value of one object.
+Example:
+```js
+trx_data:{
+ block_num:*****,//Block height
+ trx_id:"************************"//Transaction ID
+}
+```
+#### 8.If a non-query interface involves associated ID business (such as the ID generated by creating the NH asset), the data returned will contain the data object.
+//Example
+```js
+data:{
+  real_running_time: 387//Running time
+  result: "4.2.288"//Associated business id
+}
+```
+
+## Status Code
+
+| code | message | Description | API | 
+| --- | --- | --- | --- |
+| 300 | Chain sync error, please check your system clock | Chain sync error, please check your system clock | * | 
+| 301 | RPC connection failed. Please check your network | RPC connection failed. Please check your network | * | 
+| 1 | None | Operation succeeded | *　 | 
+| 0 | failed | The operation failed, and the error status description is not fixed. You can directly prompt res.message or to prompt the operation failure | *　 | 
+| 101 | Parameter is missing | Parameter is missing | *　 | 
+| 1011 | Parameter error | Parameter error | * | 
+| 102 | The network is busy, please check your network connection | The network is busy, please check your network connection | * | 
+| 103 | Please enter the correct account name(/^[a-z]([a-z0-9\.-]){4,63}/$) | Please enter the correct account name(/^a-z{4,63}/$) | CreateAccountWithPassword | 
+| 104 | XX not found | XX not found | passwordLogin etc | 
+| 105 | wrong password | wrong password | passwordLogin,unlockAccount | 
+| 106 | The account is already unlocked | The account is already unlocked | unlockAccount | 
+| 107 | Please import the private key | Please import the private key | unlockAccount | 
+| 108 | User name or password error (please confirm that your account is registered in account mode, and the account registered in wallet mode cannot be logged in using account mode) | User name or password error (please confirm that your account is registered in account mode, and the account registered in wallet mode cannot be logged in using account mode) | passwordLogin | 
+| 109 | Please enter the correct private key | Please enter the correct private key | keyLogin | 
+| 110 | The private key has no account information | The private key has no account information | keyLogin | 
+| 111 | Please login first | Please login first | changePassword | 
+| 112 | Must have owner permission to change the password, please confirm that you imported the ownerPrivateKey | Must have owner permission to change the password, please confirm that you imported the ownerPrivateKey | changePassword | 
+| 113 | Please enter the correct original/temporary password | Please enter the correct original/temporary password | changePassword | 
+| 114 | Account is locked or not logged in. | Account is locked or not logged in | changePasswor、transferAsset、getPrivateKey etc. | 
+| 115 | There is no asset XX on block chain | There is no asset XX on block chain | transferAsset etc. | 
+| 116 | Account receivable does not exist | Account receivable does not exist | transferAsset etc. | 
+| 117 | The current asset precision is configured as X ,and the decimal cannot exceed X | The current asset precision is configured as X ,and the decimal cannot exceed X | transferAsset etc. | 
+| 118 | Encrypt memo failed | Encrypt memo failed | transferAsset etc. | 
+| 119 | Expiry of the transaction | Expiry of the transaction | transferAsset etc. | 
+| 120 | Error fetching account record | Error fetching account record | queryAccountOperations | 
+| 121 | block and transaction information cannot be found | block and transaction information cannot be found | queryBlockTXID | 
+| 122 | Parameter blockOrTXID is incorrect | Parameter blockOrTXID is incorrect | queryBlockTXID | 
+| 123 | Parameter account can not be empty | Parameter account can not be empty | queryAccountInfo | 
+| 124 | Receivables account name can not be empty | Receivables account name can not be empty | transferAsset | 
+| 125 | Users do not own XX assets | Users do not own XX assets | queryAccountBalances | 
+| 127 | No reward available | No reward available | getVestingBalances,claimVestingBalance | 
+| 129 | Parameter 'memo' can not be empty | Parameter ‘memo’ can not be empty | decodeMemo | 
+| 130 | Please enter the correct contract name(/^[a-z]([a-z0-9\.-]){4,63}$/) | Please enter the correct contract name(/^[a-z]([a-z0-9\.-]){4,63}$/) | createContract | 
+| 131 | Parameter 'worldView' can not be empty | Parameter ‘worldView’ can not be empty | creatWorldView | 
+| 133 | Parameter 'toAccount' can not be empty | Parameter ‘toAccount’ can not be empty | transferNHAsset | 
+| 135 | Please check parameter data type | Please check parameter data type | creatNHAssetOrder | 
+| 136 | Parameter 'orderId' can not be empty | Parameter ‘orderId’ can not be empty | cancelNHAssetOrder | 
+| 137 | Parameter 'NHAssetHashOrIds' can not be empty | Parameter ‘NHAssetHashOrIds’ can not be empty | lookupNHAssets | 
+| 138 | Parameter 'url' can not be empty | Parameter ‘url’ can not be empty | switchAPINode | 
+| 139 | Node address must start with ws:// or wss:// | Node address must start with ws:// or wss:// | addAPINode | 
+| 140 | API server node address already exists | API server node address already exists | switchAPINode | 
+| 141 | Please check the data in parameter NHAssets | Please check the data in parameter NHAssets | creatNHAsset | 
+| 142 | Please check the data type of parameter NHAssets | Please check the data type of parameter NHAssets | creatNHAsset | 
+| 144 | Your current batch creation / deletion / transfer number is X , and batch operations can not exceed X | Your current batch creation / deletion / transfer number is X , and batch operations can not exceed X | creatNHAsset、deleteNHAsset、transferNHAsset | 
+| 145 | XX contract not found | XX contract not foun | callContractFunction, queryContract, queryAccountContractData | 
+| 146 | The account does not contain information about the contract | The account does not contain information about the contract | queryAccountContractData | 
+| 147 | NHAsset do not exist | NHAsset do not exist | queryNHAssets | 
+| 148 | Request timeout, please try to unlock the account or login the account | Request timeout, please try to unlock the account or login the account | queryVotes | 
+| 149 | This wallet has already been imported | This wallet has already been imported | importPrivateKey | 
+| 150 | Key import error | Key import error | importPrivateKey | 
+| 151 | File saving is not supported | File saving is not supported | backupDownload | 
+| 152 | Invalid backup to download conversion | Invalid backup to download conversion | backupDownload | 
+| 153 | Please unlock your wallet first | Please unlock your wallet first | importPrivateKey | 
+| 154 | Please restore your wallet first | Please restore your wallet first | backupDownload、unlockAccount | 
+| 155 | Your browser may not support wallet file recovery | Your browser may not support wallet file recovery | loadWalletFile | 
+| 156 | The wallet has been imported. Do not repeat import | The wallet has been imported. Do not repeat import | restoreWallet | 
+| 157 | Can't delete wallet, does not exist in index | Can't delete wallet, does not exist in index | deleteWallet | 
+| 158 | Imported Wallet core assets can not be XX , and it should be XX | Imported Wallet core assets can not be XX , and it should be XX | restoreWallet | 
+| 159 | Account exists | Account exists | createAccountWithWallet | 
+| 160 | You are not the creator of the Asset XX . | You are not the creator of the Asset XX | issueAsset | 
+| 161 | Orders do not exist | Orders do not exist | fillNHAssetOrder | 
+| 162 | The asset already exists | The asset already exists | createAsset | 
+| 163 | The wallet already exists. Please try importing the private key | The wallet already exists. Please try importing the private key | restoreWallet | 
+| 164 | worldViews do not exist | worldViews do not exist | queryWorldViews | 
+| 165 | There is no wallet account information on the chain | There is no wallet account information on the chain | restoreWallet | 
+| 166 | The Wallet Chain ID does not match the current chain configuration information. The chain ID of the wallet is: XX | The Wallet Chain ID does not match the current chain configuration information. The chain ID of the wallet is: XX | restoreWallet | 
+| 167 | The current contract version ID was not found | The current contract version ID was not found | queryContract | 
+| 168 | This subscription does not exist | This subscription does not exist | unsubscribe | 
+| 169 | Method does not exist | Method does not exist | unsubscribe | 
+
+# Part 2. Interoperable API for Blockchain Systems  
+  
+## Wallet mode  
+  
+### Create an account  
+Method：createAccountWithWallet  
+Function: To create an account with a wallet. The account created with the wallet cannot be logged in with account name and password. If an account already exists with the wallet, this operation will create a sub-account, which requires the account to be a lifetime member first.   
+Parameters:  
+	account：Account name registration rules, /^[a-z][a-z0-9.-]{4,63}$/, begin with lowercase letters + digits or lowercase letters or dots or dashes -, with a length of 4 to 63 characters  
+	password：password  
+	callback：callback function  
+  
+### Backup wallet  
+Method: backupDownload  
+Function: To back up the wallet. Calling this API will generate a wallet file, which will be downloaded automatically  
+Parameters:  
+	callback：callback function  
+  
+### Load backup wallet file  
+Method：loadWalletFile  
+Function：For the web, the change event is bound to the file input to read the wallet file.  
+Parameters:   
+	file: The host environment triggers the returned event object event.target, files[0] if the change event in web => file input  
+	callback: callback function  
+  
+### Restore wallet from backup file  
+Method: restoreWallet  
+Function: To back up the wallet. Calling this API will generate a wallet file, which will be downloaded automatically. After the API is called, the wallet is locked.  
+Parameters:  
+	password: the wallet password of the backup file  
+	callback: callback function  
+  
+### Import private key  
+Method: importPrivateKey  
+Function: To import private key to the wallet  
+Parameters:   
+	privateKey: unencrypted private key  
+	password: If the wallet has been created or the wallet has been restored, the password is that of the original wallet, otherwise it is a temporary password that can be filled in freely.  
+	callback: callback function  
+  
+### Delete wallet  
+Method: deleteWallet  
+Function: To delete the wallet. In the account mode, it’s better to delete the wallet first  
+Parameters:   
+	callback: callback function   
+  
+### Get a list of wallet accounts  
+Method: getAccounts  
+Function: To get a list of wallet accounts  
+Parameters:  
+	callback: Return data directly, the example format is:  
+```JavaScript
+  {  
+		"accounts": ["tom0002"],  
+		"currentAccount": {  
+			"account_id": "1.2.20",  
+			"locked": true,  
+			"account_name": "tom0002"  
+		}
+  }  
+```  
+  
+### Switch account  
+Method: setCurrentAccount  
+Function: To switch current account in wallet mode  
+Parameters:   
+	account: the account to be switched to   
+	callback: callback function  
+  
+### Unlock account  
+Method: unlockAccount  
+Function: This method can be used to unlock your account by importing private key or in the wallet mode.  
+Parameters:  
+	Password: the temporary password set when importing the private key  
+	Callback: callback function  
+  
+### Lock account  
+Method: lockAccount  
+Function: Lock the account  
+Parameters:  
+	callback: callback function  
+      
+## Account Mode  
+  
+### Create an account  
+Method: createAccountWithPassword  
+Function: To create an account. If there’s already an account logged in under account mode, this operation will create a sub-account, which requires the account to be a lifetime member first  
+Parameters:  
+	account: Account name registration rules, /^[a-z][a-z0-9.-]{4,63}$/, begin with lowercase letters + digits or lowercase letters or dots or dashes -, with a length of 4 to 63 characters  
+	password: password  
+	autoLogin: Boolean type. it specifies whether to log in automatically with the default value of false  
+	callback: callback function  
+  
+### Account login  
+Method: passwordLogin  
+Function: To login the account  
+Parameters:   
+	account: account name  
+	password: password  
+	callback: callback function  
+  
+### Private key login  
+Method: privateKeyLogin  
+Function: Previously, this API was just a transition. Strictly speaking, importing a private key exists only in the wallet mode. Now, this API is temporarily left here and is still available for calling for compatility.   
+Parameters:   
+	privateKey: Private key   
+	password: Temporary password  
+	callback: callback function  
+  
+### Logout  
+Method: logout  
+Function: This method will clear the user-related cache, including clearing the encrypted ciphertext key.  
+Parameters:  
+	callback: callback function  
+  
+### Change password  
+Method: changePassword  
+Function: The password can be changed only in the account mode; after the password is successfully changed, the API will automatically call the logout.  
+Parameters:  
+	oldPassword: old password  
+	newPassword: new password  
+	callback: callback function  
+  
+### Get current account information  
+Method: getAccountInfo  
+Function: When the account is unlocked, the return data will contain the account name  
+Parameters: None  
+  
+## Account operation  
+
+### Public Key + Account Sign Up User  
+Method: createAccountWithPublicKey  
+Function: To create an account with a random generated public key and account name. If an account already exists with the account mode, this operation will create a sub-account, which requires the account to be a lifetime member first.   
+Parameters:   
+	account(string):Account name registration rules, /^[a-z][a-z0-9.-]{4,63}$/, begin with lowercase letters + digits or lowercase letters or dots or dashes -, with a length of 4 to 63 characters   
+	ownerPubkey(string):Account permission public key  
+	activePubkey(string):fund permission public key  
+	callback: callback function  
+
+### Upgrade to a lifetime membership account  
+Method: upgradeAccount  
+Function: After purchasing a lifetime membership account, you can create a sub-account, which requires a certain fee.  
+Parameters:   
+	onlyGetFee: Whether to get this operation fee only  
+	callback: callback function  
+  
+### Export user private key  
+Method: getPrivateKey  
+Function: Get the user’s active_private_key. This key can be used to sign all the expenditures of the account. The returned owner_private_key: can modify various settings related to the account, including permission settings.  
+Parameters:   
+	callback: Set the callback function after successfully get the private key
+  
+### Query account record  
+Method: queryAccountOperations  
+Function: To query user’s recent operation history  
+Parameters:   
+	account: account name  
+	limit: Number of records queried  
+	startId: The first account record id to be queried. If the query scope is the entire account record, the initial account record is startId.    
+	endId: The last account record id to be queried. If the scope of the query is the entire account record, the latest account record is the endId.  
+	callback: See the unified API parameter description  
+  
+### Subscribe to operation record changes  
+Method: subscribeToAccountOperations  
+Function: To subscribe to operation record changes  
+Parameters:   
+	account: account name  
+	callback: Call this callback whenever the user action record changes  
+  
+### Query account information  
+Method: queryAccountInfo  
+Function: The account information includes information such as the user id username.  
+Parameters:   
+	account: account name  
+	callback: See the unified API parameter description  
+  
+## Token operation interface  
+  
+### Token asset transfer  
+Method: transferAsset  
+Function: Send tokens to the recipient  
+Parameters:   
+	fromAccount: The sender's account name. it is not a proposal  
+	toAccount: The recipient’s account name  
+	amount: Amount of tokens sent  
+	assetId: Asset ID (e.g. X.X.X) or token symbol (e.g. BTC)  
+	memo: Transfer memo  
+	feeAssetId: Token asset symbol used to pay for transfer fee  
+	isPropose: Whether to propose  
+	onlyGetFee（boolean）: Whether to get the transaction fee for this operation  
+	callback: Set the callback function after the transfer  
+
+### Create an asset  
+Method: createAsset  
+Function: To create a token  
+Parameters:   
+	assetId: Asset symbol, regular ^[.A-Z]+$  
+	precision: precise to decimal digit  
+	maxSupply: Maximum asset supply  
+	description: Asset description, optional  
+	onlyGetFee: Set to return only the fee required for this call  
+	callback: See the unified API parameter description  
+	coreExchangeRate(Object)：  
+```JavaScript  
+		{  
+			quoteAmount: quote asset(Created token, default 1),  
+			baseAmount: base asset (Core asset, default 1)  
+		}  
+```  
+  
+### Update assets  
+Method: updateAsset  
+Function: Update token  
+Parameters:   
+	assetId: Asset symbol, regular ^[.A-Z]+$  
+	maxSupply: Maximum asset supply  
+	newIssuer: Update issuer  
+	description: Asset description, optional  
+	onlyGetFee: Set to return only the fee required for this call  
+	callback: See the unified API parameter description  
+	coreExchangeRate(Object): Fee exchange rate  
+```JavaScript  
+	{   
+		quoteAmount: quote asset  
+		baseAmount: base asset  
+	}  
+```  
+  
+### Burn asset  
+Method: reserveAsset  
+Function: Burn token assets  
+Parameters:   
+	assetId: Asset symbol  
+	amount: Amount to be destroyed  
+	onlyGetFee: Set to return only the fee required for this call  
+	callback: callback function  
+  
+### Issue asset  
+Method: issueAsset  
+Function: To issue token asset  
+Parameters:   
+	toAccount: Issue object  
+	amount: Amount to be issued  
+	assetId: Asset symbol  
+	memo: memos, optional  
+	onlyGetFee: Set to return only the fee required for this call  
+	callback: callback function   
+  
+### Asset fund fee pool  
+Method: assetFundFeePool  
+Function: All fees will eventually be paid using the core asset token. The fee pool is used to cover the fee for the exchange from the secondary asset token to the core asset token so that the user can use the secondary token to pay the fee. If the balance in the funds pool is used up, the user will not be able to continue to use the secondary asset token to pay the transaction fee. Currently, the APIs that supports the use of secondary asset tokens as a fee include “transfer, vote, lifetime membership upgrade, asset issuance”, which will be expanded.  
+Parameters:   
+	assetId: Secondary asset token symbol requiring fund injection  
+	amount: Amount of core asset tokens to be injected  
+	onlyGetFee: Set to return only the fee required for this call  
+	callback: callback function    
+  
+### Collect asset fees  
+Method: assetClaimFees  
+Function: The asset issuer can collect the accumulated fees here.  
+Parameters:   
+	assetId: Secondary asset token symbol to be collected  
+	amount: Amount of secondary asset tokens  
+	onlyGetFee: Set to return only the fee required for this call  
+	callback: callback function  
+  
+### Query the assets issued on the blockchain  
+Method: queryAsset  
+Function: Token asset query  
+Parameters:   
+	assetId: Asset symbol, if this parameter is empty, all assets issued on the chain will be queried  
+	callback: callback function   
+  
+### Query specified asset balance of the account  
+Method: queryAccountBalances  
+Function: Get the digital asset corresponding to the user. If the assetId is empty, all the tokens of the user will be returned.  
+Parameters:   
+	assetId: Asset ID or token symbol. Asset ID: the unique token ID of the digital token (e.g. "X.X.X"), token symbol (e.g. "BTC")  
+	account: Account name  
+	callback: callback function  
+  
+### Query the list of all asset balances in the account  
+Method: queryAccountAllBalances  
+Function: Query the list of all assets owned by the user, including the conversion value of the asset to the unit of account. Core asset with a balance of 0 will be returned when the account has no asset balance  
+Parameters:   
+	unit: the unit of account will be exchanged to the asset, asset ID or token symbol based on the fee rate or the market price. Asset ID: The unique token ID of the digital token (e.g. "X.X.X"), token symbol (e.g. "BTC")  
+	account: account name  
+	callback: callback function  
+  
+  
+## NH asset operation  
+  
+### Register as a developer  
+Method: registerCreator  
+Function: Register your current account as a developer  
+  
+### Create a worldview  
+Method: creatWorldView  
+Function: Create a supported NH asset worldview and register the current account (usually the game's account) with the blockchain system to support the NH asset worldview  
+Parameters:   
+	worldView: Worldview name, case sensitive  
+  
+### Create NH asset  
+Method: creatNHAsset  
+Function: Create a unique NH asset. This interface is for use only by NH asset manufacturers (blacksmiths)  
+Parameters:   
+	assetId: The applicable asset ID when the current NH asset is traded;  
+	worldView: worldview  
+	baseDescribe: The specific content description of the current NH assets, as defined by the creator;  
+	ownerAccount: Specify the NH asset owner (NH asset ownership account, the default is NH asset creator)  
+	NHAssetsCount (Number): Create the amount of NH assets, the default value is 1, only type 0 to create the same NH asset to take effect  
+	type: Create the type of NH asset mode. The default value is 0. A value of 0 creates the same NH asset by default, and a value of 0 creates a different NH asset.  
+	NHAssets (Array) example:  
+```JavaScript  
+	[{  
+	 "assetId": "X.X.X",  
+	 "worldView": "TEST",  
+	 "baseDescribe": "{name:\"预言家\"}",  
+	 "ownerAccount": "test2"  
+	}, {  
+	 "assetId": "X.X.X",  
+	 "worldView": "TEST",  
+	 "baseDescribe": "{name:\"女巫\"}",  
+	 "ownerAccount": "test2"  
+	}, {  
+	 "assetId": "X.X.X",  
+	 "worldView": "TEST",  
+	 "baseDescribe": "{name:\"猎人\"}",  
+	 "ownerAccount": "test2"  
+	}]  
+```  
+  
+  
+### Delete NH assets  
+Method: deleteNHAsset  
+Function: . the entire NH asset data record, which is usually used when the product is to be destroyed (only the user can authorize the destruction of the data).  
+Parameters:   
+	NHAssetIds (Array): Unique ID of the NH asset instance; example: [X.X.X, X.X.X]  
+  
+### Transfer of NH assets  
+Method: transferNHAsset  
+Function: Users can transfer their NH assets to another user  
+Parameters:   
+	toAccount: Account name the NH asset is transferred to  
+	NHAssetIds（Array）: An array of multiple NH asset ids, example: [X.X.X, X.X.X]  
+  
+### Propose to link worldviews  
+Method: proposeRelateWorldView  
+Function: Propose to link to a certain worldview, which requires the approval of the creator of the worldview   
+Parameters:   
+	worldView: Worldview to be linked  
+  
+### Approve the proposal to link a worldview  
+Method: approvalProposal  
+Function: Approve proposals of other users to link with the worldview  
+Parameters:   
+	proposalId: Proposal ID  
+  
+### Get the proposal received by the current user  
+Method: getAccountProposals  
+Function: Get the proposal received by the current operation user  
+  
+## NH asset transaction interfaces  
+  
+### Create an NH asset sales order  
+Method: creatNHAssetOrder  
+Function: Sell NH assets (you can call the queryAccountGameItems function before the transaction, listing the user's NH assets so that the user can choose an asset to sell)  
+Parameters:   
+	otcAccount: OTC transaction platform account, used to collect the pending order fee; (filled in the OTC platform)  
+	orderFee: Pending order fee, the pending order fee paid by the user to the OTC platform account; (filled in the OTC platform)  
+	NHAssetId: The unique identifier ID of the NH asset instance; (filled in by users)  
+	price: Pending order price; (filled in by users)  
+	priceAssetId: The token type for the price of the pending order; (filled in by users)  
+	expiration: Order time, such as 3600 (seconds), is 1 hour  
+	memo: Memo for the pending order  
+	callback: Set the callback function after executing the pending order  
+
+### Purchase order NH assets  
+Method: fillNHAssetOrder  
+Function: Buy NH assets, pay the token for purchasing game equipment, and modify the product data owned by the user. This is a multi-step atomic operation, where the NH asset data of the user account is updated while paying the fee. If any action in the updating of the assets data is not recognized by the block of the main chain, the entire transaction will be rolled back to avoid abnormal transaction.  
+Parameters:   
+	orderId: order ID  
+	callback: callback function  
+  
+### Cancel the NH asset sales order  
+Method: cancelNHAssetOrder  
+Function: Cancel NH asset sale order  
+Parameters:   
+	orderId: order ID
+	callback: callback function   
+  
+## NH asset query interfaces  
+  
+### Query the NH asset sales orders of the network users  
+Method: queryNHAssetOrders  
+Function: Query the NH asset sales orders of the network users   
+Parameters:   
+	assetIds(array): Asset symbol or id screening  
+	worldViews (array): Version name or version id screening  
+	baseDescribe(string): basic description
+	pageSize: Page size  
+	page: Number of pages  
+  
+### Query the NH asset sales order of the specified user  
+Method: queryAccountNHAssetOrders  
+Function: Query the NH asset sales order of the specified user  
+Parameters:   
+	account: Query account name or account ID  
+	pageSize: Page size  
+	page: Number of pages  
+	callback: callback function  
+  
+### Query the NH assets of the item under the account  
+Method: queryAccountNHAssets  
+Function: Read all NH assets under the current user account that can be used in the corresponding game  
+Parameters:   
+	account: Account name or account ID  
+	worldViews (array): Set of worldviews  
+	page: Number of pages  
+	pageSize: Page size, number of data per page  
+	callback: Return value. Example:  
+		{status:1,data:[],total:0}  
+  
+### Query the worldview linked with the developer  
+Method: queryNHCreator  
+Function: Query the worldview linked with the developer   
+Parameters:   
+	account: Account name or account ID  
+	callback: callback function    
+
+### Query the NH assets created by the developer  
+Method: queryNHCreator  
+Function: Query the NH assets created by the developer   
+Parameters:   
+	aaccount: Account name or account ID  
+	callback: callback function  
+  
+### Query the details of NH asset  
+Method: queryNHAssets  
+Function: Query the details of NH asset   
+Parameters:  
+	NHAssetIds(Array): NH asset id or hash  
+	callback: callback function  
+  
+### Query the details of worldview  
+Method: lookupWorldViews  
+Function: Query the details of worldview   
+Parameters:   
+	worldViews (array): Worldview name or id  
+	callback: callback function  
+  
+## Node vote  
+  
+### Query the data of node votes  
+Method: queryVotes  
+Function: Query the data of node votes   
+Parameters:   
+	callback: callback function  
+  
+### User submits voting information  
+Method: publishVotes  
+Function: The proxy account is set when saving, which will be followed by the user’s voting information.   
+Parameters:   
+	witnessesIds（array）: Set of node account ids. The query node vote data will have the account ID of each node  
+	proxyAccount: Proxy account name  
+	callback: callback function  
+
+## Blockchain explorer interface  
+  
+### Query the block  
+Method: queryBlock  
+Function: Query block information by block height  
+Parameters:   
+	block: Block height  
+  
+### Query the transaction  
+Method: queryTransaction  
+Function: Query transaction information by transaction id (ie transaction hash)  
+Parameters:   
+	transactionId: Transaction id  
+
+### Query information by ids  
+Method: queryDataByIds 
+Function: Query related data by id  
+Parameters:   
+	ids(Array): Set of ID array  
+
+### Subscribe to the blocks  
+Method: subscribeToBlocks  
+Function: Monitor real-time block information  
+Parameters:   
+	isReqTrx: Whether the subscribed block contains transaction information, which is included by default.  
+	callback: callback function  
+
+### Subscribe to blockchain transactions  
+Method: subscribeToChainTranscation  
+Function: Monitor blockchain transactions across the network   
+Parameters:   
+	callback: callback function  
+  
+### View the block generation information of the node  
+Method: lookupWitnessesForExplorer  
+Function: The key point is to refer to the demo parsing block generation data of the node.  
+Parameters:   
+	callback: callback function  
+  
+### View block rewards of the account node  
+Method: lookupBlockRewards  
+Function: Analyze data with reference to demo  
+Parameters:   
+	callback: callback function   
+  
+### Collect block reward  
+Method: claimVestingBalance  
+Function: Collect block reward  
+Parameters:   
+	id: Reward ID. The ID will be included in the query block rewards.    
+	callback: callback function   
+  
+## API server node related interface  
+  
+### BCX initialization  
+Method: init  
+Function: Initialization includes RPC connection, reloading Indexedb data, etc.    
+Parameters:   
+	refresh: Optional, after the first init, the second init will use the cache information. Data will be reloaded and the RPC module will be reinitialized only if the refresh is true  
+	autoReconnect: Optional, whether to reconnect after the RPC is disconnected  
+	subscribeToRpcConnectionStatusCallback: Optional, monitor RPC connection status, return status=>closed: rpc connection is closed, error: rpc connection error, realopen: rpc connection is successful. There will provide a separate method for monitoring.  
+	callback: optional, callback function  
+
+### View the list of API server nodes  	
+Method: lookupWSNodeList  
+Function: View the list of API server nodes  
+Parameters:    
+	refresh: Whether to refresh the ping. This can only refresh the non-current connection node, if you want to refresh all, call init({refresh: true})   
+	callback: callback function  
+  
+### Connect to the API server node  
+Method: switchAPINode  
+Function: Switch node  
+Parameters:   
+	url: API server node address, this address must be the websoket address in the API server node list  
+	callback: callback function  
+  
+### Add a new API server node  
+Method: addAPINode  
+Function: Add a new API server node  
+Parameters:   
+	name: New node name  
+	url: API server node websoket address  
+	callback: callback function  
+  
+### Delete API server node  
+Method: deleteAPINode  
+Function: Delete node  
+Parameters:   
+	url: API server node websoket address  
+	callback: callback function  
+  
+### Monitor connection state changes with API server nodes  
+Method: subscribeToRpcConnectionStatus  
+Function: Monitor rpc connection status changes  
+Parameters:   
+	callback: The callback returns status, including the following results:   
+	closed: Rpc connection closed  
+	error: Rpc connection error  
+	realopen: Rpc connection succeeded  
+  
+## Contract  
+  
+### Generate private key/public key (randomly generated)  
+Method: generateKeys  
+Function: Randomly generate a pair of public and private keys, which will be used when creating a contract with permissions. The generated private key is used for API initialization to authorize the contract, which will be returned directly without callback  
+  
+### Create a contract  
+Method: createContract  
+Function: Create a smart contract. If you want to set permissions on the contract, you must add a specific lua code when creating the contract, and call the contract function set_permissions_flag => contract authority code: function my_change_contract_authority( publickey) assert(is_owner()) change_contract_authority( publickey) end function set_permissions_flag(flag) assert(is_owner()) set_permissions_flag(flag) end  
+Parameters:   
+	authority: Contract authority (public key publicKey in a pair of public and private keys), the developer can configure the private key when using the API initialization, and configure the private key corresponding to the public key to call the contract.  
+	name: Contract name, regular /^[az][a-z0-9.-]{4,63}$/, beginning with the letter + letters or numbers or dot. or dash -, length 4 to 63 data: contract lua Code  
+	onlyGetFee: Set to return only the fee required for this operation  
+	callback: See the unified API parameter description  
+  
+### Update the contract  
+Method: updateContract  
+Function: Update contract code  
+Parameters:   
+	nameOrId: Contract name or Id，Example: contract.test02  
+	data: Contract lua code  
+	onlyGetFee: Set to return only the fee for this operation  
+  
+### Contract call  
+Method: callContractFunction  
+Function: Call contract function interface   
+Parameters:   
+	nameOrId: Contract name or Id，Example: contract.test02  
+	functionName: Function name in the contract，my_nht_describe_change（Modify item properties）  
+	valueList(array): Call the parameter list of the contract function, example: [4.2.0,{"size": "large"}] , If the parameter passes a json string, the contract needs to call cjson parsing. If the object is passed, no cjson parsing is required.  
+	runtime: The time (in milliseconds) to run the contract function with a default of 5  
+	onlyGetFee: Set to return only the fee for this operation with a default of false  
+	callback: callback function  
+  
+  
+### Query contract information  
+Method: queryContract  
+Function: Query contract information data  
+Parameters:   
+	nameOrId: Contract name or Id  
+	callback: callback function  
+  
+### Query account contract data  
+Method: queryAccountContractData  
+Function: Query data generated in the account contract  
+Parameters:   
+	account: Account name or Id  
+	contractNameOrId: Contract name or Id  
+	callback: callback function
+    
+    
+## Others  
+
+### API Parameter Configuration   
+Method: apiConfig  
+Function：API parameter configuration   
+Parameters:   
+API initialization related parameters  
+
+### Unsubscribe   
+Method: unsubscribe  
+Function: Unsubscribe   
+Parameters:   
+method(Array): Cancel the method name of the specified subscription, such as unsubscribing to block and blockchain transactions ['subscribeToBlocks','subscribeToBlocks'], without passing this parameter, cancel all subscriptions. This method returns a promise without passing a callback. Note: If you need to specify to cancel a user's subscription, the parameter is ['subscribeToAccountOperation|account']  
+callback: callback function 
+
+### Decode transaction memo   
+Method: decodeMemo  
+Function: There is no callback, the result is returned directly, and the result is an object containing the memo text. The method is passed directly, but not the wrapped options object parameter. Example: bcl.decodeMemo(raw_data.memo) where raw_data is the transaction raw data.  
+
+### Get the transaction base fee    
+Method: queryTransactionBaseFee  
+Function: Get the transaction type base fee   
+Parameters:   
+transactionType: transaction type, example: transfer  
+feeAssetId: Select the token type asset symbol or ID to pay the fee  
+callback: See the unified API description  
+
+### transactionType list  
+  
+| transactionType | Corresponding API |   
+|---|---|  
+| transfer | transferAsset |   
+| account_create | createAccountWithPassword |   
+| account_update | changePassword |   
+| account_upgrade | upgradeAccount |   
+| asset_create | createAsset |   
+| asset_issue | issueAsset |   
+| proposal_update | submitProposal |   
+| vesting_balance_withdraw | claimVestingBalance |   
+| contract_create | createContract |   
+| call_contract_function | callContractFunction |   
+| register_creator | registerCreator |   
+| creat_world_view | creatWorldView |   
+| propose_relate_world_view | proposeRelateWorldView |   
+| creat_nh_asset | creatNHAsset |   
+| delete_nh_asset | delete_nh_asset |   
+| transfer_nh_asset | transferNHAsset |   
+| creat_nh_asset_order | creatNHAssetOrder |   
+| cancel_nh_asset_order | cancelNHAssetOrder |   
+| fill_nh_asset_order | fillNHAssetOrder |   
+| limit_order_create | createLimitOrder |   
+| limit_order_cancel | cancelLimitOrder |   
+>>>>>>> 9ef77fdc332367c784795ed94e3aa9def0e1d1e1
