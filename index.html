@@ -38,6 +38,7 @@
             .div_module input,.div_module select,.div_module textarea{
                 width: 100%;
             }
+   
             .div_module_c{
                 margin-bottom: 30px;
             }
@@ -121,7 +122,9 @@
             .listCard .row .field{
                 width: 160px;
             }
-
+            .listCard .row .value{
+                flex: 1;
+            }
             .transactions h4{
                 margin:8px 0;
             }
@@ -225,6 +228,20 @@
             .res{
                 max-width: 600px;
                 overflow: auto;
+            }
+
+            .div_loadAccountProposals .rows{
+                width: 250px;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .td-status{
+                /* border:1px solid #eee; */
+                padding: 10px 0;
+            }
+            .div_loadAccountProposals input[type=checkbox]{
+                width: auto;
             }
 /* 
             .scroll{
@@ -416,7 +433,7 @@
                                 <p class="res"></p>
                             </div>
                         </div>
-
+              
                         <div class="div_module_c" id="div_upgradeAccount" pclass="class_11" >
                             <h2>升级成为终身会员账户</h2>
                             <div class="div_upgradeAccount div_module">
@@ -476,7 +493,7 @@
                                 支付手续费资产类型<input type="text" class="feeAssetId"  value="COCOS"><br><br>
                                 备注消息<input class="transfer_memo" type="text" value="">
                                 <div class="checkbox">
-                                    是否发起提议: <input type="checkbox" onclick="document.querySelector('.div_from_account').style.display=this.checked?'block':'none'" class="isPropose" style="width:auto;" />          
+                                    是否发起提议: <input type="checkbox"  class="isPropose" style="width:auto;" />          
                                 </div>
                                 <p>手续费：<span class="fee"></span></p>
                                 <input type="button" id="btn_get_transferAsset_fee" value="获取本次转账所需手续费"  /><br><br>
@@ -489,12 +506,12 @@
                             <div class="div_createAsset div_module">
                                 资产符号<input  type="text" class="symbol" value="TEST"><br><br>
                                 最大资产总量<input type="number" class="max_supply"  value="100000"><br><br>
-                                精度(小数位数)<input type="text" class="precision"  value="8"><br><br>
+                                精度(小数位数)<input type="number" class="precision"  value="8"><br><br>
                                 <fieldset>
                                     <legend>手续费汇率</legend>
-                                    标价资产数量：<input type="text" class="quote" value="1" onKeyUp="_assets.c_priceChange()" />
-                                    基准资产数量：<input type="text" class="base" value="10" onKeyUp="_assets.c_priceChange()" />
-                                    <p>单价：<span class="price">0.1 COCOS/TEST</span></p>
+                                    基准资产数量：<input type="number" class="base" value="1" onKeyUp="_assets.c_priceChange()" />
+                                    标价资产数量(COCOS)：<input type="number" class="quote" value="1" onKeyUp="_assets.c_priceChange()" />
+                                    <p>单价：<span class="price">1 COCOS/TEST</span></p>
                                 </fieldset>
                                 <!-- <div class="checkbox">
                                         收取交易手续费:<input type="checkbox" class="is_charge_market_fee" style="width:auto;" />          
@@ -507,6 +524,12 @@
                                 </fieldset> -->
                                 <br>
                                 描述<textarea rows="6" class="description"></textarea>
+                                <div class="checkbox">
+                                    智能币 SmartCoin: <input type="checkbox" class="isBitAsset" style="width:auto;"  />          
+                                </div>
+                                <!-- <div class="checkbox is_prediction_market" style="display:none">
+                                    二元预测市场:: <input type="checkbox" class="is_prediction_market" style="width:auto;"  />          
+                                </div> -->
                                 <p>创建资产手续费：<span class="fee"></span></p>
                                 <input type="button" id="btn_get_createAsset_fee" value="获取创建资产费用预估"  /><br><br>
                                 <input type="button" id="btn_createAsset" value="确认创建"  />
@@ -518,10 +541,16 @@
                                 资产符号<input  type="text" class="symbol" value="TEST"><br><br>
                                 最大资产总量<input type="number" class="max_supply"  value="100000"><br><br>
                                 新发行人<input type="text" class="new_issuer"  ><br><br>
+                                <div class="checkbox">
+                                  黑白名单: <input type="checkbox" class="white_list" style="width:auto;" checked />          
+                                </div>
+                                <div class="checkbox">
+                                  限制交易: <input type="checkbox" class="transfer_restricted" style="width:auto;"  />          
+                                </div>
                                 <fieldset>
                                     <legend>手续费汇率</legend>
-                                    标价资产数量：<input type="text" class="quote" value="" onKeyUp="_assets.u_priceChange()" />
                                     基准资产数量：<input type="text" class="base" value="" onKeyUp="_assets.u_priceChange()" />
+                                    标价资产数量(COCOS)：<input type="text" class="quote" value="" onKeyUp="_assets.u_priceChange()" />
                                     <p>单价：<span class="price"></span></p>
                                 </fieldset>
                                 <br>
@@ -554,7 +583,7 @@
                             </div>
                         </div>
                         <div class="div_module_c" id="div_assetFundFeePool" pclass="class_2"  >
-                            <h2>注资资产手续费池</h2>
+                            <h2>资产手续费池注资</h2>
                             <div class="div_assetFundFeePool div_module">
                                 资产符号<input  type="text" class="asset_id" value="TEST"><br><br>
                                 数量<input type="number" class="amount"  value="1"><br><br>
@@ -564,13 +593,47 @@
                             </div>
                         </div>
                         <div class="div_module_c" id="div_assetClaimFees" pclass="class_2"  >
-                            <h2>领取资产手续费</h2>
+                            <h2>资产手续费领取</h2>
                             <div class="div_assetClaimFees div_module">
                                 资产符号<input  type="text" class="asset_id" value="TEST"><br><br>
                                 数量<input type="number" class="amount"  value="1"><br><br>
                                 <p>手续费：<span class="fee"></span></p>
                                 <input type="button" id="btn_get_assetClaimFees_fee" value="获取手续费费用预估"  /><br><br>
                                 <input type="button" id="btn_assetClaimFees" value="确认领取"  />
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_assetUpdateRestricted" pclass="class_2"  >
+                            <h2>资产受限名单更新</h2>
+                            <div class="div_assetUpdateRestricted div_module">
+                                资产符号<input  type="text" class="asset_id" value="TEST"><br><br>
+                                <div class="checkbox">
+                                 是否添加(否则移除,Boolean): <input type="checkbox" class="isadd" style="width:auto;" checked />          
+                                </div>
+                                限制类型(Number)<select class="restricted_type" >
+                                    <option value ="1">资产权限账户白名单</option>
+                                    <option value ="2">资产权限账户黑名单</option>
+                                    <option value ="3">市场交易资产白名单</option>
+                                    <option value ="4">市场交易资产黑名单</option>
+                                </select><br><br>
+                                限制列表(Array)<textarea rows="10" class="restricted_list">test3</textarea><br><br>
+                                <input type="button" id="btn_get_assetUpdateRestricted_fee" value="获取手续费费用预估"  /><br><br>
+                                <input type="button" id="btn_assetUpdateRestricted" value="确认更新"  />
+                                <p class="res"></p>
+                            </div>
+                        </div>
+                        <div class="div_module_c" id="div_queryAssetRestricted" pclass="class_2"  >
+                            <h2>查询资产受限名单</h2>
+                            <div class="div_queryAssetRestricted div_module">
+                                资产符号<input  type="text" class="asset_id" value="TEST"><br><br>
+                                限制类型<select class="restricted_type" >
+                                    <option value ="0">所有类型</option>
+                                    <option value ="1">资产权限白名单</option>
+                                    <option value ="2">资产权限黑名单</option>
+                                    <option value ="3">市场交易白名单</option>
+                                    <option value ="4">市场交易黑名单</option>
+                                </select><br><br>
+                                <input type="button" id="btn_queryAssetRestricted" value="确认查询"  />
+                                <p class="res"></p>
                             </div>
                         </div>
                         <div class="div_module_c" id="div_getAssets" pclass="class_2" >
@@ -626,23 +689,22 @@
                             </div>
                         </div>
                         <div class="div_module_c" id="div_creatWorldView" pclass="class_3">
-                            <h2>创建世界观</h2>
+                            <h2>世界观创建</h2>
                             <div class="div_creatWorldView div_module">
                                 世界观<input  type="text" class="world_view" value=""><br><br>
                                 <input type="button" id="btn_creatWorldView" value="确认创建"  />
                             </div>
                         </div>
                         <div class="div_module_c" id="div_proposeRelateWorldView" pclass="class_3" > 
-                            <h2>提议关联世界观</h2>
+                            <h2>世界观提议关联</h2>
                             <div class="div_proposeRelateWorldView div_module">
                                 <p>提议关联到某一个世界观，需要该世界观的创建人审批</p>
                                 世界观<input  type="text" class="world_view" value="TEST"><br><br>
-                                <!-- 世界观创建人<input  type="text" class="view_owner" value="test1"><br><br> -->
                                 <input type="button" id="btn_proposeRelateWorldView" value="确认关联"  />
                             </div>
                         </div>
                         <div class="div_module_c" id="loadAccountProposals" pclass="class_3" >
-                            <h2>获取当前用户收到的提议并审批</h2>
+                            <h2>查询账户收到的提议并审批</h2>
                             <div class="div_loadAccountProposals div_module" style="width:90%;">
                                 account<input  type="text" class="account" value="test1"><br><br>
                                 <input type="button" id="btn_loadAccountProposals" value="立即获取"  /><br><br>
@@ -653,6 +715,7 @@
                                             <th>id</th>
                                             <th>信息</th>
                                             <th>过期时间</th>
+                                            <th>状态</th>
                                             <th>操作</th>
                                         </tr>
                                     </thead>
@@ -663,7 +726,7 @@
                             </div>
                         </div>
                         <div class="div_module_c" id="div_create_nh" pclass="class_3" >
-                                <h2>创建NH资产</h2>
+                                <h2>NH资产创建</h2>
                                 <div class="div_create_nh div_module">
                                     资产id<input  type="text" class="asset_id" value="COCOS" ><br><br>
                                     世界观<input  type="text" class="world_view" value="TEST" ><br><br>
@@ -672,20 +735,18 @@
                                     NH资产数量(默认为1)<input  type="text" class="nh_count" value="1" placeholder="" ><br><br><br>
                                     type(默认为0,可不传,如果批量创建不同NH资产传1)<input  type="text" class="type" value="0" placeholder="" ><br><br>
                                     批量创建不同NH资产(type为1才使用该参数)<textarea rows="6" class="items"></textarea><br><br><br>
-                                    
-                                    提议目标账户<input  type="text" class="propose_account" value="test1" ><br><br>
                                     <input type="button" id="btn_create_nh" value="确认创建"  />
                                 </div>
                             </div>    
                             <div class="div_module_c" id="div_deleteNHAsset" pclass="class_3" >
-                                <h2>删除NH资产</h2>
+                                <h2>NH资产删除</h2>
                                 <div class="div_deleteNHAsset div_module">
                                     itemIds(Array)<textarea rows="10" class="NHAssetIds">4.2.195,4.2.194</textarea><br><br><br>
                                     <input type="button" id="btn_deleteNHAsset" value="确认删除" >
                                 </div>
                             </div>
                             <div class="div_module_c" id="div_transferNHAsset" pclass="class_3" >
-                                <h2>转移NH资产</h2>
+                                <h2>NH资产转移</h2>
                                 <div class="div_transferNHAsset div_module">
                                     转移目标账户<input  type="text" class="to_account" value="test2"><br><br>
                                     <input type="text" class="NHAssetIds"  value="4.2.2"><br><br>
@@ -695,7 +756,7 @@
                       
                         
                         <div class="div_module_c" id="div_sell" pclass="class_3">
-                            <h2>创建游戏NH资产出售单</h2>
+                            <h2>NH资产出售单创建</h2>
                             <div class="div_creatNHAssetOrder div_module">
                                 OTC交易平台账户otcAccount，用于收取挂单费用
                                 <input  type="text" class="receiver" value="otcaccount" ><br><br>
@@ -708,14 +769,16 @@
                                 <!-- 游戏开发者账户<input  type="text" class="developerAccount" value="" ><br><br> -->
                                 获取账户NH资产 <input type="button" id="btn_getAccountNHAssetForSell" value="立即获取"  /><br><br>     
                                 NH资产itemID<select class="sel_goods" >
-                                            <option value ="1">请选择您要卖的NH资产</option>
-                                        </select>
+                                                <option value ="1">请选择您要卖的NH资产</option>
+                                            </select>
                                 <br><br><br>
+                                
                                 <p>手续费：<span class="fee"></span></p>
                                 <input type="button" id="btn_get_creatNHAssetOrder_fee" value="获取本次交易所需手续费"  /><br><br>
                                 <input type="button" id="btn_creatNHAssetOrder" value="确认卖出NH资产"  />
                             </div>
                         </div>
+
 
                         <div class="div_module_c" id="div_queryNHAssets" pclass="class_5" >
                             <h2>查询NH资产详细信息</h2>
@@ -768,6 +831,7 @@
                             <div class="div_queryNHAssetOrders div_module"  style="width:98%;">
                                 资产ID或资产符号<input type="text" class="assetSymbolsOrIds" placeholder="" value="COCOS" ><br><br>
                                 世界观ID或世界观名<input type="text" class="world_views" placeholder="" value="" ><br><br>
+                                baseDescribe<input type="text" class="baseDescribe" placeholder="" value="" ><br><br>
                                 page<input type="text" class="page" placeholder="" value="1" ><br><br>
                                 pageSize<input type="text" class="pageSize" placeholder="" value="10" ><br><br>
                                 <input type="button" id="btn_queryNHAssetOrders" value="立即查询" ><br><br>
@@ -821,8 +885,12 @@
                         </div>
                 
                         <div class="div_module_c" id="div_getVotes"   pclass="class_8">
-                                <h2>查询节点投票信息数据并投票</h2>
+                                <h2>查询见证人理事会员投票信息数据并投票</h2>
                                 <div class="div_getVotes div_module">
+                                    类型<select class="type" >
+                                        <option value ="witnesses">见证人</option>
+                                        <option value ="committee">理事会</option>
+                                    </select><br><br>
                                     查询投票账户<input  type="text" class="query_account" value=""><br><br>
                                     <input type="button" id="btn_getVotes" value="立即加载" /><br><br>
                                     <table class="table">
@@ -904,7 +972,6 @@
                                     </div>
                                 </div>
                             </div>
-                            
                             <div class="div_module_c" id="div_queryDataByIds" pclass="class_7" >
                                 <h2>查询数据通过id</h2>
                                 <div class="div_queryDataByIds div_module" style="width:90%;">
@@ -913,7 +980,6 @@
                                     <p class="res"></p>
                                 </div>
                             </div>
-
 
                             <div class="div_module_c" id="div_getWitnessesForExplorer" pclass="class_7" >
                                 <h2>查看节点出块信息</h2>
@@ -1029,7 +1095,6 @@
                                     合约name或ID<input  type="text" class="nameOrId" value="contract.test02"><br><br>
                                     目标函数名<input  type="text" class="function_name" value="my_nht_describe_change"><br><br>
                                     参数列表 <textarea rows="10" class="value_list">4.2.0,{"size":"large"}</textarea><br><br>
-                                    runTime(单位毫秒)<input  type="text" class="runTime" value="5"><br><br><br>
                                     <input type="button" id="btn_call_contract_function" value="确认执行合约函数" /><br><br>
                                 </div>
                             </div>
@@ -1069,6 +1134,9 @@
                                     <br>
                                 </div>
                             </div>
+
+                          
+                            
                             <div class="div_module_c" id="div_getTransactionBaseFee"  pclass="class_12" >
                                 <h2>查询交易类型基础手续费</h2>
                                 <div class="div_getTransactionBaseFee div_module">
@@ -1085,12 +1153,27 @@
                                     <input type="button" id="btn_unsubscribe" value="确认取消" /><br><br>
                                 </div>
                             </div>
+                            <div class="div_module_c" id="div_apiConfig"  pclass="class_12" >
+                                <h2>API参数配置&获取</h2>
+                                <div class="div_apiConfig div_module">
+                                    语言<select class="lang" >
+                                            <option value ="zh">简体中文</option>
+                                            <option value ="en">english</option>
+                                        </select>
+                                    <div class="checkbox">
+                                        实时订阅: <input type="checkbox" class="realSub" style="width:auto;" checked />          
+                                    </div>
+                                    <input type="button" id="btn_apiConfig" value="确认配置" /><br><br>
+                                    <input type="button" id="btn_getApiConfig" value="获取API参数配置" /><br><br>
+                                    <p class="res"></p>
+                                </div>
+                            </div>
                 </div>
         </div>
        
     </div>
 
-        <script src="bcx.min.js?v=7"></script>
+        <script src="assets/bcx.min.js?v=7"></script>
         <script type="text/javascript" src="./FELib/jquery-1.8.3.min.js" charset="utf-8"></script>
         <script type="text/javascript" src="./FELib/jsonview/jquery.jsonview.min.js" charset="utf-8"></script>
 
@@ -1110,43 +1193,34 @@
                            li.innerHTML='<a href="#'+el.id+'">'+m_name+'</a>';
                            gel("."+p_class).appendChild(li); 
                         }
-                        //nav_htmls+='<li><a href="#'+el.id+'">'+m_name+'</a></li>';
                     }
                 }
 
                 loadLeftNavs();
                 
                 var _configParams={
-                    default_ws_node:"ws://47.93.62.96:8050",
-                    ws_node_list:[
-                        {url:"ws://47.93.62.96:8050",name:"COCOS最新链(香港)"},
-                        {url:"ws://39.96.33.61:8080",name:"COCOS节点2"},
-                        {url:"ws://39.96.29.40:8050",name:"COCOS节点3"},
-                        {url:"ws://39.106.126.54:8050",name:"COCOS节点4"}
+                    ws_node_list:[	
+                        {url:"ws://39.97.110.222:8040",name:"Cocos - China - Beijing"},   
+                        {url:"ws://47.93.62.96:8049",name:"Cocos - China - Xiamen"} ,
                     ],
                     networks:[
-                    //   {
-                    //     core_asset:"COCOS",
-                    //     chain_id:"52e65ef663454f910ba3fe5f0b97a359f6a15aa50a329ae8de4d2b38eb0ee7a1" 
-                    //   },
-                      {
-                        core_asset:"COCOS",
-                        chain_id:"53b98adf376459cc29e5672075ed0c0b1672ea7dce42b0b1fe5e021c02bda640" 
-                      }
+                        {
+                            core_asset:"COCOS",
+                            chain_id:"7d89b84f22af0b150780a2b121aa6c715b19261c8b7fe0fda3a564574ed7d3e9" 
+                        }
                     ], 
-                    faucet_url:"http://47.93.62.96:3000",
+                    faucet_url:"http://47.93.62.96:8041",
                     auto_reconnect:true,
-                    worker:false
-                    //app_keys:["5HxzZncKDjx7NEaEv989Huh7yYY7RukcJLKBDQztXAmZYCHWPgd"]
+                    real_sub:true,
+                    check_cached_nodes_data:false
                 };
                 var bcx=new BCX(_configParams);
                 //可以不用初始化，直接调用，API会自动判断是否初始化，热没有初始化则自动初始化
                 bcx.init({
-                    subscribeToRpcConnectionStatusCallback:res=>{
-                        console.info("subscribeToRpcConnectionStatusCallback res",res);
-                    }
+                    real_sub:true
                 }).then(res=>{
                     console.info("init res",res);
+            
                     _wallet.init();
                     _user.init();
                     _contracts.init();
@@ -1154,14 +1228,101 @@
                     _nodes.init();
                     _assets.init();
                     _explorer.init();
+                    _others.init();
 
-                    gel("#btn_getVotes").onclick=queryVotes;
-                    gel("#btn_publishVotes").onclick=publishVotes;
-                    gel("#btn_getTransactionBaseFee").onclick=getTransactionBaseFee;
-                    gel("#btn_unsubscribe").onclick=unsubscribe;
                 });
-           
 
+                var _others={
+                    init(){
+                        gel("#btn_getVotes").onclick=this.queryVotes;
+                        gel("#btn_publishVotes").onclick=this.publishVotes;
+
+                        gel("#btn_getTransactionBaseFee").onclick=this.getTransactionBaseFee;
+                        gel("#btn_unsubscribe").onclick=this.unsubscribe;
+
+                        gel("#btn_apiConfig").onclick=()=>{
+                            bcx.apiConfig({
+                                ws_node_list:[
+                                    {url:"ws://39.96.33.61:8050",name:"COCOS - China - Shanghai"},
+                                    {url:"ws://39.96.29.40:8050",name:"COCOS - China - Chengdu"},
+                                    {url:"ws://39.106.126.54:8050",name:"COCOS - China - Hong Kong"}
+                                ],
+                                check_cached_nodes_data:false,
+                                // worker:gel(".div_apiConfig .worker").value,
+                                locale:gel(".div_apiConfig .lang").value,
+                                real_sub:gel(".div_apiConfig .realSub").checked                            
+                            }).then(res=>{
+                                console.info("apiConfig res",res);
+                            })
+                        }
+
+                        gel("#btn_getApiConfig").onclick=()=>{
+                            $(".div_apiConfig .res").JSONView(bcx.getApiConfig());
+                            console.info("btn_getApiConfig res",bcx.getApiConfig());
+                        }
+                    },
+                    queryVotes(){
+                        bcx.queryVotes({
+                            queryAccount:gel(".div_getVotes .query_account").value,
+                            type:gel(".div_getVotes .type").value
+                        }).then(res=>{
+                            console.info("getVotes res",res);
+                            //(id:${item.account_id},vote_id:${item.vote_id})
+                            if(res.code==1){
+                                var votes_html=""
+                                res.data.forEach(function(item,index){
+                                    votes_html+=` <tr>
+                                                    <th scope="row">${(index+1)}</th>
+                                                    <td >${item.account_name}</td>
+                                                    <td>${item.votes}</td>
+                                                    <td>${item.active?"活跃":"不活跃"}</td>
+                                                    <td><input type="checkbox" ${item.supported?"checked":""} value="${item.account_id}" ></td>
+                                                </tr>`
+                                })
+                                gel(".div_getVotes tbody").innerHTML=votes_html;
+                            }
+                        })
+                    },
+                    publishVotes(){
+                        var vote_ids=[]
+                        var checkboxs=document.querySelectorAll(".div_getVotes input[type=checkbox]")
+                                      .forEach(function(item){
+                                            if(item.checked){
+                                            vote_ids.push(item.value);
+                                            }
+                                        })
+                        let type=gel(".div_getVotes .type").value;
+                        console.info("vote_ids",vote_ids,type);
+                        bcx.publishVotes({
+                            witnessesIds:type=="witnesses"?vote_ids:null,
+                            committee_ids:type=="committee"?vote_ids:null,
+                            proxyAccount:gel(".div_getVotes .proxy_account").value,
+                            onlyGetFee:false,
+                            callback:function(res){
+                                console.info("publishVotes res",res);
+                            }
+                        })
+                    },
+                    getTransactionBaseFee(){
+                        bcx.queryTransactionBaseFee({
+                            transactionType:gel(".div_getTransactionBaseFee .transactionType").value,
+                            feeAssetId:gel(".div_getTransactionBaseFee .feeAssetId").value,
+                            callback:function(res){
+                                console.info("getTransactionBaseFee res",res);
+                                $(".div_getTransactionBaseFee .res").JSONView(res);
+                                
+                            }
+                        })
+                    },
+                    unsubscribe(){
+                        bcx.unsubscribe({methods:gel(".div_unsubscribe .method").value.split(",")})//
+                        .then(res=>{
+                            console.info("unsubscribe res",res);
+                        });
+                    }
+                }
+
+                
                 var _explorer={
                     init:function(){
                         gel("#btn_queryBlock").onclick=this.queryBlock;
@@ -1172,6 +1333,8 @@
                         gel("#btn_subscribeBlocks").onclick=this.subscribeBlocks;
                         gel("#btn_getWitnessesForExplorer").onclick=this.getWitnessesForExplorer;
                         gel("#btn_lookupBlockRewards").onclick=this.lookupBlockRewards;
+
+
                     },
                     queryDataByIds:function(){
                         bcx.queryDataByIds({
@@ -1246,14 +1409,20 @@
                                             </div>`
 
                             gel(".div_queryTXID .block").innerHTML=block_htmls;
+                            gel(".div_queryTXID .transactions").innerHTML="";
                             let row_txid=document.createElement("div");
                             trx.parse_ops.forEach((op,op_index)=>{
                                 more="";
-                                if(op.type=="call_contract_function"&& op.result.contract_affecteds.length){
+                                if(op.result){
                                     var results="";
-                                    op.result.contract_affecteds.forEach(c_op=>{
-                                        results+="<p>"+c_op.parse_operations_text+"</p>"
-                                    });
+                                    if(op.result.type=="contract_result")
+                                        op.result.contract_affecteds.forEach(c_op=>{
+                                            results+="<p>"+c_op.parse_operations_text+"</p>"
+                                        });
+
+                                    if(op.result.type=="error_result")  results= op.result.message; 
+                                    
+                                    if(results)        
                                     more=`
                                     <a class="more" href="javascript:_explorer.showTXIDOpMore(${op_index});"  >查看结果</a>
                                     <div class="op_results">
@@ -1335,13 +1504,19 @@
                                     row_txid.innerHTML=`<h4>交易Hash: <span>${trx.trx_id}</span></h4>`;
                                     ops.forEach((op,op_index)=>{
                                         more="";
-                                        if(op.type=="call_contract_function"&& op.result.contract_affecteds.length){
+                                        
+                                        if(op.result){
                                             var results="";
-                                            op.result.contract_affecteds.forEach(c_op=>{
-                                                results+="<p>"+c_op.parse_operations_text+"</p>"
-                                            });
+                                            if(op.result.type=="contract_result")
+                                                op.result.contract_affecteds.forEach(c_op=>{
+                                                    results+="<p>"+c_op.parse_operations_text+"</p>"
+                                                });
+        
+                                            if(op.result.type=="error_result")  results= op.result.message; 
+                                            
+                                            if(results)    
                                             more=`
-                                            <a class="more" href="javascript:_explorer.showBlockOpMore(${op_index},${trx_index});"  >查看结果</a>
+                                            <a class="more" href="javascript:_explorer.showTXIDOpMore(${op_index});"  >查看结果</a>
                                             <div class="op_results">
                                                 ${results}
                                             </div>
@@ -1406,7 +1581,7 @@
                             callback:function(res){
                                 console.info("getWitnessesForExplorer res",res);
                                 if(res.code==1){
-                                    let {active_witnesses,current_witness_name,participation,coreAssetSymbol,
+                                    let {active_witnesses,current_witness_name,participation,core_asset_symbol,
                                         witness_pay_per_block,witness_budget,next_maintenance_time}=res.data;
                                         next_maintenance_time=Math.ceil((new Date(next_maintenance_time).getTime()-Date.now())/1000/60)+"分钟后";
                                 
@@ -1421,10 +1596,10 @@
                                         <div class="field">参与率：</div><div class="value">${participation}%</div>
                                     </div>
                                     <div class="row">
-                                        <div class="field">每块奖励：</div><div class="value">${witness_pay_per_block} ${coreAssetSymbol}</div>
+                                        <div class="field">每块奖励：</div><div class="value">${witness_pay_per_block} ${core_asset_symbol}</div>
                                     </div>
                                     <div class="row">
-                                        <div class="field">剩余预算：</div><div class="value">${witness_budget} ${coreAssetSymbol}</div>
+                                        <div class="field">剩余预算：</div><div class="value">${witness_budget} ${core_asset_symbol}</div>
                                     </div>
                                     <div class="row">
                                         <div class="field">投票更新时间：</div><div class="value">${next_maintenance_time}</div>
@@ -1506,6 +1681,8 @@
                var _assets={
                     init:function(){
                         // gel(".is_charge_market_fee").onclick=this.charge_market_fee_change;
+                        gel(".isBitAsset").onclick=this.isBitAssetChange;
+                        
                         gel("#btn_get_createAsset_fee").onclick=function(){
                             _assets.createAsset(true);
                         }
@@ -1567,15 +1744,41 @@
                         gel("#btn_queryAccountAllBalances").onclick=this.queryAccountAllBalances;
                        
                         gel("#btn_queryAccountBalances").onclick=this.getAccountBalances;
+
+                        gel(".isPropose").onclick=function(e){
+                            var isPropose=e.target.checked;
+                            gel('.div_from_account').style.display=isPropose?'block':'none'
+                            // if(!isPropose){
+                            //     gel(".from_account").value="";
+                            // }
+                        }
+
+                        gel("#btn_get_assetUpdateRestricted_fee").onclick=function(){
+                            _assets.assetUpdateRestricted(true);
+                        }
+                        gel("#btn_assetUpdateRestricted").onclick=function(){
+                            _assets.assetUpdateRestricted(false);
+                        }
+
+                        gel("#btn_queryAssetRestricted").onclick=this.queryAssetRestricted;
+                    },
+                    queryAssetRestricted(){
+                        bcx.queryAssetRestricted({
+                            assetId:gel(".div_queryAssetRestricted .asset_id").value,
+                            restrictedType:gel(".div_queryAssetRestricted .restricted_type").value,
+                        }).then(res=>{
+                            console.info("queryAssetRestricted res",res);
+                            $(".div_queryAssetRestricted .res").JSONView(res);
+                        })
                     },
                     c_priceChange:function(obj){
-                        gel(".div_createAsset .price").innerText=(gel(".div_createAsset .base").value/gel(".div_createAsset .quote").value||1)
+                        gel(".div_createAsset .price").innerText=(gel(".div_createAsset .quote").value/gel(".div_createAsset .base").value||1)
                         .toFixed(gel(".div_createAsset .precision").value||8)
-                        +" COCOS/ "+gel(".div_updateAsset .symbol").value
+                        +" COCOS / "+gel(".div_createAsset .symbol").value
                     },
                     u_priceChange:function(obj){
-                        gel(".div_updateAsset .price").innerText=(gel(".div_updateAsset .base").value/
-                        (gel(".div_updateAsset .quote").value||1)).toFixed(8)
+                        gel(".div_updateAsset .price").innerText=(gel(".div_updateAsset .quote").value/
+                        (gel(".div_updateAsset .base").value||1)).toFixed(8)
                          +" COCOS/ "+gel(".div_updateAsset .symbol").value
                     },
                     getAccountBalances:function(){
@@ -1599,6 +1802,18 @@
                             }
                         });
                     },
+                    assetUpdateRestricted:function(isOnlyGetFee){
+                        bcx.assetUpdateRestricted({
+                            assetId:gel(".div_assetUpdateRestricted .asset_id").value,
+                            isadd:gel(".div_assetUpdateRestricted .isadd").checked,
+                            restrictedType:gel(".div_assetUpdateRestricted .restricted_type").value,
+                            restrictedList:(gel(".div_assetUpdateRestricted .restricted_list").value).split(","),
+                            onlyGetFee:!!isOnlyGetFee
+                        }).then(res=>{
+                            console.info('div_assetUpdateRestricted res',res);
+                            $(".div_assetUpdateRestricted .res").JSONView(res);
+                        })
+                    },
                     assetClaimFees:function(isOnlyGetFee){
                         bcx.assetClaimFees({
                             assetId:gel(".div_assetClaimFees .asset_id").value,
@@ -1615,6 +1830,7 @@
                             }
                         })
                     },
+
                     assetFundFeePool:function(isOnlyGetFee){
                         bcx.assetFundFeePool({
                             assetId:gel(".div_assetFundFeePool .asset_id").value,
@@ -1735,6 +1951,9 @@
                     charge_market_fee_change:function(e){
                         gel(".fieldset_charge_market_fee").style.display=e.target.checked?"block":"none";
                     },
+                    isBitAssetChange:function(e){
+                        // gel("div.is_prediction_market").style.display=e.target.checked?"block":"none";
+                    },
                     createAsset:function(isOnlyGetFee){
                         bcx.createAsset({
                             assetId:gel(".div_createAsset .symbol").value,
@@ -1749,6 +1968,8 @@
                             //     maxMarketFee:gel(".div_createAsset .max_market_fee").value
                             // },
                             description:gel(".div_createAsset .description").value,
+                            isBitAsset:gel(".div_createAsset .isBitAsset").checked,
+                            // is_prediction_market:gel(".div_createAsset input.is_prediction_market").checked,
                             onlyGetFee:isOnlyGetFee,
                             callback:function(res){
                                 console.info("createAsset res",res);
@@ -1767,6 +1988,8 @@
                                 quoteAmount:gel(".div_updateAsset .quote").value,
                                 baseAmount:gel(".div_updateAsset .base").value
                             },
+                            whiteList:gel(".div_updateAsset .white_list").checked,
+                            transferRestricted:gel(".div_updateAsset .transfer_restricted").checked,
                             description:gel(".div_updateAsset .description").value,
                             onlyGetFee:isOnlyGetFee,
                             callback:function(res){
@@ -1795,25 +2018,31 @@
                         _wallet.getAccounts();
                     },
                     getAccounts:function(){
-                        var res=bcx.getAccounts();
-                        console.info("getAccounts res",res);
-                        $(".div_getAccounts .res").JSONView(res);
+                        // var res=bcx.getAccounts();
+                        bcx.getAccounts({
+                            callback:res=>{
+                                console.info("getAccounts res",res);
+                                res=res.data;
+                                $(".div_getAccounts .res").JSONView(res);
 
-                        var accounts_html="";
-                        res.accounts.forEach(function(account,index){
-                            var opt_htmls="";
-                            if(account!=res.current_account.account_name){
-                                opt_htmls=`<a href="javascript:_wallet.setCurrentAccount('${account}')">切换到当前账户</a>`;
+                                var accounts_html="";
+                                res.accounts.forEach(function(account,index){
+                                    var opt_htmls="";
+                                    if(account!=res.current_account.account_name){
+                                        opt_htmls=`<a href="javascript:_wallet.setCurrentAccount('${account}')">切换到当前账户</a>`;
+                                    }
+                                    accounts_html+=`<tr  >
+                                        <th scope="row">${(index+1)}</th>
+                                        <td>${account}</td>
+                                        <td>${opt_htmls}</td>
+                                    </tr>`
+                                });
+                                gel(".div_getAccounts table tbody").innerHTML=accounts_html;
+
+                                gel(".current_account").innerText=res.current_account.account_name;
                             }
-                            accounts_html+=`<tr  >
-                                <th scope="row">${(index+1)}</th>
-                                <td>${account}</td>
-                                <td>${opt_htmls}</td>
-                            </tr>`
-                        });
-                        gel(".div_getAccounts table tbody").innerHTML=accounts_html;
-
-                        gel(".current_account").innerText=res.current_account.account_name;
+                        })
+                       
                     },
                     setCurrentAccount:function(accountName){
                         bcx.setCurrentAccount({
@@ -1905,8 +2134,10 @@
                         gel("#btn_queryUserInfo").onclick=this.queryUserInfo;
                         gel("#btn_getPrivateKey").onclick=this.getPrivateKey;
                         gel("#btn_getOperations").onclick=this.fetchAndSubscribe
-
+  
                     },
+         
+                    
                     operations:[],
                     fetchAndSubscribe:function(){
                         bcx.queryUserOperations({
@@ -1964,9 +2195,8 @@
                             }
                         })
                     },
-                    getUserInfo:function(){
-                        console.info("getUserInfo res", bcx.getUserInfo());
-                        gel(".div_getUserInfo .res").innerText=JSON.stringify(bcx.getUserInfo());
+                    getUserInfo:function(){                        
+                        $(".div_getUserInfo .res").JSONView(bcx.getAccountInfo())
                     },
                    
                     createAccountWithPassword:function(){
@@ -1986,7 +2216,7 @@
                             callback:function(res){
                                 console.info("passwordLogin res",res)
                                 if(res.code==1){
-                                    gel(".current_account").innerText=bcx.getUserInfo().account_name;
+                                    gel(".current_account").innerText=bcx.getAccountInfo().account_name;
                                 }
                             }
                         })
@@ -2011,8 +2241,8 @@
                             callback:function(res){
                                 console.info("res",res);
                                 if(res.code==1){
-                                    gel(".current_account").innerText=bcx.getUserInfo().account_name;
-                                    gel(".div_getOperations .account").value=bcx.getUserInfo().account_name;
+                                    gel(".current_account").innerText=bcx.getAccountInfo().account_name;
+                                    gel(".div_getOperations .account").value=bcx.getAccountInfo().account_name;
                                 }
                             }  
                         })
@@ -2037,23 +2267,13 @@
                                 console.info("unlockAccount res",res);
                                 gel(".h_msg").innerText=res.message;
                                 if(res.code==1){
-                                    gel(".current_account").innerText=bcx.getUserInfo().account_name;
-                                    gel(".div_getOperations .account").value=bcx.getUserInfo().account_name;
-                                    console.info("bcx.getUserInfo()",bcx.getUserInfo());
+                                    gel(".current_account").innerText=bcx.getAccountInfo().account_name;
+                                    gel(".div_getOperations .account").value=bcx.getAccountInfo().account_name;
+                                    console.info("bcx.getUserInfo()",bcx.getAccountInfo());
                                     // fetchAndSubscribe();
                                 }
                             }
                         })
-                        // .then(res=>{
-                        //     console.info("unlockAccount res",res);
-                        //     gel(".h_msg").innerText=res.message;
-                        //     if(res.code==1){
-                        //         gel(".current_account").innerText=bcx.getUserInfo().account_name;
-                        //         gel(".div_getOperations .account").value=bcx.getUserInfo().account_name;
-                        //         console.info("bcx.getUserInfo()",bcx.getUserInfo());
-                        //         // fetchAndSubscribe();
-                        //     }
-                        // })
                     },
                     lock:function(){
                         bcx.lockAccount({
@@ -2078,31 +2298,30 @@
                         }})
                     },
                     lookupWSNodeList:function(){
-                        var nodes=bcx.lookupWSNodeList({
-                                refresh:false,
-                                callback:res=>{
-                                    console.info("getWSNodeList res",res);
-                                    if(res.code==1){
-                                        gel(".div_getWSNodeList .selected_url").innerText=res.data.selectedNodeUrl
-                                        var nodes_html="";
-                                        res.data.nodes.forEach((node,index)=>{
-                                            let {name,url,ping}=node;
-                                            let connect=url!=res.data.selectedNodeUrl?
-                                            `<a href="javascript:_nodes.switchAPINode('${url}')">连接</a>
-                                            <a href="javascript:_nodes.deleteAPINode('${url}')">删除</a>`:"";
-                                            nodes_html+=`<tr>
-                                                    <td>${index+1}</td>
-                                                    <td >${name}</td>
-                                                    <td>${url}</td>
-                                                    <td>${ping} ms</td>
-                                                    <td>${connect}</td>
-                                                </tr>`
-                                        });
-                                        gel(".div_getWSNodeList tbody").innerHTML=nodes_html;
-                                    }
+                        bcx.lookupWSNodeList({
+                            refresh:false,
+                            callback:res=>{
+                                console.info("getWSNodeList res111",res);
+                                if(res.code==1){
+                                    gel(".div_getWSNodeList .selected_url").innerText=res.data.selectedNodeUrl
+                                    var nodes_html="";
+                                    res.data.nodes.forEach((node,index)=>{
+                                        let {name,url,ping}=node;
+                                        let connect=url!=res.data.selectedNodeUrl?
+                                        `<a href="javascript:_nodes.switchAPINode('${url}')">连接</a>
+                                        <a href="javascript:_nodes.deleteAPINode('${url}')">删除</a>`:"";
+                                        nodes_html+=`<tr>
+                                                <td>${index+1}</td>
+                                                <td >${name}</td>
+                                                <td>${url}</td>
+                                                <td>${ping} ms</td>
+                                                <td>${connect}</td>
+                                            </tr>`
+                                    });
+                                    gel(".div_getWSNodeList tbody").innerHTML=nodes_html;
                                 }
-                            }); 
-                      
+                            }
+                        }); 
                     },
                     switchAPINode:function(url){
                         bcx.switchAPINode({
@@ -2120,7 +2339,7 @@
                             callback:res=>{
                                 console.info("addAPINode res",res);
                                 if(res.code==1){
-                                    _nodes.lookupWSNodeList();
+                                   _nodes.lookupWSNodeList();
                                 }
                             }
                         })
@@ -2237,11 +2456,20 @@
                             if(res.code==1){
                                 var htmls="";
                                 res.data.forEach(function(proposal,index){
+                                    var status_htmls="";
+                                    proposal.status.forEach(permission=>{
+                                        status_htmls+=`<div class="rows" >
+                                             <span>(${permission.weight_percentage})</span>  
+                                             <span>${permission.account_name}</span>
+                                             <input type="checkbox" class="isPropose" ${permission.isAgree?'checked':''} disabled  />
+                                            </div>`
+                                    })
                                     htmls+=`<tr>
                                         <td>${index+1}</td>
                                         <td>${proposal.id}</td>
                                         <td>${proposal.parse_operations_text}</td>
                                         <td>${proposal.expiration}</td>
+                                        <td class="td-status" >${status_htmls}</td>
                                         <td><a  href="javascript:_NHAssets.approvalProposal('${proposal.id}')">批准</a></td>
                                     </tr>`
                                 });
@@ -2268,7 +2496,6 @@
                     proposeRelateWorldView:function(){
                         bcx.proposeRelateWorldView({
                             worldView:gel(".div_proposeRelateWorldView .world_view").value,
-                            // viewOwner:gel(".div_proposeRelateWorldView .view_owner").value,
                             callback:function(res){
                                 console.info('proposeRelateWorldView res',res);
                             }
@@ -2283,7 +2510,6 @@
                             NHAssetsCount:gel(".div_create_nh .nh_count").value,
                             type:gel(".div_create_nh .type").value,
                             NHAssets:_NHAssets.create_nh_assets,
-                            proposeAccount:gel(".div_create_nh .propose_account").value,
                             callback:function(res){
                                 console.info("creatNHAsset res",res);
                             }
@@ -2333,8 +2559,9 @@
                     },
                     cancelNHAssetOrder:function(nh_orders_index){
                         var NHAsset=this.account_sell_nh_orders[nh_orders_index];
+                        console.info("NHAsset",NHAsset);
                         bcx.cancelNHAssetOrder({
-                            orderId:NHAsset.order,
+                            orderId:NHAsset.id,
                             callback:function(res){
                                 console.info("cancelNHAssetOrder res",res)
                                 if(res.code==1)
@@ -2343,10 +2570,10 @@
                         })
                     },
                     fillNHAssetOrder:function(item_orders_index){
-                        let {order,seller_name,game_item_id,price_amount,price_asset_id,price_asset_symbol}=this.sell_nh_orders[item_orders_index];
+                        // let {id,seller_name,game_item_id,price_amount,price_asset_id,price_asset_symbol}=this.sell_nh_orders[item_orders_index];
                         bcx.fillNHAssetOrder({
-                            orderId:order,
-                            onlyGetFee:true,
+                            orderId:this.sell_nh_orders[item_orders_index].id,
+                            onlyGetFee:false,
                             callback:function(res){
                                 console.info("fillNHAssetOrder res",res)
                                 _NHAssets.queryNHAssetOrders();
@@ -2357,18 +2584,12 @@
                     sell_nh_orders:[],
                     queryNHAssetOrders:function(){
                         var assetSymbolsOrIds=gel(".div_queryNHAssetOrders .assetSymbolsOrIds").value;
-                        if(assetSymbolsOrIds){
-                            assetSymbolsOrIds=assetSymbolsOrIds.split(",")
-                        }
-
                         var world_views=gel(".div_queryNHAssetOrders .world_views").value;
-                        if(world_views){
-                            world_views=world_views.split(",")
-                        }
-
+ 
                         bcx.queryNHAssetOrders({
                             assetIds:assetSymbolsOrIds,
                             worldViews:world_views,
+                            baseDescribe:gel(".div_queryNHAssetOrders .baseDescribe").value,
                             pageSize:gel(".div_queryNHAssetOrders .pageSize").value,
                             page:gel(".div_queryNHAssetOrders .page").value,
                             callback:function(res){
@@ -2377,9 +2598,10 @@
                                     $(".div_queryNHAssetOrders tbody").html("");
                                      _NHAssets.sell_nh_orders=res.data;
                                      _NHAssets.sell_nh_orders.forEach(function(item,index){
-                                        $(".div_queryNHAssetOrders tbody").append(`<tr class="${item.seller_name+item.order.replace(/\./g,'')}">
+                                        let className=item.seller_name+item.id.replace(/\./g,'');
+                                        $(".div_queryNHAssetOrders tbody").append(`<tr class="${className}">
                                             <td>${index+1}</td>
-                                            <td >${item.order}</td>
+                                            <td >${item.id}</td>
                                             <td >${item.nh_asset_id}</td>
                                             <td  >
                                                 <div class="nh_base_describe"></div>
@@ -2393,9 +2615,9 @@
                                             <td width="120" style="padding:0 5px;">${item.memo}</td>
                                             <td><a href="javascript:_NHAssets.fillNHAssetOrder(${index})">购买</a></td>
                                         </tr>`)
-                                        $(".div_queryNHAssetOrders ."+item.seller_name+item.order.replace(/\./g,'')+" .nh_base_describe").JSONView(item.nh_asset_base_describe)
+                                        $(".div_queryNHAssetOrders ."+className+" .nh_base_describe").JSONView(item.base_describe)
                                         if(item.describe_with_contract)
-                                        $(".div_queryNHAssetOrders ."+item.seller_name+item.order.replace(/\./g,'')+" .describe_with_contract").JSONView(item.describe_with_contract)
+                                        $(".div_queryNHAssetOrders ."+className+" .describe_with_contract").JSONView(item.describe_with_contract)
                                     })
                                 }
                             }
@@ -2416,9 +2638,10 @@
                                     //<td width="80">${item.item_ID}</td>
                                      _NHAssets.account_sell_nh_orders=res.data;
                                      _NHAssets.account_sell_nh_orders.forEach(function(item,index){
-                                        $(".div_queryAccountNHAssetOrders tbody").append(`<tr class="${item.seller_name+item.order.replace(/\./g,'')}">
+                                        let className=item.seller_name+item.id.replace(/\./g,'');
+                                        $(".div_queryAccountNHAssetOrders tbody").append(`<tr class="${className}">
                                             <td>${index+1}</td>
-                                            <td >${item.order}</td>
+                                            <td >${item.id}</td>
                                             <td >${item.nh_asset_id}</td>
                                             <td  >
                                                 <div class="game_item_base_describe"></div>
@@ -2433,8 +2656,8 @@
                                             <td><a href="javascript:_NHAssets.cancelNHAssetOrder(${index})">取消</a></td>
                                         </tr>`)
 
-                                        $(".div_queryAccountNHAssetOrders ."+item.seller_name+item.order.replace(/\./g,'')+" .game_item_base_describe").JSONView(item.nh_asset_base_describe)
-                                        $(".div_queryAccountNHAssetOrders ."+item.seller_name+item.order.replace(/\./g,'')+" .describe_with_contract").JSONView(item.describe_with_contract)
+                                        $(".div_queryAccountNHAssetOrders ."+className+" .game_item_base_describe").JSONView(item.base_describe)
+                                        $(".div_queryAccountNHAssetOrders ."+className+" .describe_with_contract").JSONView(item.describe_with_contract)
                                     })
                                 }
                             }
@@ -2502,21 +2725,19 @@
                         //     alert("请先登录或解锁账户")
                         // }
                         bcx.queryAccountNHAssets({
-                            account:bcx.getUserInfo().account_id,
+                            account:bcx.getAccountInfo().account_id,
                             worldViews:[],
                             callback:function(res){
                                 console.info('queryAccountNHAssets res',res);
-
                                 var sel_goods=gel(".div_creatNHAssetOrder .sel_goods");
                                 var sel_goods_htmls='<option value="-1">请选择您要卖的NH资产</option>'
                                 if(res.code==1){
                                     if(res.data.length){
                                         res.data.forEach(function(nh_asset){
-                                            sel_goods_htmls+='<option value="'+nh_asset.nh_asset_id+'">'+nh_asset.nh_asset_id+" | "+nh_asset.base_describe+'</option>';
+                                            sel_goods_htmls+='<option value="'+nh_asset.id+'">'+nh_asset.id+" | "+nh_asset.base_describe+'</option>';
                                         });
                                     }
                                 }
-                                
                                 sel_goods.innerHTML=sel_goods_htmls;
                             }
                        })  
@@ -2606,8 +2827,7 @@
                         bcx.callContractFunction({
                             nameOrId:gel(".div_call_contract_function .nameOrId").value,
                             functionName:gel(".div_call_contract_function .function_name").value,//["1",1000001,'COCOS']
-                            valueList:(gel(".div_call_contract_function .value_list").value).split(","),//[{"level":1,"color":"red","clothes":{"size":7}}],//
-                            runTime:gel(".div_call_contract_function .runTime").value,
+                            valueList:(gel(".div_call_contract_function .value_list").value).split(","),//['4.2.0',{"type":"Employee","employeeId":"551"}],////[{"level":1,"color":"red","clothes":{"size":7}}],//
                             onlyGetFee:false,
                             callback:function(res){
                                 console.info("callContractFunction res",res);
@@ -2627,131 +2847,66 @@
                 }
     
 
-
-                function publishVotes(){
-                  var vote_ids=[]
-                  var checkboxs=document.querySelectorAll(".div_getVotes input[type=checkbox]")
-                                .forEach(function(item){
-                                    if(item.checked){
-                                       vote_ids.push(item.value);
-                                    }
-                                })
-                   console.info("vote_ids",vote_ids);
-                   bcx.publishVotes({
-                      witnessesIds:vote_ids,
-                      proxyAccount:gel(".div_getVotes .proxy_account").value,
-                      onlyGetFee:false,
-                      callback:function(res){
-                          console.info("publishVotes res",res);
-                      }
-                   })
-                }
-
-
-                function queryVotes(){
-                    bcx.queryVotes({
-                        queryAccount:gel(".div_getVotes .query_account").value
-                    }).then(res=>{
-                        console.info("getVotes res",res);
-                        //(id:${item.account_id},vote_id:${item.vote_id})
-                        if(res.code==1){
-                            var votes_html=""
-                            res.data.forEach(function(item,index){
-                                votes_html+=` <tr>
-                                                <th scope="row">${(index+1)}</th>
-                                                <td >${item.account_name}</td>
-                                                <td>${item.votes}</td>
-                                                <td>${item.active?"活跃":"不活跃"}</td>
-                                                <td><input type="checkbox" ${item.supported?"checked":""} value="${item.account_id}" ></td>
-                                            </tr>`
-                            })
-                            gel(".div_getVotes tbody").innerHTML=votes_html;
-                        }
-                    })
-                }
-
-
-                function getTransactionBaseFee(){
-                    bcx.queryTransactionBaseFee({
-                        transactionType:gel(".div_getTransactionBaseFee .transactionType").value,
-                        feeAssetId:gel(".div_getTransactionBaseFee .feeAssetId").value
-                    }).then(res=>{
-                        console.info("getTransactionBaseFee res",res);
-                        $(".div_getTransactionBaseFee .res").JSONView(res);
-                    })
-                }
-
-                function unsubscribe(){
-                    bcx.unsubscribe({methods:gel(".div_unsubscribe .method").value.split(",")})//
-                    .then(res=>{
-                        console.info("unsubscribe res",res);
-                    });
-                }
-
                 function renderOp(operations,selector,isAllOP=false){
                     gel(selector).innerHTML="";
                     var operations_html=""
                     var memo="",more="";
-                    var isLocked=bcx.getUserInfo().locked;
+                    var isLocked=bcx.getAccountInfo().locked;
                     operations.forEach(function(item,index){
                         more="";
                         memo=item.raw_data.memo||"";
 
                         if(memo){
                             if(item.type=="transfer"&&!isAllOP){
-                                    if(isLocked){
+                               if(isLocked){
                                     memo=`<a href="javascript:decodeMemo(${index});">解锁</a>`
                                 }else{
                                     memo=bcx.decodeMemo(memo);
-                                    if(memo.code==1){
-                                        memo=memo.data.text||"";
-                                    }
-
-                                    if(memo)
-                                        memo="备注："+memo;
+                                    console.info("memo",memo);
+                                    if(memo.code==1)  memo=memo.data.text||"";
+                                    if(memo)  memo="备注："+memo;
                                 }
                             }else if(item.type=="creat_nh_asset_order"){
                                 memo="备注："+memo;
+                            }else{
+                                memo="";
                             }
-                           
                         }
 
-                        if(item.type=="call_contract_function"&& item.result.contract_affecteds.length){
+                        if(item.result.type=="error_result"||item.result.type=="contract_result"){
                             var results="";
-                            item.result.contract_affecteds.forEach(c_op=>{
-                                results+="<p>"+c_op.parse_operations_text+"</p>"
-                            });
-                            more=`
-                            <a class="more" href="javascript:showOpMore(${index},${isAllOP});"  >${item.expand?"收起":"查看结果"}</a>
-                            <div class="op_results" style="display:${item.expand?'block':'none'}">
-                                ${results}
-                            </div>
-                            `
+                            if(item.result.type=="contract_result")
+                                item.result.contract_affecteds.forEach(c_op=>{
+                                     results+="<p>"+c_op.parse_operations_text+"</p>"
+                                });
+
+                            if(item.result.type=="error_result")  results= item.result.message; 
+                            
+                            more=`<a class="more" href="javascript:showOpMore(${index});" >查看结果</a>
+                                  <div class="op_results">
+                                    ${results}
+                                  </div>`
                         }
+
                         var new_options_html="";
-                        if(item.raw_data.new_options)
-                             new_options_html='<div class="new_options"><span class="green" >新的设定</span> <div></div></div>';
+                        if(item.raw_data.new_options) new_options_html='<div class="new_options"><span class="green" >新的设定</span> <div></div></div>';
 
                         var tr = document.createElement('tr');
                         var op_class="op_"+item.id.replace(/\./g,"");
                         tr.className=op_class;
                         tr.innerHTML=`
                             <td scope="row" width="80">${item.block_num}</th>
-                                <td width="135" >${item.type_name}</td>
+                                <td width="140" >${item.type_name}</td>
                             <td style="max-width:500px; word-wrap: break-word; padding-right:10px;">
                                 ${item.parse_operations_text} <span class="memo">${memo}</span>
                                 ${more}
                                 ${new_options_html}
                             </td>
                             <td>${item.parse_operations.fee}</td>
-                            <td>${item.date}</td>
-                        `
-                        // operations_html+=` <tr   >
-                                                
-                        //                     </tr>`
+                            <td>${item.date}</td>`
+
                         gel(selector).appendChild(tr);
-                        if(item.raw_data.new_options)
-                         $("."+op_class+" .new_options div").JSONView(item.raw_data.new_options,{ collapsed: true })
+                        if(item.raw_data.new_options) $("."+op_class+" .new_options div").JSONView(item.raw_data.new_options,{ collapsed: true })
                     })
                     //gel(selector).innerHTML=operations_html;
                 }
@@ -2768,7 +2923,7 @@
                 }
 
                 function decodeMemo(op_index){
-                    var isLocked=bcx.getUserInfo().locked;
+                    var isLocked=bcx.getAccountInfo().locked;
                     if(isLocked){
                         gel(".h_msg").innerText="请先解锁账户";
                         alert("请先解锁账户");
