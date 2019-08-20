@@ -3,7 +3,7 @@
 ### JSSdk-Demo User Guide
 
 ### Description
-###### JSSdk-Demo provides a JSSDK[JS-SDK](https://github.com/Cocos-BCX/JSSDK) interface tool by integrating JS-SDK;
+###### JSSdk-Demo provides a [JS-SDK](https://github.com/Cocos-BCX/JSSDK) interface tool by integrating JS-SDK;
 
 
 ### How to use 
