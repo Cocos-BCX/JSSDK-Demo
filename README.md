@@ -1,21 +1,22 @@
+[中文](https://github.com/Cocos-BCX/JSSDK-Demo/blob/master/README_cn.md "中文")
 
-### JSSdk-Demo 使用说明
+### JSSdk-Demo User Guide
 
-### 说明
-###### JSSdk-Demo 通过集成[JS-SDK](https://github.com/Cocos-BCX/JSSDK) ，提供一个界面化的JSSDK接口体验工具；
+### Description
+###### JSSdk-Demo provides a JSSDK[JS-SDK](https://github.com/Cocos-BCX/JSSDK) interface tool by integrating JS-SDK;
 
 
-### 使用 
-###### clone 项目代码，并在浏览器中打开项目中的index.xml 文件即可，使用浏览器 ‘开发者工具’功能查看数据输出。
+### How to use 
+###### Clone the project code and open the index.xml file in the project in your browser to view the data output using the browser 'Developer Tools' feature.
 
-### 使用示例
- ###### 1.创建账户
+### Example
+ ###### 1. Create an account
  ![avatar](https://github.com/Cocos-BCX/JSSDK-Demo/blob/master/images/create_account.png)
 
- ###### 2.登录账户
+ ###### 2. Login
   ![avatar](https://github.com/Cocos-BCX/JSSDK-Demo/blob/master/images/login.png)
 
-  ###### 3.转账
+  ###### 3. Transfer
   ![avatar](https://github.com/Cocos-BCX/JSSDK-Demo/blob/master/images/transfer.png)
 
-- [JSSDK接口详细说明](https://github.com/Cocos-BCX/JSSDK/blob/master/README_cn.md)
+- [Details of JSSDK interface](https://github.com/Cocos-BCX/JSSDK/blob/master/README_cn.md)
