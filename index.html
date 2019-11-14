@@ -909,10 +909,18 @@
 
                         <a class="lang" key="Type_limit">限制类型(Number)</a>
                         <select class="restricted_type">
-                            <option value="1" class="lang" key="Asset_authority_accounts_whitelist">资产权限账户白名单</option>
-                            <option value="2" class="lang" key="Asset_authority_accounts_blacklist">资产权限账户黑名单</option>
-                            <option value="3" class="lang" key="Whitelist_of_assets">市场交易资产白名单</option>
-                            <option value="4" class="lang" key="Blacklist_of_assets">市场交易资产黑名单</option>
+                            <option value="1">
+                                <h5 class="lang" key="Asset_authority_accounts_whitelist">资产权限账户白名单</h5>
+                            </option>
+                            <option value="2">
+                                <h5 class="lang" key="Asset_authority_accounts_blacklist">资产权限账户黑名单</h5>
+                            </option>
+                            <option value="3">
+                                <h5 class="lang" key="Whitelist_of_assets">市场交易资产白名单</h5>
+                            </option>
+                            <option value="4">
+                                <h5 class="lang" key="Blacklist_of_assets">市场交易资产黑名单</h5>
+                            </option>
                         </select><br><br>
                         <a class="lang" key="List_limit">限制列表(Array)</a>
                         <textarea rows="10" class="restricted_list">test3</textarea><br><br>
@@ -951,11 +959,21 @@
                         <a class="lang" key="Asset_Token">资产符号</a><input type="text" class="asset_id"
                             value="TEST"><br><br>
                         <a class="lang" key="Type_limit">限制类型</a><select class="restricted_type">
-                            <option value="0" class="lang" key="All_types">所有类型</option>
-                            <option value="1" class="lang" key="Asset_authority_whitelist">资产权限白名单</option>
-                            <option value="2" class="lang" key="Asset_authority_blacklist">资产权限黑名单</option>
-                            <option value="3" class="lang" key="Whitelist_of_assets">市场交易白名单</option>
-                            <option value="4" class="lang" key="Blacklist_of_assets">市场交易黑名单</option>
+                            <option value="0">
+                                <h5 class="lang" key="All_types">所有类型</h5>
+                            </option>
+                            <option value="1">资产权限白名单
+                                <h5 class="lang" key="Asset_authority_whitelist">资产权限白名单</h5>
+                            </option>
+                            <option value="2">
+                                <h5 class="lang" key="Asset_authority_blacklist">资产权限黑名单</h5>
+                            </option>
+                            <option value="3">
+                                <h5 class="lang" key="Whitelist_of_assets">市场交易白名单</h5>
+                            </option>
+                            <option value="4">
+                                <h5 class="lang" key="Blacklist_of_assets">市场交易黑名单</h5>
+                            </option>
                         </select><br><br>
                         <input type="button" id="btn_queryAssetRestricted" class="lang" key="Confirm_Search"
                             value="确认查询" />
@@ -1122,7 +1140,9 @@
                             value="立即获取" /><br><br>
                         <a class="lang" key="NH_assets_item_ID">NH资产itemID</a>
                         <select class="sel_goods">
-                            <option value="1" class="lang" key="Please_select_an_NH_asset_to_sale">请选择您要卖的NH资产</option>
+                            <option value="1">
+                                <h5 class="lang" key="Please_select_an_NH_asset_to_sale">请选择您要卖的NH资产</h5>
+                            </option>
                         </select>
                         <br><br><br>
 
@@ -1257,8 +1277,12 @@
                     <div class="div_getVotes div_module">
                         <a class="lang" key="Type">类型</a>
                         <select class="type">
-                            <option class="lang" key="Witness" value="witnesses">见证人</option>
-                            <option class="lang" key="Committee" value="committee">理事会</option>
+                            <option value="witnesses">
+                                <h5 class="lang" key="Witness">见证人</h5>
+                            </option>
+                            <option value="committee">
+                                <h5 class="lang" key="Committee">理事会</h5>
+                            </option>
                         </select><br><br>
                         <a class="lang" key="Query_voting_account">查询投票账户</a>
                         <input type="text" class="query_account" value=""><br><br>
@@ -1393,7 +1417,8 @@
                         <a class="lang" key="Query_account">查询账户</a>
                         <input type="text" class="account lang" key="Query_account" placeholder="查询账户"><br><br>
 
-                        <input type="button" id="btn_queryVestingBalance" class="lang" key="Instant_View" value="立即查看" /><br><br>
+                        <input type="button" id="btn_queryVestingBalance" class="lang" key="Instant_View"
+                            value="立即查看" /><br><br>
                         <div class="mainInfo">
 
                         </div>
@@ -2003,16 +2028,18 @@
                 })
             },
             queryVotes() {
-                bcx.queryVotes({
-                    queryAccount: gel(".div_getVotes .query_account").value,
-                    type: gel(".div_getVotes .type").value
-                }).then(res => {
-                    console.info("getVotes res", res);
-                    //(id:${item.account_id},vote_id:${item.vote_id})
-                    if (res.code == 1) {
-                        var votes_html = ""
-                        res.data.forEach(function (item, index) {
-                            votes_html += ` <tr>
+                console.info("div_getVotes value", gel(".div_getVotes .query_account").value),
+                    console.info("div_getVotes type", gel(".div_getVotes .type").value),
+                    bcx.queryVotes({
+                        queryAccount: gel(".div_getVotes .query_account").value,
+                        type: gel(".div_getVotes .type").value
+                    }).then(res => {
+                        console.info("getVotes res", res);
+                        //(id:${item.account_id},vote_id:${item.vote_id})
+                        if (res.code == 1) {
+                            var votes_html = ""
+                            res.data.forEach(function (item, index) {
+                                votes_html += ` <tr>
                                                     <th scope="row">${(index+1)}</th>
                                                     <td >${item.account_name}</td>
                                                     <td>${item.votes}</td>
@@ -2020,10 +2047,10 @@
                                                     <td>${item.work_status?"是":"否"}</td>
                                                     <td><input type="checkbox" ${item.supported?"checked":""} value="${item.account_id}" ></td>
                                                 </tr>`
-                        })
-                        gel(".div_getVotes tbody").innerHTML = votes_html;
-                    }
-                })
+                            })
+                            gel(".div_getVotes tbody").innerHTML = votes_html;
+                        }
+                    })
             },
             publishVotes() {
                 var vote_ids = []
