@@ -4,14 +4,15 @@ var http = require("http");
 var url = require("url");
 var querystring = require('querystring')
 let bcx=_bcx.createBCX({
-    ws_node_list:[
-        {url:"ws://192.168.50.104:8001",name:"Cocos - China - Beijing"},   
+    default_ws_node:"ws://test.cocosbcx.net",
+    ws_node_list:[	
+        {url:"ws://test.cocosbcx.net",name:"Cocos - China - Beijing"}   	
     ],
     networks:[
-     {
-        core_asset:"COCOS",
-        chain_id:"10f1b6f5253bc7fd6142542c594e915002e0181b5e83ffe340e1937fe5359aa6" 
-      }
+        {
+            core_asset:"COCOS",
+            chain_id:"c1ac4bb7bd7d94874a1cb98b39a8a582421d03d022dfa4be8c70567076e03ad0" 
+        }
     ], 
     faucet_url:"",
     auto_reconnect:true,
@@ -19,29 +20,34 @@ let bcx=_bcx.createBCX({
     check_cached_nodes_data:false                 
 });
 
-bcx.passwordLogin({
-    account:"test1",
-    password:"12345678"
-}).then(res=>{
-    console.info("bcx.getAccountInfo()",bcx.getAccountInfo())
-    if(res.code==1){
-        bcx.publishVotes({
-            type:"witnesses",
-            vote_ids:["1.2.9", "1.2.10", "1.2.12", "1.2.5", "1.2.6", "1.2.15", "1.2.7", "1.2.8", "1.2.11", "1.2.13", "1.2.14"],
-            votes:2222
-        }).then(res=>{
-            console.info("publishVotes res",res);
-        })
-        // bcx.updateCollateralForGas({
-        //     mortgager:"test1",
-        //     beneficiary:"test2",
-        //     amount:120,
-        //     isPropose:false
-        // }).then(res=>{
-        //     console.info("updateCollateralForGas res",res);
-        // })
-    }
-});
+// bcx.queryBlock({
+//     block:600000
+// }).then(res=>{
+//     console.info("queryBlock res",res);
+// })
+// bcx.passwordLogin({
+//     account:"test1",
+//     password:"12345678"
+// }).then(res=>{
+//     console.info("bcx.getAccountInfo()",bcx.getAccountInfo())
+//     if(res.code==1){
+//         bcx.publishVotes({
+//             type:"witnesses",
+//             vote_ids:["1.2.9", "1.2.10", "1.2.12", "1.2.5", "1.2.6", "1.2.15", "1.2.7", "1.2.8", "1.2.11", "1.2.13", "1.2.14"],
+//             votes:2222
+//         }).then(res=>{
+//             console.info("publishVotes res",res);
+//         })
+//         // bcx.updateCollateralForGas({
+//         //     mortgager:"test1",
+//         //     beneficiary:"test2",
+//         //     amount:120,
+//         //     isPropose:false
+//         // }).then(res=>{
+//         //     console.info("updateCollateralForGas res",res);
+//         // })
+//     }
+// });
 
 // bcx.createAccountWithPassword({
 //     account:"test1231",
@@ -97,8 +103,8 @@ let server=http.createServer(function(request, response) {
 //     }
 // })
 
-// bcx.subscribeToBlocks({
-//     callback:res=>{
-//         console.info("subscribeToBlocks res",res);
-//     }
-// })
+bcx.subscribeToBlocks({
+    callback:res=>{
+        console.info("subscribeToBlocks res",res);
+    }
+})
