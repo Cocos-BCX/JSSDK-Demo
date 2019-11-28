@@ -6,7 +6,7 @@ var querystring = require('querystring')
 let bcx=_bcx.createBCX({
     default_ws_node:"ws://test.cocosbcx.net",
     ws_node_list:[	
-        {url:"ws://test.cocosbcx.net",name:"Cocos - China - Beijing"}   	
+         {url:"ws://test.cocosbcx.net",name:"Cocos - China - Beijing"}   	
     ],
     networks:[
         {
@@ -25,29 +25,40 @@ let bcx=_bcx.createBCX({
 // }).then(res=>{
 //     console.info("queryBlock res",res);
 // })
-// bcx.passwordLogin({
-//     account:"test1",
-//     password:"12345678"
-// }).then(res=>{
-//     console.info("bcx.getAccountInfo()",bcx.getAccountInfo())
-//     if(res.code==1){
-//         bcx.publishVotes({
-//             type:"witnesses",
-//             vote_ids:["1.2.9", "1.2.10", "1.2.12", "1.2.5", "1.2.6", "1.2.15", "1.2.7", "1.2.8", "1.2.11", "1.2.13", "1.2.14"],
-//             votes:2222
-//         }).then(res=>{
-//             console.info("publishVotes res",res);
-//         })
-//         // bcx.updateCollateralForGas({
-//         //     mortgager:"test1",
-//         //     beneficiary:"test2",
-//         //     amount:120,
-//         //     isPropose:false
-//         // }).then(res=>{
-//         //     console.info("updateCollateralForGas res",res);
-//         // })
-//     }
-// });
+bcx.passwordLogin({
+    account:"test1",
+    password:"12345678"
+}).then(res=>{
+    console.info("bcx.getAccountInfo()",bcx.getAccountInfo())
+    if(res.code==1){
+        // bcx.publishVotes({
+        //     type:"witnesses",
+        //     vote_ids:["1.2.9", "1.2.10", "1.2.12", "1.2.5", "1.2.6", "1.2.15", "1.2.7", "1.2.8", "1.2.11", "1.2.13", "1.2.14"],
+        //     votes:2222
+        // }).then(res=>{
+        //     console.info("publishVotes res",res);
+        // })
+        // bcx.updateCollateralForGas({
+        //     mortgager:"test1",
+        //     beneficiary:"test2",
+        //     amount:120,
+        //     isPropose:false
+        // }).then(res=>{
+        //     console.info("updateCollateralForGas res",res);
+        // })
+
+        bcx.transferAsset({
+            fromAccount:"test1",
+            toAccount:"test2",//query.to,
+            amount:1,//query.token,
+            assetId:"COCOS",
+            memo:"嘿嘿",
+            isEncryption:true
+        }).then(result=>{
+            console.info('bcx transferAsset',result);
+        })
+    }
+});
 
 // bcx.createAccountWithPassword({
 //     account:"test1231",
@@ -57,6 +68,7 @@ let bcx=_bcx.createBCX({
 //         console.info("signup res",res);
 //     }
 // })
+
 
 let server=http.createServer(function(request, response) {
     var pathname = url.parse(request.url);
@@ -103,8 +115,10 @@ let server=http.createServer(function(request, response) {
 //     }
 // })
 
-bcx.subscribeToBlocks({
-    callback:res=>{
-        console.info("subscribeToBlocks res",res);
-    }
-})
+// bcx.subscribeToBlocks({
+//     callback:res=>{
+//         console.info("subscribeToBlocks res",res);
+//     }
+// })
+
+
