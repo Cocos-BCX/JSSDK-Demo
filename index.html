@@ -1111,7 +1111,7 @@
                             <div class="div_module_c" id="div_queryVestingBalance"  pclass="class_7" >
                                 <h2>查询可领取的解冻资产</h2>
                                 <div class="div_queryVestingBalance div_module" >
-                                    查询账户<input  type="text" class="account" value="" placeholder="查询账户"><br><br>
+                                    查询账户<input  type="text" class="account" value="unitedlabs.witness" placeholder="查询账户"><br><br>
                                     类型
                                     <select class="type">
                                        <option value="">全部</option>
@@ -1498,7 +1498,7 @@
        
     </div>
 
-        <script src="assets/bcx.min.js?v=7"></script>
+        <script src="./assets/bcx.min.js?v=7"></script>
         <script type="text/javascript" src="./FELib/jquery-1.8.3.min.js" charset="utf-8"></script>
         <script type="text/javascript" src="./FELib/jsonview/jquery.jsonview.min.js" charset="utf-8"></script>
 
@@ -1523,17 +1523,34 @@
 
                 loadLeftNavs();
                 
+                 // var _configParams={ 
+                //     ws_node_list:[
+                //          {url:"ws://test.cocosbcx.net",name:"Cocos - China - Beijing"}   
+                        
+                //      ],
+                //      networks:[
+                //         {
+                //             core_asset:"COCOS",
+                //             chain_id:"1ae3653a3105800f5722c5bda2b55530d0e9e8654314e2f3dc6d2b010da641c5" 
+                //         }
+                //      ], 
+                //      faucet_url:"https://test-faucet.cocosbcx.net",
+                //      auto_reconnect:true,
+                //      real_sub:true,
+                //      check_cached_nodes_data:false
+                //     //app_keys:["5HxzZncKDjx7NEaEv989Huh7yYY7RukcJLKBDQztXAmZYCHWPgd"]
+                // };
                 var _configParams={ 
                     ws_node_list:[
-                        {url:"",name:""}   	
+                      {url:"wss://api.cocosbcx.net",name:"Cocos - Terminal"}
                      ],
                      networks:[
                         {
                             core_asset:"COCOS",
-                            chain_id:"" 
+                            chain_id:"6057d856c398875cac2650fe33caef3d5f6b403d184c5154abbff526ec1143c4" 
                         }
                      ], 
-                     faucet_url:"",
+                     faucet_url:"https://faucet.cocosbcx.net",
                      auto_reconnect:true,
                      real_sub:true,
                      check_cached_nodes_data:false
@@ -1549,6 +1566,8 @@
                     }
                 }).then(res=>{
                     console.info("init res",res);
+                    console.info("this.$bcx.getAccountInfo()",bcx.getAccountInfo());
+
                     _wallet.init();
                     _user.init();
                     _contracts.init();
@@ -1582,7 +1601,7 @@
                                 locale:gel(".div_apiConfig .lang").value,
                                 real_sub:gel(".div_apiConfig .realSub").checked,
                                 faucet_url:"http://47.93.62.96:8042"                            
-                            },false).then(res=>{
+                            },true).then(res=>{
                                 console.info("apiConfig res",res);
                             })
                         }
@@ -2014,7 +2033,7 @@
                     blocks:[],
                     subscribeBlocks:function(){
                         bcx.subscribeToBlocks({
-                            isReqTrx:true,
+                            isReqTrx:false,
                             callback:function(res){
                                 console.info("subscribeBlocks res",res);
                                 if(res.code==1){
@@ -2284,7 +2303,10 @@
                         });
                    },
                    claimVestingBalance(id,amount,asset_id){
-                        bcx.claimVestingBalance({id}).then(res=>{
+                        bcx.claimVestingBalance({
+                            id,
+                            amount
+                        }).then(res=>{
                             console.info("claimVestingBalance res",res);
                         })
                    },
@@ -2330,11 +2352,11 @@
                                                 <div class="field">${available_balances[type]}：</div><div class="value">${remaining_hours} 小时</div>
                                             </div>
                                             <div class="row">
-                                                <div class="field">可领取数量：</div><div class="value">${available_percent}% / ${amount} ${symbol}</div>
+                                                <div class="field">可领取数量：</div><div class="value">${available_percent}% / <span class="amount">${amount}</span> ${symbol}</div>
                                             </div>
 
                                             <div class="row" dis>
-                                                <input type="button" onClick="_explorer.claimVestingBalance('${id}')" value="立即领取" /><br><br>  
+                                                <input type="button" onClick="_explorer.claimVestingBalance('${id}',${amount})" value="立即领取" /><br><br>  
                                             </div>
                                         </div>
                                         `;
@@ -3504,12 +3526,19 @@
                         })
                     },
                     callContractFunction:function(){
-                        console.info(((gel(".div_call_contract_function .value_list").value).split(/\n/)));
+                        let valueList=gel(".div_call_contract_function .value_list").value;
+                        if(valueList){
+                            valueList=valueList.split(/\n/);
+                        }else{
+                            valueList=[];
+                        }
+                        console.info("valueList",valueList);
+
                         //nameOrId=>合约名字或ID
                         bcx.callContractFunction({
                             nameOrId:gel(".div_call_contract_function .nameOrId").value,
                             functionName:gel(".div_call_contract_function .function_name").value,//["1",1000001,'COCOS']
-                            valueList:(gel(".div_call_contract_function .value_list").value).split(/\n/),//['4.2.0',{"type":"Employee","employeeId":"551"}],////[{"level":1,"color":"red","clothes":{"size":7}}],//
+                            valueList,//['4.2.0',{"type":"Employee","employeeId":"551"}],////[{"level":1,"color":"red","clothes":{"size":7}}],//
                             callback:function(res){
                                 console.info("callContractFunction res",res);
                             }
