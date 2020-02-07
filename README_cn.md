@@ -24,7 +24,7 @@
 ###### 4.切换节点使用示例
 1. 初始化jssdk对象bcx;
 
-  ```ruby
+```ruby
   var _configParams = {
       ws_node_list: [{
         url: "wss://api.cocosbcx.net",
@@ -40,7 +40,8 @@
       // check_cached_nodes_data: false
     };
     bcx = new BCX(_configParams);
-    ```
+```
+    
  - 初始化过程会使用_configParams中的节点参数，建立默认的节点连接；
 
 2. 切换节点
@@ -86,11 +87,12 @@
     - API 
     - getAPIConfig
 	- 返回值中的select_ws_node为当前连接的节点
-	```ruby
+	
+```ruby
       getApiConfig().then(res => {
          console.log("select_ws_node",res.select_ws_node)
        })
-	```
+```
 
 4. 检查切换是否成功
 	- 通过比较切换时apiConfig中的default_ws_node和getApiConfig中的select_ws_node是否一致判定, 相等则说明节点切换成功，否则失败。
