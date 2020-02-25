@@ -26,10 +26,10 @@ let bcx=_bcx.createBCX({
 //     console.info("queryBlock res",res);
 // })
 bcx.passwordLogin({
-    account:"test1",
+    account:"test2",
     password:"12345678"
 }).then(res=>{
-    console.info("bcx.getAccountInfo()",bcx.getAccountInfo())
+    console.info("passwordLogin res",res)
     if(res.code==1){
         // bcx.publishVotes({
         //     type:"witnesses",
@@ -48,8 +48,8 @@ bcx.passwordLogin({
         // })
 
         bcx.transferAsset({
-            fromAccount:"test1",
-            toAccount:"test2",//query.to,
+            fromAccount:"test2",
+            toAccount:"test1",//query.to,
             amount:1,//query.token,
             assetId:"COCOS",
             memo:"嘿嘿",
